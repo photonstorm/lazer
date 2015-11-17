@@ -15,7 +15,6 @@
     "url": "https://photonstorm@github.com/photonstorm/lazer.git"
   },
   "scripts": {
-    "prepublish": "grunt build",
     "test": "NODE_ENV=test grunt jshint"
   },
   "keywords": [
