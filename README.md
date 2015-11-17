@@ -2,7 +2,9 @@
 
 This is the development repository for Lazer (previously known as Phaser 3).
 
-Follow development on [Twitter](https://twitter.com/photonstorm)
+Follow development on [Twitter](https://twitter.com/lazerjs)
+
+Check out the [Lazer Dev](https://github.com/photonstorm/lazer-dev) repo to get all the code samples and tests.
 
 ## Warning: Highly Experimental
 
