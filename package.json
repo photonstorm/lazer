@@ -1,0 +1,61 @@
+{
+  "name": "lazer",
+  "version": "0.0.1",
+  "release": "Asuna",
+  "description": "A fast, free and fun HTML5 Game Framework built on ES6.",
+  "author": "Richard Davey <hello@lazerjs.io> (http://www.lazerjs.io)",
+  "logo": "https://raw.github.com/photonstorm/phaser/master/phaser-logo-small.png",
+  "homepage": "http://lazerjs.io",
+  "bugs": "https://github.com/photonstorm/lazer/issues",
+  "license": "MIT",
+  "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
+  "main": "./build/lazer.js",
+  "repository": {
+    "type": "git",
+    "url": "https://photonstorm@github.com/photonstorm/lazer.git"
+  },
+  "scripts": {
+    "prepublish": "grunt build",
+    "test": "NODE_ENV=test grunt jshint"
+  },
+  "keywords": [
+    "2d",
+    "3d",
+    "HTML5",
+    "WebGL",
+    "canvas",
+    "game",
+    "javascript",
+    "typescript",
+    "es6",
+    "es2015",
+    "phaser",
+    "physics",
+    "tweens",
+    "web audio",
+    "collision",
+    "tilemaps",
+    "sound",
+    "arcade",
+    "action",
+    "rpg",
+    "puzzle",
+    "retro",
+    "8bit",
+    "casual",
+    "multiplayer",
+    "banner"
+  ],
+  "devDependencies": {
+    "babel": "^6.1.18",
+    "babel-cli": "^6.1.18",
+    "babel-core": "^6.1.21",
+    "babel-eslint": "^4.1.5",
+    "babel-polyfill": "^6.1.19",
+    "babel-preset-es2015": "^6.1.18",
+    "eslint": "^1.9.0",
+    "systemjs": "^0.19.6",
+    "traceur": "0.0.92",
+    "typescript": "^1.6.2"
+  }
+}
