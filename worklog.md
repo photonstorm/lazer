@@ -15,6 +15,8 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 Moved the XML Parser from the Loader into its own file (doesn't need to be part of the base class). Loader returns a Promise for the complete event as well (it has done for a while,  just forgot to write about it). Looking at moving the XHR loader to its own function and then it's time to move onto the master game loop.
 
+Canvas Move, MoveHorizontal and MoveVertical are all done, using a much more efficient pattern method (rather than a swap canvas). Complete tests for all of them including one running off the Master Clock and performance was much better than with a swap canvas.
+
 ### 11th November 2015
 
 Today was mostly about tidying up the VertexArrayBuffer and VertexIndexBuffer classes. Also moved the 'add' specific code to its own functions (like AddQuadAlphaColor - a name I'm not set on yet). The Batched texture renderer is coming on nicely.
