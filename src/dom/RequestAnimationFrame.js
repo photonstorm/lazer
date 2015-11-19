@@ -7,14 +7,10 @@ export default class RequestAnimationFrame {
         this.root = root;
         this.forceSetTimeOut = forceSetTimeOut;
 
-        //  If there's no window object then we have to use ST anyway
-        if (!window)
+        //  If there's no window object or RAF then we have to use ST anyway
+        if (!forceSetTimeOut)
         {
-            this.forceSetTimeOut = true;
-        }
-        else
-        {
-            this.normalizeRaf();
+            this.forceSetTimeOut = !this.normalizeRaf();
         }
 
         this._running = false;
@@ -23,7 +19,7 @@ export default class RequestAnimationFrame {
 
     }
 
-    //  Under SetTimeout callback must return the ms value of when to run the next update
+    //  Under SetTimeout the callback must return the ms value of when to run the next update
     start (callback) {
 
         if (!this._running)
@@ -33,11 +29,11 @@ export default class RequestAnimationFrame {
 
             if (this.usingSetTimeout)
             {
-                this._timeOutID = window.setTimeout(this.updateSetTimeout, 0);
+                this._timeOutID = this.root.setTimeout(now => this.updateSetTimeout(Date.now()), 0);
             }
             else
             {
-                this._timeOutID = window.requestAnimationFrame(this.updateRAF);
+                this._timeOutID = this.root.requestAnimationFrame(now => this.updateRAF(now));
             }
         }
 
@@ -47,15 +43,13 @@ export default class RequestAnimationFrame {
 
         this._callback(now);
 
-        this._timeOutID = window.requestAnimationFrame(this.updateRAF);
+        this._timeOutID = this.root.requestAnimationFrame(now => this.updateRAF(now));
 
     }
 
-    updateSetTimeout () {
+    updateSetTimeout (now) {
 
-        const delay = this._callback(Date.now());
-
-        this._timeOutID = window.setTimeout(this.updateSetTimeout, delay);
+        this._timeOutID = this.root.setTimeout(now => this.updateSetTimeout(Date.now()), 0);
 
     }
 
@@ -65,11 +59,11 @@ export default class RequestAnimationFrame {
         {
             if (this.usingSetTimeout)
             {
-                clearTimeout(this._timeOutID);
+                this.root.clearTimeout(this._timeOutID);
             }
             else
             {
-                window.cancelAnimationFrame(this._timeOutID);
+                this.root.cancelAnimationFrame(this._timeOutID);
             }
 
             this._running = false;
@@ -79,7 +73,11 @@ export default class RequestAnimationFrame {
 
     normalizeRaf () {
 
-        if (!this.root.requestAnimationFrame)
+        if (this.root.requestAnimationFrame)
+        {
+            return true;
+        }
+        else
         {
             for (let vendor of ['ms', 'moz', 'webkit', 'o'])
             {
@@ -87,9 +85,12 @@ export default class RequestAnimationFrame {
                 {
                     this.root.requestAnimationFrame = this.root[vendor] + 'RequestAnimationFrame';
                     this.root.cancelAnimationFrame = this.root[vendor] + 'CancelAnimationFrame';
+                    return true;
                 }
             }
         }
+
+        return false;
 
     }
 

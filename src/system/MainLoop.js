@@ -1,3 +1,5 @@
+import NOOP from 'system/NOOP.js';
+
 export default class MainLoop {
 
     constructor (timestep = 1000 / 60) {
@@ -23,12 +25,6 @@ export default class MainLoop {
         this.panic = false;
 
 
-
-        // In all major browsers, replacing non-specified functions with NOOPs
-        // seems to be as fast or slightly faster than using conditions to only
-        // call the functions if they are specified. This is probably due to empty
-        // functions being optimized away. http://jsperf.com/noop-vs-condition
-        this.NOOP = function() {};
 
         // A function that runs at the beginning of the main loop.
         // See `MainLoop.setBegin()` for details.
