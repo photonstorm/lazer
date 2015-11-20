@@ -13,6 +13,10 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * SetPixel assumes the ImageData is the full canvas and doesn't need offsetting on write.
 * SetPixels could record the extend of the dirty rect and optimise the putImageData call as a result.
 
+### 20th November 2015
+
+SetPixel now does putImageData with a 1x1 pixel direct. SetPixels records the direct rect as new pixesl are drawn and uses it when writing.
+
 ### 19th November 2015
 
 Added the new RequestAnimationFrame class. As with Phaser it will handle using either RAF or SetTimeout for you. Unlike RAF polyfills it allows you to specifically force it to use SetTimeout (very handy for testing edge cases for legacy devices). Time to hook RAF into the MasterClock.

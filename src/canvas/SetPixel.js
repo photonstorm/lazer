@@ -21,6 +21,6 @@ export default function SetPixel (context, imageData, x, y, red = 0, green = 0, 
         }
     }
 
-    context.putImageData(imageData, 0, 0);
+    context.putImageData(imageData, 0, 0, x, y, 1, 1);
     
 }
