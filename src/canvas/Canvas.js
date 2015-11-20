@@ -3,7 +3,7 @@
 
 export default function (width = 256, height = 256, id = '') {
 
-    var canvas = document.createElement('canvas');
+    const canvas = document.createElement('canvas');
 
     if (id !== '')
     {

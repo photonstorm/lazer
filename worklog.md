@@ -15,7 +15,11 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 Added the new RequestAnimationFrame class. As with Phaser it will handle using either RAF or SetTimeout for you. Unlike RAF polyfills it allows you to specifically force it to use SetTimeout (very handy for testing edge cases for legacy devices). Time to hook RAF into the MasterClock.
 
+Wasted hours trying to find the cause of a 500KB Major gc sweep every 2 seconds with nothing but the MasterClock running. After de-constructing every class it turns out that it was the Dev Tools to blame - apparently they inject stack data into the frigging active _JS Heap_ as the Timeline runs! This is insanity but there's nothing we can do about it. So time to put the classes back together again. From this point on I'll take Dev Tools reports with a sizable pinch of salt. It's worrying when the very tool you're using to profile your code is the very reason for the peaks in the timeline.
 
+Added Fill, Resize, GetPixel and GetPixelFromImageData to the canvas functions.
+
+Added GetPixel, GetPixelFromImageData, ImageData, SetPixel and SetPixels to the canvas functions. These allow for pixel level manipulation of a Canvas Contexts ImageData. Am now considering splitting the canvas src folder up and moving pixel level functions to one folder, effects to another and so on, otherwise it could grow quite unwieldy in there over time.
 
 ### 17th November 2015
 

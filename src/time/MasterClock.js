@@ -12,7 +12,7 @@ export default class MasterClock {
 
     constructor () {
 
-        // this.raf = new RequestAnimationFrame(window, false);
+        this.raf = new RequestAnimationFrame(window, false);
 
         //  This needs normalising with perf now in the step loop
         this.getTime = Date.now;
@@ -57,7 +57,6 @@ export default class MasterClock {
         */
         this.elapsed = 0;
 
-
         this._startTime = 0;
 
         this.callback = null;
@@ -75,40 +74,28 @@ export default class MasterClock {
         this.callback = callback;
 
         //  This starts RAF going automatically
-        // this.raf.start(now => this.step(now));
-
-        let _this = this;
-
-        this._onLoop = function (time) {
-            return _this.step(time);
-        };
-
-        window.requestAnimationFrame(this._onLoop);
+        this.raf.start(now => this.step(now));
 
     }
 
     //  this.raf provides performance.now as an argument (or Date.now under SetTimeout)
     step (now) {
 
-        // this.prevTime = this.time;
+        this.prevTime = this.time;
 
-        // this.time = now;
+        this.time = now;
 
-        // this.elapsed = this.time - this.prevTime;
+        this.elapsed = this.time - this.prevTime;
 
-        // for (const clock of this.clocks)
-        // {
-        //     clock.step(this.elapsed);
-        // }
+        for (const clock of this.clocks)
+        {
+            clock.step(this.elapsed);
+        }
 
-        // this.callback();
-
-        window.requestAnimationFrame(this._onLoop);
-
-        // window.requestAnimationFrame(now => this.step(now));
+        this.callback();
 
         //  For SetTimeout RAF
-        // return 16;
+        return 16;
 
     }
 

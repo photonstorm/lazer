@@ -60,6 +60,18 @@ export default class PixelData {
 
     }
 
+    get width () {
+
+        return this.canvas.width;
+
+    }
+
+    get height () {
+
+        return this.canvas.height;
+
+    }
+
     destroy () {
 
         this.canvas = null;
