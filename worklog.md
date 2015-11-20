@@ -10,6 +10,8 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 * I need to find a way to allow for non-English error messages in Errors and console warnings.
 * I'd like to find a way to allow for non-English jsdocs as well, inline in the code, but not sure how without using some kind of build script (which may not be a bad idea?)
+* SetPixel assumes the ImageData is the full canvas and doesn't need offsetting on write.
+* SetPixels could record the extend of the dirty rect and optimise the putImageData call as a result.
 
 ### 19th November 2015
 
