@@ -1,5 +1,5 @@
 //  Add spread operator
-export default function () {
+export default function Average () {
 
     let sum = 0;
     let len = arguments.length;

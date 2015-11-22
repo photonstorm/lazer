@@ -12,8 +12,9 @@ export default function GetImageData (context, x = 0, y = 0, width = null, heigh
         height = context.canvas.height;
     }
 
-    x = Clamp(x, 0, width);
-    y = Clamp(y, 0, height);
+    //  Ensure x/y are within 0 to canvas bounds
+    x = Clamp(x, 0, context.canvas.width);
+    y = Clamp(y, 0, context.canvas.height);
 
     return context.getImageData(x, y, width, height);
 
