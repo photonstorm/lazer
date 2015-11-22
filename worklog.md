@@ -25,6 +25,10 @@ Added FindClosestInSorted and renamed to make it more explicit (and provide room
 
 Created a new CheckMatrix function to validate you've actually passed in a proper matrix. RotateMatrix and MatrixToString both now use this check as well.
 
+Added Array RotateLeft and RotateRight to allow you to cycle array elements and created 4 tests. Added new argument 'total' to each which lets you run the rotation multiple times.
+
+Finished final Array Utils: NumberArray and NumberArrayStep.
+
 ### 21st November 2015
 
 SetPixels now takes an ImageData offset for the x,y dirty rect placement. Added Vec2.setTo.
