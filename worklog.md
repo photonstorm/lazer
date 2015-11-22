@@ -29,6 +29,7 @@ Updated all the canvas tests to use the new folder paths.
 
 Added a Grayscale and Invert effect to the effects folder and two tests for them.
 
+Finally for tonight added in Brightness and Threshold effects. Can try a Convolution matrix tomorrow.
 
 ### 20th November 2015
 
