@@ -13,6 +13,14 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * SetPixel assumes the ImageData is the full canvas and doesn't need offsetting on write.
 * SetPixels could record the extend of the dirty rect and optimise the putImageData call as a result.
 
+### 22nd November 2015
+
+Started work on the Array Utils. So far have done GetRandomElement, RemoveRandomElement, Shuffle and SpliceOne. Included adding String Utils Pad.
+
+Also did the Array Matrix functions: TransposeMatrix, RotateMatrix, ReverseRows, ReverseColumns, MatrixToString, RotateLeft, RotateRight and Rotate180.
+
+
+
 ### 21st November 2015
 
 SetPixels now takes an ImageData offset for the x,y dirty rect placement. Added Vec2.setTo.
