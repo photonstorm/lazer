@@ -1,3 +1,4 @@
+import CheckMatrix from 'utils/array/matrix/CheckMatrix.js';
 import TransposeMatrix from 'utils/array/matrix/TransposeMatrix.js';
 
 /**
@@ -11,6 +12,11 @@ import TransposeMatrix from 'utils/array/matrix/TransposeMatrix.js';
 * @return {Array<any[]>} The rotated matrix. The source matrix should be discarded for the returned matrix.
 */
 export default function RotateMatrix (matrix, direction = 90) {
+
+    if (!CheckMatrix(matrix))
+    {
+        return null;
+    }
 
     if (typeof direction !== 'string')
     {

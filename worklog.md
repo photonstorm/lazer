@@ -19,7 +19,9 @@ Started work on the Array Utils. So far have done GetRandomElement, RemoveRandom
 
 Also did the Array Matrix functions: TransposeMatrix, RotateMatrix, ReverseRows, ReverseColumns, MatrixToString, RotateLeft, RotateRight and Rotate180.
 
+Added FindClosestInSorted and renamed to make it more explicit (and provide room to have un-sorted version)
 
+Created a new CheckMatrix function to validate you've actually passed in a proper matrix. RotateMatrix and MatrixToString both now use this check as well.
 
 ### 21st November 2015
 
