@@ -13,9 +13,18 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * SetPixel assumes the ImageData is the full canvas and doesn't need offsetting on write.
 * SetPixels could record the extend of the dirty rect and optimise the putImageData call as a result.
 
+### 21st November 2015
+
+SetPixels now takes an ImageData offset for the x,y dirty rect placement. Added Vec2.setTo.
+
+Moved the imageData index look-up to GetIndex and GetIndexFast, the later avoiding the bounds safety checks of the other. Updates GetPixel etc to use this new function.
+
+Finished ProcessPixels and some tests for it. It will take an imageData and a region and pass each pixel to your own callback. The color that comes back from the callback is then set into the imageData. Useful for non-shader image manipulation.
+
+
 ### 20th November 2015
 
-SetPixel now does putImageData with a 1x1 pixel direct. SetPixels records the direct rect as new pixesl are drawn and uses it when writing.
+SetPixel now does putImageData with a 1x1 pixel direct. SetPixels records the direct rect as new pixels are drawn and uses it when writing.
 
 ### 19th November 2015
 

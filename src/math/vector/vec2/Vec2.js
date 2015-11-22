@@ -28,6 +28,15 @@ export default class Vec2 {
         this[1] = v;
     }
 
+    setTo (x, y) {
+
+        this[0] = x;
+        this[1] = y;
+
+        return this;
+
+    }
+
     zero () {
 
         this[0] = 0;
