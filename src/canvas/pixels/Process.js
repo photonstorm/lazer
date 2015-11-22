@@ -5,7 +5,9 @@ import PutImageData from 'canvas/imagedata/PutImageData.js';
 //  If this isn't the case then use canvas/image/ProcessDirty 
 //  and write it back where you need it directly
 
-export default function ProcessPixels (context, imageData, callback, x = 0, y = 0, width = 0, height = 0) {
+export default function Process (context, callback, x = 0, y = 0, width = 0, height = 0) {
+
+    let imageData = GetImageData(context);
 
     Process(imageData, callback, x, y, width, height);
 
