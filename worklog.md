@@ -23,6 +23,13 @@ Finished ProcessPixels and some tests for it. It will take an imageData and a re
 
 Have split the canvas functions up into more distinct folders. They make more sense now. The 'imagedata' folder now deals specifically with ImageData and doesn't ever write back to the context, where as the 'pixels' folder contains helper functions that encapsulate the context and ImageData side of things together. Also put the Move functions into the new 'effects' folder, and Fill into 'graphics'.
 
+Added Between and FloatBetween to the math functions because they're generally super useful.
+
+Updated all the canvas tests to use the new folder paths.
+
+Added a Grayscale and Invert effect to the effects folder and two tests for them.
+
+
 ### 20th November 2015
 
 SetPixel now does putImageData with a 1x1 pixel direct. SetPixels records the direct rect as new pixels are drawn and uses it when writing.

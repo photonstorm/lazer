@@ -1,14 +1,12 @@
 import ProcessPixels from 'canvas/pixels/Process.js';
 
-export default function Grayscale (context, x = 0, y = 0, width = 0, height = 0) {
+export default function Invert (context, x = 0, y = 0, width = 0, height = 0) {
 
     let effect = function (x, y, r, g, b, a) {
 
-        let avg = (r + g + b) / 3;
-
-        r = avg;
-        g = avg;
-        b = avg;
+        r = 255 - r;
+        g = 255 - g;
+        b = 255 - b;
 
         return [ r, g, b, a ];
 
