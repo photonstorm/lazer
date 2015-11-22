@@ -1,9 +1,9 @@
-import GetImageData from 'canvas/GetImageData.js';
+import GetImageData from 'canvas/imagedata/GetImageData.js';
 
 //  Gets a single pixel from the given context and returns
 //  an object containing its color properties.
 //  If you need to do this a lot (in a heavy loop) then consider using
-//  GetPixelFromPixelData instead to save on constant temp. image data creation.
+//  imagedata/GetPixel instead to save on constant temp. image data creation.
 
 export default function GetPixel (context, x, y, out = { r: 0, g: 0, b: 0, a: 0 }) {
 

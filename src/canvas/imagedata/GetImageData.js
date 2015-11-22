@@ -1,8 +1,6 @@
+import Clamp from 'math/Clamp.js';
 
 export default function GetImageData (context, x = 0, y = 0, width = null, height = null) {
-
-    x = Math.abs(Math.round(x));
-    y = Math.abs(Math.round(y));
 
     if (!width)
     {
@@ -13,6 +11,9 @@ export default function GetImageData (context, x = 0, y = 0, width = null, heigh
     {
         height = context.canvas.height;
     }
+
+    x = Clamp(x, 0, width);
+    y = Clamp(y, 0, height);
 
     return context.getImageData(x, y, width, height);
 

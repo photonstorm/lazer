@@ -1,10 +1,11 @@
+import GetContext from 'canvas/GetContext.js';
+import GetImageData from 'canvas/imagedata/GetImageData.js';
+
 export default class PixelData {
     
     constructor (canvas) {
 
-        this.canvas = canvas;
-
-        this.context = canvas.getContext('2d', { alpha: true });
+        this.context = GetContext(canvas, { alpha: true });
 
         this.imageData = null;
 
@@ -35,7 +36,7 @@ export default class PixelData {
     */
     update () {
 
-        this.imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        this.imageData = GetImageData(this.context, 0, 0);
         this.data = this.imageData.data;
 
         if (this.imageData.data.buffer)
@@ -62,19 +63,18 @@ export default class PixelData {
 
     get width () {
 
-        return this.canvas.width;
+        return this.context.canvas.width;
 
     }
 
     get height () {
 
-        return this.canvas.height;
+        return this.context.canvas.height;
 
     }
 
     destroy () {
 
-        this.canvas = null;
         this.context = null;
         this.imageData = null;
         this.data = null;

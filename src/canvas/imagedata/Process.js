@@ -1,7 +1,7 @@
-import GetIndex from 'canvas/GetIndexFast.js';
+import GetIndex from 'canvas/imagedata/GetIndexFast.js';
 import Clamp from 'math/Clamp.js';
 
-export default function ProcessPixels (imageData, callback, x = 0, y = 0, width = 0, height = 0) {
+export default function Process (imageData, callback, x = 0, y = 0, width = 0, height = 0) {
 
     width = Clamp(width + x, 0, imageData.width);
     height = Clamp(height + y, 0, imageData.height);

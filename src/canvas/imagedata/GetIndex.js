@@ -1,5 +1,4 @@
 
-
 export default function GetIndex (imageData, x, y) {
 
     x = Math.abs(Math.round(x));

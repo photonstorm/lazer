@@ -1,3 +1,5 @@
+import GetIndex from 'canvas/imagedata/GetIndex.js';
+
 /**
  * [description]
  * @param  {ImageData} imageData [description]
@@ -6,14 +8,9 @@
  * @param  {Object} out       [description]
  * @return {Object}           [description]
  */
-export default function GetPixelFromImageData (imageData, x, y, out = { r: 0, g: 0, b: 0, a: 0 }) {
+export default function GetPixel (imageData, x, y, out = { r: 0, g: 0, b: 0, a: 0 }) {
 
-    x = Math.abs(Math.round(x));
-    y = Math.abs(Math.round(y));
-
-    let index = ~~(x + (y * imageData.width));
-
-    index *= 4;
+    let index = GetIndex(imageData, x, y);
 
     if (imageData.data[index] >= 0)
     {

@@ -1,5 +1,6 @@
 import Vec2 from 'math/vector/vec2/Vec2.js';
-import GetIndex from 'canvas.GetIndex.js';
+import SetPixel from 'canvas/imagedata/SetPixel.js';
+import PutImageData from 'canvas/imagedata/PutImageData.js';
 
 //  Set Pixels
 
@@ -9,7 +10,7 @@ let tl = null;
 let br = null;
 let offset = null;
 
-export function load (context, imageData, x = 0, y = 0) {
+export function load (context, imageData, offsetX = 0, offsetY = 0) {
 
     this.context = context;
     this.imageData = imageData;
@@ -18,27 +19,22 @@ export function load (context, imageData, x = 0, y = 0) {
     {
         this.tl = new Vec2(Infinity, Infinity);
         this.br = new Vec2(0, 0);
-        this.offset = new Vec2(x, y);
+        this.offset = new Vec2(offsetX, offsetY);
     }
     else
     {
         this.tl.setTo(Infinity, Infinity);
         this.br.zero();
-        this.offset.setTo(x, y);
+        this.offset.setTo(offsetX, offsetY);
     }
     
 }
 
 export function set (x, y, red = 0, green = 0, blue = 0, alpha = 255) {
 
-    let index = GetIndex(this.imageData, x, y);
-
-    if (img.data[index] >= 0)
+    if (SetPixel(this.imageData, x, y, red, green, blue, alpha))
     {
-        img.data[index] = red;
-        img.data[++index] = green;
-        img.data[++index] = blue;
-        img.data[++index] = alpha;
+        //  If the pixel was written correctly then let's extend our bounds area
 
         if (x < this.tl.x)
         {
@@ -70,6 +66,15 @@ export function write () {
         return;
     }
 
-    this.context.putImageData(this.imageData, this.offset.x, this.offset.y, this.tl.x, this.tl.y, this.br.x - this.tl.x, this.br.y - this.tl.y);
+    return PutImageData(
+        this.context, 
+        this.imageData, 
+        this.offset.x, 
+        this.offset.y, 
+        this.tl.x,
+        this.tl.y,
+        this.br.x - this.tl.x,
+        this.br.y - this.tl.y
+    );
 
 }
