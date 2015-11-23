@@ -3,7 +3,7 @@ import GetXY from 'canvas/imagedata/GetXY.js';
 //  Scans the given imageData from top to bottom (proceeding left to right)
 //  until it hits a pixel with an alpha value > tolerance
 
-export default function ScanTopToBottom (imageData, tolerance) {
+export default function ScanTopToBottom (imageData, tolerance = 0) {
 
     for (let i = 3; i < imageData.data.length; i += 4)
     {

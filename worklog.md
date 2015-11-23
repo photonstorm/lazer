@@ -33,6 +33,8 @@ Removed the bitwise operator ~~ from GetIndex and GetIndexFast. Added GetX, GetY
 
 Completed more ImageData functions: ScanTopToBottom, ScanBottomToTop, ScanLeftToRight, ScanRightToLeft and GetFirstPixel. These allow you to scan through an ImageData until it hits a pixel with an alpha value greater than the tolerance provided.
 
+Using the new Scan functions I implemented GetBounds. This will return an object containing the x/y/width/height of the surrounding area of the ImageData based on the alpha tolerance. You can use it to find the bounds of non-transparent pixels on a canvas. Also fixed geom/Rectangle.
+
 ### 21st November 2015
 
 SetPixels now takes an ImageData offset for the x,y dirty rect placement. Added Vec2.setTo.

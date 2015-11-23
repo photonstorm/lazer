@@ -1,4 +1,4 @@
-import Vec2 from 'math/Vec2.js';
+import Vec2 from 'math/vector/vec2/Vec2.js';
 
 export default class Rectangle {
 
@@ -15,8 +15,8 @@ export default class Rectangle {
 
     setTo (x, y, width, height) {
 
-        this._width = x + width;
-        this._height = y + height;
+        this._width = width;
+        this._height = height;
 
         //  top-left      0, 0
         //  top-right     1, 0
@@ -24,9 +24,11 @@ export default class Rectangle {
         //  bottom-left   0, 1
 
         this.points[0].setTo(x, y);
-        this.points[1].setTo(this._width, y);
-        this.points[2].setTo(this._width, this._height);
-        this.points[3].setTo(x, this._height);
+        this.points[1].setTo(width + x, y);
+        this.points[2].setTo(width + x, height + y);
+        this.points[3].setTo(x, height + y);
+
+        return this;
 
     }
 
