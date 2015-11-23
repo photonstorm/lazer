@@ -21,6 +21,8 @@ Added ReplaceRGB and ReplaceRGBA with tests. Also highlighed a bug in Process Pi
 
 Added Canvas DrawImage with a new options object, makes for much cleaner client-side code for this function specifically. Added lots of DrawImage tests.
 
+Canvas Shadow is in and working (as well as browsers support it anyway)
+
 ### 22nd November 2015
 
 Started work on the Array Utils. So far have done GetRandomElement, RemoveRandomElement, Shuffle and SpliceOne. Included adding String Utils Pad.

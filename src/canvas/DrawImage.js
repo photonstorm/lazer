@@ -57,7 +57,8 @@ export default function DrawImage (
         return;
     }
 
-    let _alpha = context.globalAlpha;
+    const prevAlpha = context.globalAlpha;
+    const prevOp = context.globalCompositeOperation;
 
     context.save();
 
@@ -67,6 +68,11 @@ export default function DrawImage (
     {
         x |= 0;
         y |= 0;
+    }
+
+    if (blendMode)
+    {
+        context.globalCompositeOperation = blendMode;
     }
 
     context.translate(x, y);
@@ -89,7 +95,8 @@ export default function DrawImage (
 
     context.restore();
 
-    context.globalAlpha = _alpha;
+    context.globalAlpha = prevAlpha;
+    context.globalCompositeOperation = prevOp;
 
     return context;
     
