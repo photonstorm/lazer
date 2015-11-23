@@ -31,6 +31,7 @@ Finished final Array Utils: NumberArray and NumberArrayStep.
 
 Removed the bitwise operator ~~ from GetIndex and GetIndexFast. Added GetX, GetY and GetXY to complement GetIndex.
 
+Completed more ImageData functions: ScanTopToBottom, ScanBottomToTop, ScanLeftToRight, ScanRightToLeft and GetFirstPixel. These allow you to scan through an ImageData until it hits a pixel with an alpha value greater than the tolerance provided.
 
 ### 21st November 2015
 
