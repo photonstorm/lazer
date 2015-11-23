@@ -1,8 +1,8 @@
 export function crisp (canvas) {
 
-    var types = [ 'optimizeSpeed', 'crisp-edges', '-moz-crisp-edges', '-webkit-optimize-contrast', 'optimize-contrast', 'pixelated' ];
+    let types = [ 'optimizeSpeed', 'crisp-edges', '-moz-crisp-edges', '-webkit-optimize-contrast', 'optimize-contrast', 'pixelated' ];
 
-    for (var i = 0; i < types.length; i++)
+    for (let i = 0; i < types.length; i++)
     {
         canvas.style['image-rendering'] = types[i];
     }

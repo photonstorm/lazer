@@ -1,6 +1,6 @@
 export function set (context, value) {
 
-    var s = this.getPrefix(context);
+    let s = this.getPrefix(context);
 
     if (s)
     {
@@ -25,11 +25,11 @@ export function disable (context) {
 
 export function getPrefix (context) {
 
-    var vendor = [ 'i', 'webkitI', 'msI', 'mozI', 'oI' ];
+    const vendor = [ 'i', 'webkitI', 'msI', 'mozI', 'oI' ];
 
-    for (var prefix in vendor)
+    for (let prefix in vendor)
     {
-        var s = vendor[prefix] + 'mageSmoothingEnabled';
+        let s = vendor[prefix] + 'mageSmoothingEnabled';
 
         if (s in context)
         {

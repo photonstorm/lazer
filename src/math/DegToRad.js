@@ -1,6 +1,6 @@
-let degToRad = Math.PI / 180;
+const degToRad = Math.PI / 180;
 
-export default function (degrees) {
+export default function DegToRad (degrees) {
 
     return degrees * degToRad;
     

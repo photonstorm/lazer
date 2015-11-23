@@ -19,7 +19,7 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 Added ReplaceRGB and ReplaceRGBA with tests. Also highlighed a bug in Process Pixels where the dimensions calculations were incorrect. Has made me update Process ImageData to work across the whole imageData object provided, rather than a region of it, which just made more sense.
 
-
+Added Canvas DrawImage with a new options object, makes for much cleaner client-side code for this function specifically. Added lots of DrawImage tests.
 
 ### 22nd November 2015
 
