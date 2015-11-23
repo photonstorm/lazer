@@ -1,36 +1,31 @@
-import GetIndex from 'canvas/imagedata/GetIndexFast.js';
-import Clamp from 'math/Clamp.js';
+import GetX from 'canvas/imagedata/GetX.js';
+import GetY from 'canvas/imagedata/GetY.js';
 
-export default function Process (imageData, callback, x = 0, y = 0, width = 0, height = 0) {
+//  This will process ALL pixels in the ImageData
+//  If you only wish to process a few then use GetImageData to extract the region needed.
 
-    width = Clamp(width + x, 0, imageData.width);
-    height = Clamp(height + y, 0, imageData.height);
+export default function Process (imageData, callback) {
 
     //  Process the pixels
     //  The callback must return an array with
     //  0 = red, 1 = green, 2 = blue, 3 = alpha
     //  where each value is between 0 and 255 inclusive
 
-    for (let ty = y; ty < height; ty++)
+    for (let i = 0; i < imageData.data.length; i += 4)
     {
-        for (let tx = x; tx < width; tx++)
-        {
-            let index = GetIndex(imageData, tx, ty);
+        let color = callback(
+            GetX(imageData, i), 
+            GetY(imageData, i), 
+            imageData.data[i],
+            imageData.data[i + 1],
+            imageData.data[i + 2],
+            imageData.data[i + 3]
+        );
 
-            let color = callback(
-                tx, 
-                ty, 
-                imageData.data[index],
-                imageData.data[index + 1],
-                imageData.data[index + 2],
-                imageData.data[index + 3]
-            );
-
-            imageData.data[index] = color[0];
-            imageData.data[++index] = color[1];
-            imageData.data[++index] = color[2];
-            imageData.data[++index] = color[3];
-        }
+        imageData.data[i] = color[0];
+        imageData.data[i + 1] = color[1];
+        imageData.data[i + 2] = color[2];
+        imageData.data[i + 3] = color[3];
     }
 
     return imageData;

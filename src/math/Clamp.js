@@ -1,4 +1,4 @@
-export default function (value, low, high) {
+export default function Clamp (value, low, high) {
 
     if (value < low)
     {

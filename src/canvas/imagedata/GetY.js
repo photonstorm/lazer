@@ -1,6 +1,6 @@
 //  Based on the given index return the Y component
 
-export default function GetX (imageData, index) {
+export default function GetY (imageData, index) {
 
     return Math.floor(Math.floor(index / imageData.width) / 4);
 
