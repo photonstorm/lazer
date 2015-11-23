@@ -9,7 +9,7 @@
 * @return {Phaser.BitmapData} This BitmapData object for method chaining.
 */
 
-export default function (context, r, g, b, a = 1) {
+export default function Fill (context, r, g, b, a = 1) {
 
     const canvas = context.canvas;
 

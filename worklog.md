@@ -29,6 +29,9 @@ Added Array RotateLeft and RotateRight to allow you to cycle array elements and 
 
 Finished final Array Utils: NumberArray and NumberArrayStep.
 
+Removed the bitwise operator ~~ from GetIndex and GetIndexFast. Added GetX, GetY and GetXY to complement GetIndex.
+
+
 ### 21st November 2015
 
 SetPixels now takes an ImageData offset for the x,y dirty rect placement. Added Vec2.setTo.

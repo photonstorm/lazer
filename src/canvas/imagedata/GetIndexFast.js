@@ -4,6 +4,6 @@
 
 export default function GetIndexFast (imageData, x, y) {
 
-    return (~~(x + (y * imageData.width))) * 4;
+    return (x + y * imageData.width) * 4;
 
 }
