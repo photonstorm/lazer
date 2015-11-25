@@ -15,6 +15,11 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * An Array Matrix walker could be good (allow you to move around within a matrix, turn, step, etc)
 * Array Matrix Resize could be useful too (both up and down)
 
+### 25th November 2015
+
+Math - GetPow2 and IsPow2 functions added.
+
+
 ### 23rd November 2015
 
 Added ReplaceRGB and ReplaceRGBA with tests. Also highlighed a bug in Process Pixels where the dimensions calculations were incorrect. Has made me update Process ImageData to work across the whole imageData object provided, rather than a region of it, which just made more sense.
