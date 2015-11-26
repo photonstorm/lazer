@@ -31,6 +31,8 @@ GetPixels3x3 will take an ImageData and an x/y coordinate and extract and return
 values of the 8 pixels around the given point, plus that pixel. This is typically used in a 
 convolution filter.
 
+With the Convolve function working properly and nicely optimized it was a simple case of cranking out a bunch of ImageData filters including: Blur, EdgeDetect, EdgeDetectDarken, Emboss, EmbossSubtle, Laplace, MeanRemoval and Sharpen.
+
 ### 23rd November 2015
 
 Added ReplaceRGB and ReplaceRGBA with tests. Also highlighed a bug in Process Pixels where the dimensions calculations were incorrect. Has made me update Process ImageData to work across the whole imageData object provided, rather than a region of it, which just made more sense.
