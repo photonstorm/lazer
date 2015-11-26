@@ -29,29 +29,20 @@ export default function Convolve (imageData, weights, divisor = false, offset = 
             continue;
         }
 
-        res = 0;
-
-        let pixels = [
-            src[i - w * 4 - 4] || src[i],
-            src[i - w * 4]     || src[i],
-            src[i - w * 4 + 4] || src[i],
-            src[i - 4]         || src[i],
-            src[i],
-            src[i + 4]         || src[i],
-            src[i + w * 4 - 4] || src[i],
-            src[i + w * 4]     || src[i],
-            src[i + w * 4 + 4] || src[i]
-        ];
-
-        for (let j = 0; j < 9; j++)
-        {
-            res += pixels[j] * weights[j];
-        }
+        res  = (src[i - w * 4 - 4] || src[i]) * weights[0];
+        res += (src[i - w * 4]     || src[i]) * weights[1];
+        res += (src[i - w * 4 + 4] || src[i]) * weights[2];
+        res += (src[i - 4]         || src[i]) * weights[3];
+        res += (src[i]) * weights[4];
+        res += (src[i + 4]         || src[i]) * weights[5];
+        res += (src[i + w * 4 - 4] || src[i]) * weights[6];
+        res += (src[i + w * 4]     || src[i]) * weights[7];
+        res += (src[i + w * 4 + 4] || src[i]) * weights[8];
 
         res /= divisor;
         res += offset;
 
-        dest[i] = res;
+        dest[i] = Math.min(res, 255);
     }
 
 }
