@@ -4,6 +4,7 @@ import WebGLGetContext from 'webgl/GetContext.js';
 import CompileShader from 'webgl/CompileShader.js';
 import WebGLProgram from 'webgl/Program.js';
 import VertexArrayBuffer from 'webgl/vbo/VertexArrayBuffer.js';
+import AddVert from 'webgl/vbo/AddVert.js';
 import * as Attribute from 'webgl/Attribute.js';
 
 export default class WebGLBatchedPointRenderer {
@@ -82,7 +83,7 @@ export default class WebGLBatchedPointRenderer {
 
         //  Populate the vertex buffer
 
-        //  2 verts per element, 100 elements in total
+        //  2 verts per element, 1000 elements in total
         this.vertexBuffer.create(this.gl, 2, 1000);
 
         this.pos = Attribute.createFloat(this.gl, this.program.program, 'pointPosition');
@@ -105,16 +106,16 @@ export default class WebGLBatchedPointRenderer {
 
     }
 
-    addPoint (x, y) {
+    reset () {
 
-        //  Map to WebGL coordinate space
-        return this.vertexBuffer.add(this.getLocalX(x), this.getLocalY(y));
+        this.vertexBuffer.reset();
 
     }
 
-    updatePoint (index, x, y) {
+    addPoint (x, y) {
 
-        return this.vertexBuffer.update(index, this.getLocalX(x), this.getLocalY(y));
+        //  Map to WebGL coordinate space
+        AddVert(this.vertexBuffer, this.getLocalX(x), this.getLocalY(y));
 
     }
 

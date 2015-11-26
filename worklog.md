@@ -17,8 +17,19 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 ### 25th November 2015
 
-Math - GetPow2 and IsPow2 functions added.
+Math - GetPow2 and IsPow2 functions added. Also added Mat33 class and helper functions.
 
+Fixed the WebGLBatchedPointRenderer and the latest test to get things rendering again.
+
+Added some new ImageData filters: FlipHorizontal and FlipVertical will flip the image data.
+BilinearSample will sample the pixels around the given x/y coordinate.
+CopyImageData will create an ImageData like object with a shallow copy of the data array.
+CreateImageData will create a blank ImageData like object.
+Distort runs a distortion filter over an ImageData (like a pinch / pull effect)
+
+GetPixels3x3 will take an ImageData and an x/y coordinate and extract and return the color
+values of the 8 pixels around the given point, plus that pixel. This is typically used in a 
+convolution filter.
 
 ### 23rd November 2015
 

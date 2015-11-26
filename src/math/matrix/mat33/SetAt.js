@@ -1,4 +1,6 @@
-export default function (m, v) {
+//  v = vec3 - x,y,z
+
+export default function SetAt (m, v) {
 
     m[6] = v[0];
     m[7] = v[1];

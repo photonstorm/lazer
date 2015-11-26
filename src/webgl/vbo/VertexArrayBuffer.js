@@ -71,6 +71,7 @@ export default class VertexArrayBuffer {
 
         this.index = 0;
         this.size = 0;
+        this.total = 0;
 
     }
 

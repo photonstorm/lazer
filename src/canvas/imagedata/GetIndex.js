@@ -8,5 +8,9 @@ export default function GetIndex (imageData, x, y) {
     {
         return (x + y * imageData.width) * 4;
     }
+    else
+    {
+        return -1;
+    }
 
 }
