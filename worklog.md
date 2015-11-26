@@ -15,6 +15,10 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * An Array Matrix walker could be good (allow you to move around within a matrix, turn, step, etc)
 * Array Matrix Resize could be useful too (both up and down)
 
+### 26th November 2015
+
+
+
 ### 25th November 2015
 
 Math - GetPow2 and IsPow2 functions added. Also added Mat33 class and helper functions.
@@ -27,9 +31,7 @@ CopyImageData will create an ImageData like object with a shallow copy of the da
 CreateImageData will create a blank ImageData like object.
 Distort runs a distortion filter over an ImageData (like a pinch / pull effect)
 
-GetPixels3x3 will take an ImageData and an x/y coordinate and extract and return the color
-values of the 8 pixels around the given point, plus that pixel. This is typically used in a 
-convolution filter.
+GetPixels3x3 will take an ImageData and an x/y coordinate and extract and return the color values of the 8 pixels around the given point, plus that pixel. This is typically used in a convolution filter.
 
 With the Convolve function working properly and nicely optimized it was a simple case of cranking out a bunch of ImageData filters including: Blur, EdgeDetect, EdgeDetectDarken, Emboss, EmbossSubtle, Laplace, MeanRemoval and Sharpen.
 

@@ -6,25 +6,52 @@ export default class MainLoop {
 
         this.timestep = timestep;
 
+    // The cumulative amount of in-app time that hasn't been simulated yet.
+    // See the comments inside animate() for details.
         this.frameDelta = 0;
 
+    // The timestamp in milliseconds of the last time the main loop was run.
+    // Used to compute the time elapsed between frames.
         this.lastFrameTimeMs = 0;
 
+    // An exponential moving average of the frames per second.
         this.fps = 60;
 
+    // The timestamp (in milliseconds) of the last time the `fps` moving
+    // average was updated.
         this.lastFpsUpdate = 0;
 
+    // The number of frames delivered in the current second.
         this.framesThisSecond = 0;
 
+    // The number of times update() is called in a given frame. This is only
+    // relevant inside of animate(), but a reference is held externally so that
+    // this variable is not marked for garbage collection every time the main
+    // loop runs.
         this.numUpdateSteps = 0;
 
+    // The minimum amount of time in milliseconds that must pass since the last
+    // frame was executed before another frame can be executed. The
+    // multiplicative inverse caps the FPS (the default of zero means there is
+    // no cap).
         this.minFrameDelay = 0;
 
+    // Whether the main loop is running.
         this.running = false;
+
+    // `true` if `MainLoop.start()` has been called and the most recent time it
+    // was called has not been followed by a call to `MainLoop.stop()`. This is
+    // different than `running` because there is a delay of a few milliseconds
+    // after `MainLoop.start()` is called before the application is considered
+    // "running." This delay is due to waiting for the next frame.
         this.started = false;
+
+    // Whether the simulation has fallen too far behind real time.
+    // Specifically, `panic` will be set to `true` if too many updates occur in
+    // one frame. This is only relevant inside of animate(), but a reference is
+    // held externally so that this variable is not marked for garbage
+    // collection every time the main loop runs.
         this.panic = false;
-
-
 
         // A function that runs at the beginning of the main loop.
         // See `MainLoop.setBegin()` for details.
@@ -69,7 +96,7 @@ export default class MainLoop {
 
     resetFrameDelta () {
 
-        var oldFrameDelta = this.frameDelta;
+        let oldFrameDelta = this.frameDelta;
 
         this.frameDelta = 0;
 
