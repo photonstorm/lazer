@@ -15,6 +15,17 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * An Array Matrix walker could be good (allow you to move around within a matrix, turn, step, etc)
 * Array Matrix Resize could be useful too (both up and down)
 * A horizontal and vertical convolve function would be very useful for combined filters like Sobel
+* Game Config objects (things like PixelArt, Transparent, etc) - can be loaded into the game when it boots, rather than loads of arguments.
+
+### 27th November 2015
+
+Lots of conceptual work on the Transform component today. Pixi uses a deferred update system for transforms, i.e. changing the local transform of a DisplayObject would not immediately update its world transform (or its children). When the render loop ran the transforms were then calculated for the entire display list, from the root node down in a single iterating `updateTransform` function. The advantage is that you never call this function more than once per DisplayObject. The disadvantage is that whenever you check a DisplayObject property like position, rotation or scale you don't get the actual current values, but instead those from the previous update loop. Or you can force a call to `updateTransform`, losing the O(n) computations you previously had in the process. This is especially problematic in physics and tweening systems. I've lost count of the number of times this has lead to bugs and head-scratching.
+
+It's something I want resolved for Lazer. Out with the deferred updates and in with immediate ones. I believe this will increase stability of the framework as a whole, and your own games. More importantly the renderer shouldn't be responsible for maintaining game object positions, it should literally just dump the textures out at the coordinates and scales given, and no more. So it's time to take back control of this aspect and put it into the right place in the chain.
+
+Also under Lazer there is no longer a Stage object. Things are broken down into Layers, and each Layer is its own root display object. This should help minimize transform iterations.
+
+
 
 ### 26th November 2015
 
