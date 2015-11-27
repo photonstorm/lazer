@@ -14,10 +14,13 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * SetPixels could record the extend of the dirty rect and optimise the putImageData call as a result.
 * An Array Matrix walker could be good (allow you to move around within a matrix, turn, step, etc)
 * Array Matrix Resize could be useful too (both up and down)
+* A horizontal and vertical convolve function would be very useful for combined filters like Sobel
 
 ### 26th November 2015
 
+Today was all about the MainLoop. It's now finally working the way I wanted, including passing interpolation values to the render function, allowing you to smoothly update sprites regardless of actual frame rate. Have tested the MainLoop running under 60, 30 and 10 fps and it interpolates perfectly in all of them. Finally, nice smooth motion, no matter what! (browser glitches aside)
 
+The class is a complete mess and it's not properly hooked into the MasterClock either, but the leg work is done and the test cases look great.
 
 ### 25th November 2015
 

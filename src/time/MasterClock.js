@@ -6,6 +6,9 @@ import Clock from 'time/Clock.js';
 //  own stepping rate, slow motion, etc. Each State can have its own GameClock instance,
 //  updating at whatever rate it requires.
 
+//  What we've got here is an overlap of responsibilities between Clock and MainLoop.
+//  They need bundling together.
+
 //  There should be only one MasterClock per Game instance
 
 export default class MasterClock {

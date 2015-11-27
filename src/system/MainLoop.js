@@ -1,10 +1,27 @@
+import RequestAnimationFrame from 'dom/RequestAnimationFrame.js';
 import NOOP from 'system/NOOP.js';
 
 export default class MainLoop {
 
-    constructor (timestep = 1000 / 60) {
+    constructor (framerate = 60) {
 
-        this.timestep = timestep;
+        //  Move to external file once tested
+        this.getTime = Date.now;
+
+        if (window.performance)
+        {
+            if (window.performance.now)
+            {
+                this.getTime = () => { return window.performance.now() };
+            }
+            else if (window.performance.webkitNow)
+            {
+                this.getTime = () => { return window.performance.webkitNow() };
+            }
+        }
+
+        this.timestep = 1000 / framerate;
+        this.physicsStep = 1 / framerate;
 
     // The cumulative amount of in-app time that hasn't been simulated yet.
     // See the comments inside animate() for details.
@@ -55,23 +72,21 @@ export default class MainLoop {
 
         // A function that runs at the beginning of the main loop.
         // See `MainLoop.setBegin()` for details.
-        this.begin = this.NOOP;
+        this.begin = NOOP;
 
         // A function that runs updates (i.e. AI and physics).
         // See `MainLoop.setUpdate()` for details.
-        this.update = this.NOOP;
+        this.update = NOOP;
 
         // A function that draws things on the screen.
         // See `MainLoop.setDraw()` for details.
-        this.draw = this.NOOP;
+        this.draw = NOOP;
 
         // A function that runs at the end of the main loop.
         // See `MainLoop.setEnd()` for details.
-        this.end = this.NOOP;
+        this.end = NOOP;
 
-        // The ID of the currently executing frame. Used to cancel frames when
-        // stopping the loop.
-        this.rafHandle;
+        this.raf = new RequestAnimationFrame(window, false);
 
     }
 
@@ -112,8 +127,86 @@ export default class MainLoop {
         }
 
         this.started = true;
+        this.running = true;
 
+        this.lastFrameTimeMs = this.getTime();
+        this.lastFpsUpdate = this.getTime();
+        this.framesThisSecond = 0;
 
+        console.log('MainLoop start', this.lastFpsUpdate, this.lastFrameTimeMs);
+        console.log('MainLoop sim', this.timestep);
+
+        //  This starts RAF going automatically
+        this.raf.start(now => this.step(now));
+
+    }
+
+    step (timestamp) {
+
+        // console.log(timestamp);
+        // debugger;
+
+        // Throttle the frame rate (if minFrameDelay is set to a non-zero value by
+        // `MainLoop.setMaxAllowedFPS()`).
+        if (timestamp < this.lastFrameTimeMs + this.minFrameDelay)
+        {
+            // Run the loop again the next time the browser is ready to render.
+            // rafHandle = requestAnimationFrame(animate);
+            return;
+        }
+
+        // frameDelta is the cumulative amount of in-app time that hasn't been
+        // simulated yet. Add the time since the last frame. We need to track total
+        // not-yet-simulated time (as opposed to just the time elapsed since the
+        // last frame) because not all actually elapsed time is guaranteed to be
+        // simulated each frame. See the comments below for details.
+        this.frameDelta += timestamp - this.lastFrameTimeMs;
+        this.lastFrameTimeMs = timestamp;
+
+        // Run any updates that are not dependent on time in the simulation. See
+        // `MainLoop.setBegin()` for additional details on how to use this.
+        this.begin(timestamp, this.frameDelta);
+        // this.begin(this.frameDelta);
+
+        // Update the estimate of the frame rate, `fps`. Every second, the number
+        // of frames that occurred in that second are included in an exponential
+        // moving average of all frames per second, with an alpha of 0.25. This
+        // means that more recent seconds affect the estimated frame rate more than
+        // older seconds.
+        if (timestamp > this.lastFpsUpdate + 1000)
+        {
+            // Compute the new exponential moving average with an alpha of 0.25.
+            // Using constants inline is okay here.
+            this.fps = 0.25 * this.framesThisSecond + 0.75 * this.fps;
+
+            this.lastFpsUpdate = timestamp;
+            this.framesThisSecond = 0;
+        }
+
+        this.framesThisSecond++;
+
+        this.numUpdateSteps = 0;
+
+        while (this.frameDelta >= this.timestep)
+        {
+            this.update(this.timestep);
+
+            this.frameDelta -= this.timestep;
+
+            if (++this.numUpdateSteps >= 240)
+            {
+                this.panic = true;
+                break;
+            }
+        }
+
+        this.draw(this.frameDelta / this.timestep);
+
+        // Run any updates that are not dependent on time in the simulation. See
+        // `MainLoop.setEnd()` for additional details on how to use this.
+        this.end(this.fps, this.panic);
+
+        this.panic = false;
 
     }
 
@@ -122,7 +215,7 @@ export default class MainLoop {
         this.running = false;
         this.started = false;
 
-        // cancelAnimationFrame(rafHandle);
+        this.raf.stop();
 
         return this;
 

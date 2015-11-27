@@ -3,7 +3,7 @@
 // call the functions if they are specified. This is probably due to empty
 // functions being optimized away. http://jsperf.com/noop-vs-condition
 
-export default function () {
+export default function NOOP () {
 
     //  That's right, there's nothing here.
     

@@ -29,20 +29,22 @@ export default function Convolve (imageData, weights, divisor = false, offset = 
             continue;
         }
 
-        res  = (src[i - w * 4 - 4] || src[i]) * weights[0];
-        res += (src[i - w * 4]     || src[i]) * weights[1];
-        res += (src[i - w * 4 + 4] || src[i]) * weights[2];
-        res += (src[i - 4]         || src[i]) * weights[3];
-        res += (src[i]) * weights[4];
-        res += (src[i + 4]         || src[i]) * weights[5];
-        res += (src[i + w * 4 - 4] || src[i]) * weights[6];
-        res += (src[i + w * 4]     || src[i]) * weights[7];
-        res += (src[i + w * 4 + 4] || src[i]) * weights[8];
+        res  = (src[i - w * 4 - 4] || src[i]) * weights[0];     // top-left
+        res += (src[i - w * 4]     || src[i]) * weights[1];     // top-middle
+        res += (src[i - w * 4 + 4] || src[i]) * weights[2];     // top-right
+        res += (src[i - 4]         || src[i]) * weights[3];     // left
+        res += (src[i]) * weights[4];                           // middle
+        res += (src[i + 4]         || src[i]) * weights[5];     // right
+        res += (src[i + w * 4 - 4] || src[i]) * weights[6];     // bottom-left
+        res += (src[i + w * 4]     || src[i]) * weights[7];     // bottom-middle
+        res += (src[i + w * 4 + 4] || src[i]) * weights[8];     // bottom-right
 
         res /= divisor;
         res += offset;
 
         dest[i] = Math.min(res, 255);
     }
+
+    return imageData;
 
 }
