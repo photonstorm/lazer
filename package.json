@@ -10,6 +10,7 @@
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "main": "./build/lazer.js",
+  "jsnext:main": "dist/lazer.es6.js",
   "repository": {
     "type": "git",
     "url": "https://photonstorm@github.com/photonstorm/lazer.git"

@@ -16,6 +16,11 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Array Matrix Resize could be useful too (both up and down)
 * A horizontal and vertical convolve function would be very useful for combined filters like Sobel
 * Game Config objects (things like PixelArt, Transparent, etc) - can be loaded into the game when it boots, rather than loads of arguments.
+* A Transform cache
+
+### 1st December 2015
+
+Today I started on the Canvas Graphics functions. So far I've done: Clear, Fill, FillGradient, FillPattern, Line, LineCap, LineDash, LineJoin, LineWidth, MiterLimit, Stroke, StrokeGradient, StrokePattern and Rectangle.
 
 ### 27th November 2015
 

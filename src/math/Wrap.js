@@ -1,13 +1,13 @@
-export default function (value, min, max) {
+export default function Wrap (value, min, max) {
 
-    var range = max - min;
+    let range = max - min;
 
     if (range <= 0)
     {
         return 0;
     }
 
-    var result = (value - min) % range;
+    let result = (value - min) % range;
 
     if (result < 0)
     {
