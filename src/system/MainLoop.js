@@ -135,9 +135,6 @@ export default class MainLoop {
         this.lastFpsUpdate = this.getTime();
         this.framesThisSecond = 0;
 
-        console.log('MainLoop start', this.lastFpsUpdate, this.lastFrameTimeMs);
-        console.log('MainLoop sim', this.timestep);
-
         //  This starts RAF going automatically
         this.raf.start(now => this.step(now));
 

@@ -144,7 +144,7 @@ export default class Shape extends Position {
         if (this.lineDashSegments)
         {
             ctx.setLineDash(this.lineDashSegments);
-            ctx.lineDashOffset = this.offset;
+            ctx.lineDashOffset = this.lineDashOffset;
         }
 
         ctx.strokeStyle = this.strokeStyle;
