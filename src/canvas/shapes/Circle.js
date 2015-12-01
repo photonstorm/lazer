@@ -1,6 +1,6 @@
 import Shape from 'canvas/shapes/Shape.js';
 
-export default class Rectangle extends Shape {
+export default class Circle extends Shape {
 
     constructor (config) {
 
@@ -20,7 +20,7 @@ export default class Rectangle extends Shape {
         let dx = this.anchor.x * -this.width;
         let dy = this.anchor.y * -this.height;
 
-        ctx.rect(dx, dy, this.width, this.height);
+        ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
 
         this.endDraw(ctx);
 

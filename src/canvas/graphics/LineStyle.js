@@ -2,7 +2,7 @@
 
 //  butt, round or square
 //  bevel, round or miter
-export default function Line (context, width = 1, cap = 'butt', join = 'bevel', segments = null, offset = 0, miter = 10) {
+export default function LineStyle (context, width = 1, cap = 'butt', join = 'bevel', segments = null, offset = 0, miter = 10) {
 
     context.lineWidth = width;
     context.lineCap = cap;

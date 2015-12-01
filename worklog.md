@@ -20,7 +20,9 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 ### 1st December 2015
 
-Today I started on the Canvas Graphics functions. So far I've done: Clear, Fill, FillGradient, FillPattern, Line, LineCap, LineDash, LineJoin, LineWidth, MiterLimit, Stroke, StrokeGradient, StrokePattern and Rectangle.
+Today I did the Canvas Graphics functions. So far I've done: Clear, Fill, FillGradient, FillPattern, Line, LineCap, LineDash, LineJoin, LineWidth, MiterLimit, Stroke, StrokeGradient and StrokePattern.
+
+Have added Canvas Graphics primitives: Arc, Circle and Rectangle. These draw direct to the context with no state saving or restoration, they're pure drawing functions. However I've also added the Shape class, which encapsulates the canvas state saving, translation, rotation and rendering of primitives. Circle and Rectangle both extend Shape and allow for an easy way to blast geometry onto the canvas. More shapes can now follow (star, heart, line, etc) and also Paths for shape masks.
 
 ### 27th November 2015
 
