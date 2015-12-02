@@ -1,6 +1,6 @@
 import Clamp from 'math/Clamp.js';
 
-//  method 1
+//  method 1 (or use addColor function in this file)
 // let p = LinearGradient(this.ctx, 0, 0, 256, 256);
 // p.addColorStop(0, '#ff0000');
 // p.addColorStop(0.5, '#ffff00');

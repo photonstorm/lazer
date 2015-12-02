@@ -3,6 +3,9 @@ import RadToDeg from 'math/RadToDeg.js';
 import Wrap from 'math/Wrap.js';
 import Vec2 from 'math/vector/vec2/Vec2.js';
 import Position from 'components/Position.js';
+import ShapeGradient from 'canvas/shapes/ShapeGradient.js';
+
+//  Note: When finished this should extend Transform instead
 
 export default class Shape extends Position {
 
@@ -10,7 +13,7 @@ export default class Shape extends Position {
                     x = 0,
                     y = 0,
                     width = 0, 
-                    height = 0,
+                    height = width,
                     rotation = 0,
                     stroke = '',
                     fill = '',
@@ -88,6 +91,10 @@ export default class Shape extends Position {
 
         this.strokeFirst = strokeFirst;
 
+        this.gradient = null;
+        this.fillGradient = false;
+        this.strokeGradient = false;
+
         this.lineWidth = lineWidth;
         this.lineCap = lineCap;
         this.lineJoin = lineJoin;
@@ -101,7 +108,22 @@ export default class Shape extends Position {
 
     }
 
-    lineDash(segments, offset = 0) {
+    createLinearGradient (fill = true, ...colors) {
+
+        this.gradient = new ShapeGradient(this, 0, colors);
+
+        if (fill)
+        {
+            this.fillGradient = true;
+        }
+        else
+        {
+            this.strokeGradient = true;
+        }
+
+    }
+
+    lineDash (segments, offset = 0) {
 
         this.lineDashSegments = segments;
         this.lineDashOffset = offset;
@@ -150,6 +172,11 @@ export default class Shape extends Position {
         ctx.strokeStyle = this.strokeStyle;
         ctx.fillStyle = this.fillStyle;
 
+        if (this.fillGradient)
+        {
+            ctx.fillStyle = this.gradient.update(ctx);
+        }
+
         let tx = this.getRenderX(this.interpolate, i);
         let ty = this.getRenderY(this.interpolate, i);
 
@@ -159,9 +186,6 @@ export default class Shape extends Position {
             ty -= 0.5;
         }
 
-        // tx = this.position.x - this.pivot.x * a;
-        // ty = this.position.y - this.pivot.y * d;
-
         ctx.translate(tx, ty);
         ctx.rotate(this.rotation);
 
@@ -170,8 +194,6 @@ export default class Shape extends Position {
     }
 
     endDraw (ctx) {
-
-        ctx.closePath();
 
         if (this.strokeFirst)
         {

@@ -18,6 +18,7 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Game Config objects (things like PixelArt, Transparent, etc) - can be loaded into the game when it boots, rather than loads of arguments.
 * A Transform cache
 * Add interpolation to Shape rotation
+* Find a way to merge solid fill colors and fill patterns into ShapeGradient (and rename it!)
 
 ### 1st December 2015
 
@@ -26,6 +27,8 @@ Today I did the Canvas Graphics functions. So far I've done: Clear, Fill, FillGr
 Have added Canvas Graphics primitives: Arc, Circle and Rectangle. These draw direct to the context with no state saving or restoration, they're pure drawing functions. However I've also added the Shape class, which encapsulates the canvas state saving, translation, rotation and rendering of primitives. Circle and Rectangle both extend Shape and allow for an easy way to blast geometry onto the canvas. More shapes can now follow (star, heart, line, etc) and also Paths for shape masks.
 
 Added LinearGradient and RadialGradient and tests for them. Also added Star shape.
+
+Finally for today added the ShapeGradient class which allows you to link a gradient fill to a Shape object, so you can easily fill lots of different shapes from a single object.
 
 ### 27th November 2015
 
