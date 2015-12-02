@@ -19,6 +19,17 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * A Transform cache
 * Add interpolation to Shape rotation
 * Find a way to merge solid fill colors and fill patterns into ShapeGradient (and rename it!)
+* Add in the 'no rotation' transform update version
+
+### 2nd December 2015
+
+Fixed the Mat33.multiply function which was utterly wrong :)
+
+Added the Transform2D class and created lots of tests for it. This is mostly working how I need it to now. It encapsulates position, rotation and scale as you'd expect, with public getters and setters in local space, with a transform matrix with parenting / children for scene graph rendering.
+
+Also added SetTransformFromMatrix and DrawImageFromMatrix.
+
+With a working Transform class I can now create the start of a Sprite class and proper scene graph. Will also add the Transform object to the Canvas Shape class and test that.
 
 ### 1st December 2015
 

@@ -10,7 +10,7 @@
 * @param {number} skewY - The value to skew vertically by.
 * @return {CanvasRenderingContext2D} Returns the source context.
 */
-export default function (context, translateX, translateY, scaleX = 1, scaleY = 1, skewX = 0, skewY = 0) {
+export default function SetTransform (context, translateX = 0, translateY = 0, scaleX = 1, scaleY = 1, skewX = 0, skewY = 0) {
 
     context.setTransform(scaleX, skewX, skewY, scaleY, translateX, translateY);
 

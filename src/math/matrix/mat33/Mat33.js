@@ -76,19 +76,22 @@ export default class Mat33 {
     //  a = mat33
     multiply (a) {
 
-        let b00 = this[0];
-        let b01 = this[1];
-        let b10 = this[3];
-        let b11 = this[4];
-        let b20 = this[5];
-        let b21 = this[7];
+        let b00 = this[0]; // a
+        let b01 = this[1]; // b
+        let b10 = this[3]; // c
+        let b11 = this[4]; // d
+        let b20 = this[6]; // tx
+        let b21 = this[7]; // ty
 
         this[0] = a[0] * b00 + a[1] * b10;
         this[1] = a[0] * b01 + a[1] * b11;
+        this[2] = 0;
         this[3] = a[3] * b00 + a[4] * b10;
         this[4] = a[3] * b01 + a[4] * b11;
-        this[6] = a[5] * b00 + a[7] * b10 + b20;
-        this[7] = a[5] * b01 + a[7] * b11 + b21;
+        this[5] = 0;
+        this[6] = b20 * a[0] + b21 * a[3] + a[6];
+        this[7] = b20 * a[1] + b21 * a[4] + a[7];
+        this[8] = 1;
 
         return this;
 
