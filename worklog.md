@@ -25,6 +25,7 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 Updated Transform to use Vec2 functions, rather than classes. Cuts down on the number of new objects being created per Transform. Added Transform.draw to handle linear interpolation (needs refining, but mostly works).
 
+Started work on the Keyboard input files as they're going to be needed soon.
 
 ### 2nd December 2015
 
