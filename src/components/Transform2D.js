@@ -1,8 +1,8 @@
 import DegToRad from 'math/DegToRad.js';
 import RadToDeg from 'math/RadToDeg.js';
 import Wrap from 'math/Wrap.js';
+import Vec2 from 'math/vector/vec2/Build.js';
 import Mat33 from 'math/matrix/mat33/Mat33.js';
-import Vec2 from 'math/vector/vec2/Vec2.js';
 
 //  A 2D specific Transform object (based on the Unity Transform object)
 
@@ -31,27 +31,19 @@ export default class Transform2D {
         //  Is this a root Transform? (can never be if it has a parent)
         this.isRoot = (parent) ? false : true;
 
-        this._position = new Vec2(x, y);
-        this._scale = new Vec2(scaleX, scaleY);
+        this._position = Vec2(x, y);
+        this._scale = Vec2(scaleX, scaleY);
         this._rotation = rotation;
 
         this._local = new Mat33();
-        this._global = new Mat33();
-
-        // this.rotationX = .5;
-        // this.rotationY = .5;
-        // this.scaleX = scaleX;
-        // this.scaleY = scaleY;
-        // this.scaleTX = .5;
-        // this.scaleTY = .5;
-        // this.scaleAnchor = 0;
 
         //  for interpolation
-        this.oldX = x;
-        this.oldY = y;
-        this.oldScaleX = scaleX;
-        this.oldScaleY = scaleY;
-        this.oldRotationAngle = rotation;
+        this.interpolate = true;
+
+        this._oldPosition = Vec2(x, y);
+        this._oldScale = Vec2(scaleX, scaleY);
+        this._oldRotation = rotation;
+        this._drawMatrix = new Mat33();
 
         //  Because they need to be unique and a Set provides this for us
         this.children = new Set();
@@ -95,9 +87,33 @@ export default class Transform2D {
         return this._rotation;
     }
 
-    get angle () {
+    getRenderX (i = 1) {
 
-        return RadToDeg(this.rotation);
+        return (this._oldPosition[0] + (this._position[0] - this._oldPosition[0]) * i);
+
+    }
+
+    getRenderY (i = 1) {
+
+        return (this._oldPosition[1] + (this._position[1] - this._oldPosition[1]) * i);
+
+    }
+
+    getRenderScaleX (i = 1) {
+
+        return (this._oldScale[0] + (this._scale[0] - this._oldScale[0]) * i);
+
+    }
+
+    getRenderScaleY (i = 1) {
+
+        return (this._oldScale[1] + (this._scale[1] - this._oldScale[1]) * i);
+
+    }
+
+    getRenderRotation (i = 1) {
+
+        return (this._oldRotation + (this._rotation - this._oldRotation) * i);
 
     }
 
@@ -107,6 +123,7 @@ export default class Transform2D {
 
         if (value !== this._position[0])
         {
+            this._oldPosition[0] = this._position[0];
             this._position[0] = value;
             this.update();
         }
@@ -117,6 +134,7 @@ export default class Transform2D {
 
         if (value !== this._position[1])
         {
+            this._oldPosition[1] = this._position[1];
             this._position[1] = value;
             this.update();
         }
@@ -127,6 +145,7 @@ export default class Transform2D {
 
         if (value !== this._scale[0])
         {
+            this._oldScale[0] = this._scale[0];
             this._scale[0] = value;
             this.update();
         }
@@ -137,6 +156,7 @@ export default class Transform2D {
 
         if (value !== this._scale[1])
         {
+            this._oldScale[1] = this._scale[1];
             this._scale[1] = value;
             this.update();
         }
@@ -147,21 +167,41 @@ export default class Transform2D {
 
         if (radians !== this._rotation)
         {
+            this._oldRotation = this._rotation;
             this._rotation = radians;
             this.update();
         }
 
     }
 
-    set angle (degrees) {
+    //  Immediately sets the position + clears the interpolation value
+    setPosition (x, y = x) {
 
-        this.rotation = DegToRad(Wrap(degrees, 0, 360));
+        this._oldPosition[0] = x;
+        this._oldPosition[1] = y;
+        this._position[0] = x;
+        this._position[1] = y;
+        this.update();
 
     }
 
-    scale (x, y = x) {
+    //  Immediately sets the scale + clears the interpolation value
+    setScale (x, y = x) {
 
-        this._scale.set(x, y);
+        this._oldScale[0] = x;
+        this._oldScale[1] = y;
+        this._scale[0] = x;
+        this._scale[1] = y;
+        this.update();
+
+    }
+
+    //  Immediately sets the rotation + clears the interpolation value
+    setRotation (value) {
+
+        this._oldRotation = value;
+        this._rotation = value;
+        this.update();
 
     }
 
@@ -229,9 +269,34 @@ export default class Transform2D {
             this.drawList[i].update();
         }
 
+        this.dirty = true;
+
     }
 
-    render () {
+    draw (i = 1) {
+
+        //  Unrolled getRender functions
+        this._drawMatrix.transform(
+            this._oldPosition[0] + (this._position[0] - this._oldPosition[0]) * i,
+            this._oldPosition[1] + (this._position[1] - this._oldPosition[1]) * i,
+            this._oldRotation + (this._rotation - this._oldRotation) * i,
+            this._oldScale[0] + (this._scale[0] - this._oldScale[0]) * i,
+            this._oldScale[1] + (this._scale[1] - this._oldScale[1]) * i
+        );
+
+        if (this.parent)
+        {
+            this._drawMatrix.multiply(this.parent._drawMatrix);
+        }
+
+        this._oldPosition[0] = this._position[0];
+        this._oldPosition[1] = this._position[1];
+        this._oldRotation = this._rotation;
+        this._oldScale[0] = this._scale[0];
+        this._oldScale[1] = this._scale[1];
+
+        return this._drawMatrix;
+        // return this._local;
 
     }
 

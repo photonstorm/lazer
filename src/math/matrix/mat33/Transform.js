@@ -1,15 +1,21 @@
-let mat = Float32Array;
+//  m = mat33 like object
+//  angle is in radians
 
-export default function (m, v, dst = new mat(9)) {
+export default function Transform (m, rotationDirection, x = 0, y = 0, angle = 0, scaleX = 1, scaleY = 1) {
 
-    const v0 = v[0];
-    const v1 = v[1];
-    const v2 = v[2];
+    let c = Math.cos(angle);
+    let s = Math.sin(angle) * rotationDirection;
 
-    dst[0] = (m[0] * v0 + m[3] * v1 + m[6] * v2);
-    dst[1] = (m[1] * v0 + m[4] * v1 + m[7] * v2);
-    dst[2] = (m[2] * v0 + m[5] * v1 + m[8] * v2);
+    m[0] = c * scaleX;
+    m[1] = -s * scaleY;
+    m[2] = 0;
+    m[3] = s * scaleX;
+    m[4] = c * scaleY;
+    m[5] = 0;
+    m[6] = x;
+    m[7] = y;
+    m[8] = 1;
 
-    return dst;
+    return m;
 
 }

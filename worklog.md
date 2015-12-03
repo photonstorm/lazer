@@ -21,6 +21,11 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Find a way to merge solid fill colors and fill patterns into ShapeGradient (and rename it!)
 * Add in the 'no rotation' transform update version
 
+### 3rd December 2015
+
+Updated Transform to use Vec2 functions, rather than classes. Cuts down on the number of new objects being created per Transform. Added Transform.draw to handle linear interpolation (needs refining, but mostly works).
+
+
 ### 2nd December 2015
 
 Fixed the Mat33.multiply function which was utterly wrong :)
