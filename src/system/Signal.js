@@ -143,6 +143,12 @@ export default class Signal {
 
     }
 
+    get hasListeners () {
+
+        return this.callbacks.size > 0;
+
+    }
+
     getNumListeners () {
 
         return this.callbacks.size;

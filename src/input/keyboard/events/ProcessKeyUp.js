@@ -1,34 +1,45 @@
-//  list = a Set full of Key objects
+import Signal from 'system/Signal.js';
 
-export default function ProcessKeyUp (event, list) {
+export const onUp = new Signal();
 
-    let prevent = false;
+//  list = anything that can be iterated, like a Set, Map, Array or custom object with
+//  a Symbol.iterator
 
-    for (let key of list)
+export default function ProcessKeyUp (event, list = null, prevent = false) {
+
+    if (list)
     {
-        if (key.keyCode !== event.keyCode || !key.enabled)
+        for (let key of list)
         {
-            continue;
+            if (key.keyCode !== event.keyCode || !key.enabled)
+            {
+                continue;
+            }
+
+            if (key.preventDefault)
+            {
+                prevent = true;
+            }
+
+            key.isDown = false;
+            key.isUp = true;
+            key.timeUp = event.timeStamp;
+            key.duration = key.timeUp - key.timeDown;
+            key._justDown = false;
+            key._justUp = true;
+
+            console.log('up', key.name);
         }
-
-        if (key.preventDefault)
-        {
-            prevent = true;
-        }
-
-        key.isDown = false;
-        key.isUp = true;
-        key.timeUp = event.timeStamp;
-        key.duration = key.timeUp - key.timeDown;
-        key._justDown = false;
-        key._justUp = true;
-
-        console.log('up', key.char);
     }
 
     if (prevent)
     {
         event.preventDefault();
+    }
+
+    if (onUp.hasListeners)
+    {
+        onUp.dispatch(event);
     }
 
 }

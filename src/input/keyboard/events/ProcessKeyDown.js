@@ -1,46 +1,57 @@
-//  list = a Set full of Key objects
+import Signal from 'system/Signal.js';
 
-export default function ProcessKeyDown (event, list) {
+export const onDown = new Signal();
 
-    let prevent = false;
+//  list = anything that can be iterated, like a Set, Map, Array or custom object with
+//  a Symbol.iterator
 
-    for (let key of list)
+export default function ProcessKeyDown (event, list = null, prevent = false) {
+
+    if (list)
     {
-        if (key.keyCode !== event.keyCode || !key.enabled)
+        for (let key of list)
         {
-            continue;
-        }
+            if (key.keyCode !== event.keyCode || !key.enabled)
+            {
+                continue;
+            }
 
-        if (key.preventDefault)
-        {
-            prevent = true;
-        }
+            if (key.preventDefault)
+            {
+                prevent = true;
+            }
 
-        key.altKey = event.altKey;
-        key.ctrlKey = event.ctrlKey;
-        key.shiftKey = event.shiftKey;
+            key.altKey = event.altKey;
+            key.ctrlKey = event.ctrlKey;
+            key.shiftKey = event.shiftKey;
 
-        if (key.isDown)
-        {
-            key.repeats++;
-        }
-        else
-        {
-            key.isDown = true;
-            key.isUp = false;
-            key.timeDown = event.timeStamp;
-            key.duration = 0;
-            key.repeats = 0;
-            key._justDown = true;
-            key._justUp = false;
-        }
+            if (key.isDown)
+            {
+                key.repeats++;
+            }
+            else
+            {
+                key.isDown = true;
+                key.isUp = false;
+                key.timeDown = event.timeStamp;
+                key.duration = 0;
+                key.repeats = 0;
+                key._justDown = true;
+                key._justUp = false;
+            }
 
-        console.log('down', key.char);
+            console.log('down', key.name);
+        }
     }
 
     if (prevent)
     {
         event.preventDefault();
+    }
+
+    if (onDown.hasListeners)
+    {
+        onDown.dispatch(event);
     }
 
 }
