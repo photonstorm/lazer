@@ -1,10 +1,17 @@
 //  A generic Key object which can be passed to the Process functions (and so on)
 
-export default function Key (keycode) {
+//  keycode can be either numeric or a string
+
+export default function Key (keycode, name = '') {
 
     if (typeof keycode === 'string')
     {
         keycode = keycode.toUpperCase().charCodeAt(0);
+    }
+
+    if (name === '')
+    {
+        name = String.fromCharCode(keycode);
     }
 
     return {
@@ -15,9 +22,9 @@ export default function Key (keycode) {
         keyCode: keycode,
 
         /**
-        * @property {string} char - A string representation of this Key, if possible (i.e. alphanumeric).
+        * @property {string} name - A string representation of this Key (worked out via String.fromCharCode if possible, or set in the arguments)
         */
-        char: String.fromCharCode(keycode),
+        name: name,
 
         /**
         * @property {boolean} preventDefault - Should this Key prevent event propagation?
