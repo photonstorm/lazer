@@ -27,6 +27,12 @@ Updated Transform to use Vec2 functions, rather than classes. Cuts down on the n
 
 Started work on the Keyboard input files as they're going to be needed soon.
 
+Some late night hacking resulted in a nicely refactored set of Keyboard handling functions. Very happy with the end result so far. Have got Keyboard events sorted (KeyDown, KeyUp and KeyPress), a generic Key object (not a class) that you can pass to the functions like JustDown or DownDuration. Also ResetKey and ProcessKeyEvent. You can bind keyboard listeners to any target you want now (window, document, canvas, etc). You can even bind to multiple targets, so you could listen for a certain key on the canvas and then another on the window.
+
+Created several tests to show them in action, including moving a star around the canvas. Feels like it's coming alive :)
+
+There are lots of cool things we can do with the new system which I'll start tomorrow, including Key Combos, multiple callbacks bound to single key codes and text entry. The old Phaser Key objects were updated every single frame, which is overkill, so the new system avoids this.
+
 ### 2nd December 2015
 
 Fixed the Mat33.multiply function which was utterly wrong :)
