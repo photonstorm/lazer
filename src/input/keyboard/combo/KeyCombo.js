@@ -44,6 +44,9 @@ export default function KeyCombo (keys) {
         //  The current index of the key being waited for in the 'keys' string
         index: 0,
 
+        //  The length of this combo (in keycodes)
+        size: codes.length,
+
         //  If they get a key wrong do we reset the combo?
         resetOnWrongKey: true,
 
@@ -57,7 +60,7 @@ export default function KeyCombo (keys) {
         matched: false,
 
         //  If previously matched and they press Key 1 again, will it reset?
-        resetOnMatch: true,
+        resetOnMatch: false,
 
         //  The time the entire combo was matched
         timeMatched: 0

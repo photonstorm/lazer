@@ -12,6 +12,7 @@ export default function ProcessKeyCombo (event, combo) {
     if (event.keyCode === combo.current)
     {
         //  Key was correct
+        console.log('Combo Key correct', combo.current);
 
         if (combo.index > 0 && combo.maxKeyDelay > 0)
         {
@@ -35,10 +36,13 @@ export default function ProcessKeyCombo (event, combo) {
     else
     {
         //  Wrong key was pressed
+
+        console.log('Combo Key wrong, combo reset', combo.current);
+
         if (combo.resetOnWrongKey)
         {
             combo.index = 0;
-            combo.current = combo.codes[0];
+            combo.current = combo.keyCodes[0];
         }
     }
 
@@ -47,6 +51,8 @@ export default function ProcessKeyCombo (event, combo) {
         combo.timeLastMatched = event.timeStamp;
         combo.matched = true;
         combo.timeMatched = event.timeStamp;
+
+        console.log('Combo Matched', matched);
     }
 
     return matched;

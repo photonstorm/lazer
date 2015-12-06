@@ -2,16 +2,16 @@
 
 export default function AdvanceKeyCombo (event, combo) {
 
-    if (combo.index === combo.codes.length - 1)
+    combo.timeLastMatched = event.timeStamp;
+    combo.index++;
+
+    if (combo.index === combo.size)
     {
         return true;
     }
     else
     {
-        combo.timeLastMatched = event.timeStamp;
-        combo.index++;
-        combo.current = combo.codes[index];
-
+        combo.current = combo.keyCodes[combo.index];
         return false;
     }
 
