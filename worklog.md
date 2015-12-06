@@ -21,12 +21,15 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Find a way to merge solid fill colors and fill patterns into ShapeGradient (and rename it!)
 * Add in the 'no rotation' transform update version
 
+### 6th December 2015
+
+Added in the KeyCombo functions. This lets you define a set of keycodes that match to a 'combo', allowing you to create combos in your game. For example adding the Konami code to your main menu. Combos work by being passed the Keyboard event and then updating an internal pointer to see if it matches the next code in the combo. You can specify a maximum amount of time allowed between each key press (or disable it), and reset the combo should they press an incorrect key.
+
 ### 4th December 2015
 
 Lots of tidying up in the keyboard folder ready for the more advanced functions. Created a 'keys' folder which contains a single function per key, for more friendly Key creation that automatically sets the Key name and code for you. Might seem overkill to split these into single files, but the less space we waste internally the better. This way you can include only those few keys you need.
 
-Moved things like DownDuration to the new 'state' folder and split out the event process functions to their own files (ProcessKeyDown). The process functions no longer retain their own Set but expect one to be provided, making them more generic and less coupled.
-
+Moved things like DownDuration to the new 'state' folder and split out the event process functions to their own files (ProcessKeyDown). The process functions no longer retain their own Set but expects one to be provided, making them more generic and less coupled.
 
 ### 3rd December 2015
 

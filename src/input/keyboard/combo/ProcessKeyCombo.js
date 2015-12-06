@@ -1,8 +1,8 @@
+import AdvanceKeyCombo from 'input/keyboard/combo/AdvanceKeyCombo.js';
 
 export default function ProcessKeyCombo (event, combo) {
 
     let matched = false;
-    let keyMatched = false;
 
     if (combo.matched)
     {
@@ -12,14 +12,24 @@ export default function ProcessKeyCombo (event, combo) {
     if (event.keyCode === combo.current)
     {
         //  Key was correct
-        let duration = event.timeStamp - combo.timeLastMatched;
 
-        //  We have to check to see if the delay between
-        //  the new key and the old one was too long (if enabled)
-
-        if (combo.index > 0 && combo.maxKeyDelay > 0 && (duration >= combo.maxKeyDelay))
+        if (combo.index > 0 && combo.maxKeyDelay > 0)
         {
-            keyMatched = true;
+            //  We have to check to see if the delay between
+            //  the new key and the old one was too long (if enabled)
+
+            let duration = event.timeStamp - combo.timeLastMatched;
+
+            //  Check if they pressed it in time or not
+            if (combo.index > 0 && (duration >= combo.maxKeyDelay))
+            {
+                matched = AdvanceKeyCombo(event, combo);
+            }
+        }
+        else
+        {
+            //  We don't check the time for the first key pressed, so just advance it
+            matched = AdvanceKeyCombo(event, combo);
         }
     }
     else

@@ -4,8 +4,6 @@
 //  An array of either integers (key codes) or strings, or a mixture of both
 //  An array of objects (such as Key objects) with a public 'keyCode' property
 
-//  Support Combos that can be set in any order
-
 export default function KeyCombo (keys) {
 
     //  Can't have a zero or single length combo (string or array based)
@@ -52,7 +50,7 @@ export default function KeyCombo (keys) {
         //  The max delay in ms between each key press. Above this the combo is reset. 0 means disabled.
         maxKeyDelay: 0,
 
-        //  The time the last key in the combo was matched
+        //  The time the previous key in the combo was matched
         timeLastMatched: 0,
 
         //  Has this Key Combo been matched yet?
