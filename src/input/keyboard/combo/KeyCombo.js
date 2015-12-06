@@ -4,6 +4,8 @@
 //  An array of either integers (key codes) or strings, or a mixture of both
 //  An array of objects (such as Key objects) with a public 'keyCode' property
 
+//  Support Combos that can be set in any order
+
 export default function KeyCombo (keys) {
 
     //  Can't have a zero or single length combo (string or array based)
@@ -44,18 +46,22 @@ export default function KeyCombo (keys) {
         //  The current index of the key being waited for in the 'keys' string
         index: 0,
 
-        //  The max delay in ms between each key press. Above this the combo is reset.
-        maxDelay: 1000,
-
         //  If they get a key wrong do we reset the combo?
         resetOnWrongKey: true,
 
-        //  If previously matched and they press Key 1 again, will it reset?
-        resetOnMatch: true,
+        //  The max delay in ms between each key press. Above this the combo is reset. 0 means disabled.
+        maxKeyDelay: 0,
+
+        //  The time the last key in the combo was matched
+        timeLastMatched: 0,
 
         //  Has this Key Combo been matched yet?
         matched: false,
 
+        //  If previously matched and they press Key 1 again, will it reset?
+        resetOnMatch: true,
+
+        //  The time the entire combo was matched
         timeMatched: 0
 
     };
