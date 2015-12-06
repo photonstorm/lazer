@@ -19,10 +19,10 @@ export default function ProcessKeyCombo (event, combo) {
             //  We have to check to see if the delay between
             //  the new key and the old one was too long (if enabled)
 
-            let duration = event.timeStamp - combo.timeLastMatched;
+            let timeLimit = combo.timeLastMatched + combo.maxKeyDelay;
 
             //  Check if they pressed it in time or not
-            if (combo.index > 0 && (duration >= combo.maxKeyDelay))
+            if (event.timeStamp <= timeLimit)
             {
                 matched = AdvanceKeyCombo(event, combo);
             }
