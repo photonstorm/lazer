@@ -23,6 +23,10 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 7th December 2015
+
+Fixed the issue in ProcessKeyCombo and now key combos trigger fine even with the `maxKeyDelay` set.
+
 ### 6th December 2015
 
 Added in the KeyCombo functions. This lets you define a set of keycodes that match to a 'combo', allowing you to create combos in your game. For example adding the Konami code to your main menu. Combos work by being passed the Keyboard event and then updating an internal pointer to see if it matches the next code in the combo. You can specify a maximum amount of time allowed between each key press (or disable it), and reset the combo should they press an incorrect key.

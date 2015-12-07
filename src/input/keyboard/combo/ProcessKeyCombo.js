@@ -2,7 +2,8 @@ import AdvanceKeyCombo from 'input/keyboard/combo/AdvanceKeyCombo.js';
 
 export default function ProcessKeyCombo (event, combo) {
 
-    let matched = false;
+    let comboMatched = false;
+    let keyMatched = false;
 
     if (combo.matched)
     {
@@ -12,7 +13,6 @@ export default function ProcessKeyCombo (event, combo) {
     if (event.keyCode === combo.current)
     {
         //  Key was correct
-        console.log('Combo Key correct', combo.current);
 
         if (combo.index > 0 && combo.maxKeyDelay > 0)
         {
@@ -24,37 +24,33 @@ export default function ProcessKeyCombo (event, combo) {
             //  Check if they pressed it in time or not
             if (event.timeStamp <= timeLimit)
             {
-                matched = AdvanceKeyCombo(event, combo);
+                keyMatched = true;
+                comboMatched = AdvanceKeyCombo(event, combo);
             }
         }
         else
         {
+            keyMatched = true;
+
             //  We don't check the time for the first key pressed, so just advance it
-            matched = AdvanceKeyCombo(event, combo);
+            comboMatched = AdvanceKeyCombo(event, combo);
         }
     }
-    else
+
+    if (!keyMatched && combo.resetOnWrongKey)
     {
         //  Wrong key was pressed
-
-        console.log('Combo Key wrong, combo reset', combo.current);
-
-        if (combo.resetOnWrongKey)
-        {
-            combo.index = 0;
-            combo.current = combo.keyCodes[0];
-        }
+        combo.index = 0;
+        combo.current = combo.keyCodes[0];
     }
 
-    if (matched)
+    if (comboMatched)
     {
         combo.timeLastMatched = event.timeStamp;
         combo.matched = true;
         combo.timeMatched = event.timeStamp;
-
-        console.log('Combo Matched', matched);
     }
 
-    return matched;
+    return comboMatched;
 
 }
