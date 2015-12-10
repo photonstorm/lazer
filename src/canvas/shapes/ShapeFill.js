@@ -95,12 +95,10 @@ export default class ShapeFill {
 
         if (colors.length === 1 && Array.isArray(colors[0]))
         {
-            console.log('setColors A');
             this.colors = colors[0];
         }
         else
         {
-            console.log('setColors B');
             this.colors = colors;
         }
 
@@ -114,17 +112,21 @@ export default class ShapeFill {
 
         this.gradient = null;
 
+        context.save();
+
+        context.translate(0, 0);
+
         if (this.type === LINEAR_HORIZONTAL)
         {
-            this.gradient = context.createLinearGradient(0, 0, 0, this.shape.width * 2);
+            this.gradient = context.createLinearGradient(0, 0, this.shape.width, 0);
         }
         else if (this.type === LINEAR_VERTICAL)
         {
-            this.gradient = context.createLinearGradient(0, 0, this.shape.width * 2, 0);
+            this.gradient = context.createLinearGradient(0, 0, 0, this.shape.height);
         }
         else if (this.type === LINEAR_DIAGONAL)
         {
-            this.gradient = context.createLinearGradient(0, 0, this.shape.width * 2, this.shape.height * 2);
+            this.gradient = context.createLinearGradient(0, 0, this.shape.width, this.shape.height);
         }
         else if (this.type === RADIAL)
         {
@@ -133,15 +135,19 @@ export default class ShapeFill {
 
         if (this.gradient)
         {
-            for (let i = 0; i < this.colors.length / 2; i += 2)
-            {
-                console.log('addColorStop', this.colors[i], this.colors[i + 1]);
+            let c = 0;
 
-                this.gradient.addColorStop(this.colors[i], this.colors[i + 1]);
+            for (let i = 0; i < this.colors.length / 2; i++)
+            {
+                this.gradient.addColorStop(this.colors[c], this.colors[c + 1]);
+
+                c += 2;
             }
 
             this.style = this.gradient;
         }
+
+        context.restore();
 
         this.dirty = false;
 

@@ -39,9 +39,6 @@ export default class Star extends Shape {
 
         this.startDraw(ctx, i);
 
-        // let dx = this.anchor.x * -this.width;
-        // let dy = this.anchor.y * -this.height;
-
         ctx.moveTo(this.outerRadius, 0);
 
         for (let i = 1; i < this._pointsScaled; i++)

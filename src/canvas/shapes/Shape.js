@@ -178,8 +178,8 @@ export default class Shape extends Position {
             ctx.lineDashOffset = this.lineDashOffset;
         }
 
-        let tx = this.getRenderX(this.interpolate, i);
-        let ty = this.getRenderY(this.interpolate, i);
+        let tx = this.getRenderX(this.interpolate, i) + (this.anchor.x * -this.width);
+        let ty = this.getRenderY(this.interpolate, i) + (this.anchor.y * -this.height);
 
         if (this.subPixelAdjust && this.lineWidth % 2)
         {
