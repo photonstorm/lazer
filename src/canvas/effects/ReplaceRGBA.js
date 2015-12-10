@@ -15,7 +15,7 @@ import ProcessPixels from 'canvas/pixels/Process.js';
 * @param {number} a2 - The alpha color value that is the replacement color. Between 0 and 255.
 * @return {Phaser.BitmapData} This BitmapData object for method chaining.
 */
-export default function ReplaceRGB (context, r1, g1, b1, a1, r2, g2, b2, a2, x = 0, y = 0, width = 0, height = 0) {
+export default function ReplaceRGBA (context, r1, g1, b1, a1, r2, g2, b2, a2, x = 0, y = 0, width = 0, height = 0) {
 
     let effect = function (x, y, r, g, b, a) {
 
