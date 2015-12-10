@@ -23,6 +23,12 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 9th December 2015
+
+KeyCombo can now take its optional settings as a config object, after the Keycodes. Updated one of the examples to use this format.
+
+
+
 ### 7th December 2015
 
 Fixed the issue in ProcessKeyCombo and now key combos trigger fine even with the `maxKeyDelay` set.
