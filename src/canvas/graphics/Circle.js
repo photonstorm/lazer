@@ -13,4 +13,6 @@ export default function Circle (context, x, y, radius = 128, rotation = 0, fromC
 
     context.arc(0, 0, radius, 0, 2 * Math.PI);
 
+    return context;
+
 }

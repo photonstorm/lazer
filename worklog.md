@@ -18,16 +18,23 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Game Config objects (things like PixelArt, Transparent, etc) - can be loaded into the game when it boots, rather than loads of arguments.
 * A Transform cache
 * Add interpolation to Shape rotation
-* Find a way to merge solid fill colors and fill patterns into ShapeGradient (and rename it!)
 * Add in the 'no rotation' transform update version
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 10th December 2015
+
+Added Canvas functions for BeginPath, ClosePath, Save, Restore and Pattern.
+
+Worked a lot on the ShapeFill class, which accompanies a Shape object. You can now stack multiple fills (or strokes) onto a single Shape and they'll be applied in the order specified.
+
+Removed ShapeGradient and renamed it ShapeFill - adding in lots of helper functions to make the one class deal with all varieties of fill (solid, patter, linear and radial). Updated lots of examples to handle the new format too.
+
+
+
 ### 9th December 2015
 
 KeyCombo can now take its optional settings as a config object, after the Keycodes. Updated one of the examples to use this format.
-
-
 
 ### 7th December 2015
 

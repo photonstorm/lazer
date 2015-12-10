@@ -12,6 +12,8 @@ import Clamp from 'math/Clamp.js';
 //  method 3
 // let p = LinearGradient(this.ctx, 0, 0, 256, 256, [ 0, '#ff00f0', 0.5, '#05fff0', 1, '#8000ff' ]);
 
+//  Note: the context given here does NOT need to be the same one the gradient is used on
+
 export default function LinearGradient (context, x0, y0, x1, y1, ...colors) {
 
     let gradient = context.createLinearGradient(x0, y0, x1, y1);

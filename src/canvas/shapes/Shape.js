@@ -3,7 +3,8 @@ import RadToDeg from 'math/RadToDeg.js';
 import Wrap from 'math/Wrap.js';
 import Vec2 from 'math/vector/vec2/Vec2.js';
 import Position from 'components/Position.js';
-import ShapeGradient from 'canvas/shapes/ShapeGradient.js';
+import ShapeFill from 'canvas/shapes/ShapeFill.js';
+import ShapeStroke from 'canvas/shapes/ShapeStroke.js';
 
 //  Note: When finished this should extend Transform instead
 
@@ -73,28 +74,6 @@ export default class Shape extends Position {
             this.angle = angle;
         }
 
-        this.stroke = false;
-
-        if (stroke !== '')
-        {
-            this.stroke = true;
-            this.strokeStyle = stroke;
-        }
-
-        this.fill = false;
-
-        if (fill !== '')
-        {
-            this.fill = true;
-            this.fillStyle = fill;
-        }
-
-        this.strokeFirst = strokeFirst;
-
-        this.gradient = null;
-        this.fillGradient = false;
-        this.strokeGradient = false;
-
         this.lineWidth = lineWidth;
         this.lineCap = lineCap;
         this.lineJoin = lineJoin;
@@ -106,20 +85,62 @@ export default class Shape extends Position {
         this.interpolate = interpolate;
         this.subPixelAdjust = subPixelAdjust;
 
-    }
+        this.fills = [];
 
-    createLinearGradient (fill = true, ...colors) {
-
-        this.gradient = new ShapeGradient(this, 0, colors);
-
-        if (fill)
+        if (strokeFirst)
         {
-            this.fillGradient = true;
+            if (stroke !== '')
+            {
+                let strokeFill = this.addStroke();
+                strokeFill.setSolid(stroke);
+            }
+
+            if (fill !== '')
+            {
+                let shapeFill = this.addFill();
+                shapeFill.setSolid(fill);
+            }
         }
         else
         {
-            this.strokeGradient = true;
+            if (fill !== '')
+            {
+                let shapeFill = this.addFill();
+                shapeFill.setSolid(fill);
+            }
+
+            if (stroke !== '')
+            {
+                let strokeFill = this.addStroke();
+                strokeFill.setSolid(stroke);
+            }
         }
+
+    }
+
+    addFill () {
+
+        let fill = new ShapeFill(this);
+
+        this.fills.push(fill);
+
+        return fill;
+
+    }
+
+    addStroke () {
+
+        let stroke = new ShapeStroke(this);
+
+        this.fills.push(stroke);
+
+        return stroke;
+
+    }
+
+    getFill (index = 0) {
+
+        return this.fills[index];
 
     }
 
@@ -142,18 +163,6 @@ export default class Shape extends Position {
 
     }
 
-    fillColor (r, g, b, a = 1) {
-
-        this.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-
-    }
-
-    strokeColor (r, g, b, a = 1) {
-
-        this.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-
-    }
-
     startDraw (ctx, i) {
 
         ctx.save();
@@ -167,14 +176,6 @@ export default class Shape extends Position {
         {
             ctx.setLineDash(this.lineDashSegments);
             ctx.lineDashOffset = this.lineDashOffset;
-        }
-
-        ctx.strokeStyle = this.strokeStyle;
-        ctx.fillStyle = this.fillStyle;
-
-        if (this.fillGradient)
-        {
-            ctx.fillStyle = this.gradient.update(ctx);
         }
 
         let tx = this.getRenderX(this.interpolate, i);
@@ -195,29 +196,9 @@ export default class Shape extends Position {
 
     endDraw (ctx) {
 
-        if (this.strokeFirst)
+        for (let fill of this.fills)
         {
-            if (this.stroke)
-            {
-                ctx.stroke();
-            }
-
-            if (this.fill)
-            {
-                ctx.fill();
-            }
-        }
-        else
-        {
-            if (this.fill)
-            {
-                ctx.fill();
-            }
-
-            if (this.stroke)
-            {
-                ctx.stroke();
-            }
+            fill.draw(ctx);
         }
 
         ctx.restore();
