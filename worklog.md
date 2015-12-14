@@ -22,6 +22,24 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 14th December 2015
+
+Monday's are always business admin days - when I usually spend time queuing up news for the Phaser site, answering support email and so on. However in order to move forwards with some areas of Lazer it's important I get a solid, if minimal, transform component nailed very quickly, so that is the focus of my remaining time today.
+
+
+
+### 11th December 2015
+
+Today was spent mostly experimenting with different ways of representing a 2D affine transform in Lazer. Every library appears to have its own way of handling this.
+
+Pixi for example uses a single Pixi Matrix object which isn't touched until the `updateTransform` call and then integrates local Sprite properties such as rotation and position. This works well for Pixi but won't work for 3D content (where rotations should be represented by quaternions rather than floats). 
+
+Other libraries do it differently of course. CAAT for example uses 3 different anchors, one for translation, one for rotation and another for scale. Each CAAT Actor also carries a model view matrix and a world view matrix with it (plus Inversed copies of each). So it's a pretty heavy bundle of properties to say the least, but the flexibility is fantastic as a result.
+
+In Unity literally everything is based on a Transform component, and they have a huge number of properties: local position, rotation, scale and world level versions. As well as local, parent and root transform references and more. Very powerful and equally expensive, except they can get away with it as they compile to native. They of course also are 3D in nature, so quat based rotation objects, vec3s and much larger matrices than 2D libraries need.
+
+After a lot of research it's clear there is no straight winner here. There are benefits to each approach and downsides as well. I think it has shown me that Lazer shouldn't assume to say "use this Transform component and nothing else", because that is clearly not the right approach. Based on this I think it makes a lot of sense to create a few smaller 2D based Transform components: maybe a Pixi compatible one and a more powerful CAAT influenced one. But to also remember that we need to address 3D too, so to avoid generic naming conventions like 'Transform' and instead keep it namespaced away into its own 2d subset.
+
 ### 10th December 2015
 
 Added Canvas functions for BeginPath, ClosePath, Save, Restore and Pattern.
@@ -29,8 +47,6 @@ Added Canvas functions for BeginPath, ClosePath, Save, Restore and Pattern.
 Worked a lot on the ShapeFill class, which accompanies a Shape object. You can now stack multiple fills (or strokes) onto a single Shape and they'll be applied in the order specified.
 
 Removed ShapeGradient and renamed it ShapeFill - adding in lots of helper functions to make the one class deal with all varieties of fill (solid, patter, linear and radial). Updated lots of examples to handle the new format too.
-
-
 
 ### 9th December 2015
 
