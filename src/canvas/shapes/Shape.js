@@ -2,13 +2,11 @@ import DegToRad from 'math/DegToRad.js';
 import RadToDeg from 'math/RadToDeg.js';
 import Wrap from 'math/Wrap.js';
 import Vec2 from 'math/vector/vec2/Vec2.js';
-import Position from 'components/Position.js';
 import ShapeFill from 'canvas/shapes/ShapeFill.js';
 import ShapeStroke from 'canvas/shapes/ShapeStroke.js';
+import Transform2D from 'components/Transform2D.js';
 
-//  Note: When finished this should extend Transform instead
-
-export default class Shape extends Position {
+export default class Shape extends Transform2D {
 
     constructor ({
                     x = 0,
@@ -27,6 +25,8 @@ export default class Shape extends Position {
                     anchor = null,
                     anchorX = 0,
                     anchorY = 0,
+                    scaleX = 1,
+                    scaleY = 1,
                     lineWidth = 1,
                     lineCap = 'butt',
                     lineJoin = 'bevel',
@@ -39,7 +39,7 @@ export default class Shape extends Position {
                 } = {})
     {
 
-        super(x, y);
+        super(this, null, x, y, rotation, scaleX, scaleY);
 
         this.visible = visible;
 
@@ -66,7 +66,7 @@ export default class Shape extends Position {
         }
 
         //  rads
-        this.rotation = rotation;
+        // this.rotation = rotation;
 
         //  degs
         if (angle !== 0)
@@ -178,8 +178,11 @@ export default class Shape extends Position {
             ctx.lineDashOffset = this.lineDashOffset;
         }
 
-        let tx = this.getRenderX(this.interpolate, i) + (this.anchor.x * -this.width);
-        let ty = this.getRenderY(this.interpolate, i) + (this.anchor.y * -this.height);
+        // let tx = this.getRenderX(this.interpolate, i) + (this.anchor.x * -this.width);
+        // let ty = this.getRenderY(this.interpolate, i) + (this.anchor.y * -this.height);
+
+        let tx = this.getRenderX(this.interpolate, i);
+        let ty = this.getRenderY(this.interpolate, i);
 
         if (this.subPixelAdjust && this.lineWidth % 2)
         {

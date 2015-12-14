@@ -1,7 +1,8 @@
-import SetTransform from 'canvas/SetTransform.js';
 
-export default function (context) {
+export default function ResetTransform (context) {
 
-    return SetTransform(context, 0, 0, 1, 1, 0, 0);
+    context.setTransform(1, 0, 0, 1, 0, 0);
+
+    return context;
     
 }

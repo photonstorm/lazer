@@ -35,6 +35,7 @@ export default class Transform {
         //  The position of the transform in world space.
         this.position = new Vec3(x, y, z);
 
+        //  The scale of the transform in world space.
         this.scale = new Vec3(1, 1, 1);
 
         //  The rotation of the transform in world space stored as a Quaternion.
