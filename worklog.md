@@ -24,8 +24,11 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 ### 14th December 2015
 
-Monday's are always business admin days - when I usually spend time queuing up news for the Phaser site, answering support email and so on. However in order to move forwards with some areas of Lazer it's important I get a solid, if minimal, transform component nailed very quickly, so that is the focus of my remaining time today.
+Monday's are always business admin days, when I usually spend time queuing up news for the Phaser site, answering support email and so on. However in order to move forwards with some areas of Lazer it's important I get a solid, if minimal, transform component nailed very quickly, so that is the focus of my remaining time today.
 
+As a step towards this I've implemented a matrix 2x3 set of functions. Basically a mat33 but refined specifically for 2D use. Element order matches that of the canvas setTransform call. All of the core functions are in: Add, Build, Clone, Copy, Invert, Multiply, Rotate, Scale, Translate and so on.
+
+Could do with a mat23 class that encapsulates all of the core functions into a single object that Transform can use. Need to be careful though as performing matrix operations, even in a baked matrix, can be expensive compared to modifying properties directly (such as position or rotation) and then only calculating the matrix once per loop.
 
 
 ### 11th December 2015
