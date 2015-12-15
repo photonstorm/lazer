@@ -30,6 +30,7 @@ As a step towards this I've implemented a matrix 2x3 set of functions. Basically
 
 Could do with a mat23 class that encapsulates all of the core functions into a single object that Transform can use. Need to be careful though as performing matrix operations, even in a baked matrix, can be expensive compared to modifying properties directly (such as position or rotation) and then only calculating the matrix once per loop.
 
+Final work for tonight was getting the Transform2DLite class in a good shape. It will now accurately handle position, scaling, rotation and pivot via a handful of local Vec2 arrays and a single mat23. Have updated the Shape class to use this for now and re-tested the Shape examples and it's looking good. The only thing left it needs is a rotation anchor.
 
 ### 11th December 2015
 

@@ -1,12 +1,12 @@
 import DegToRad from 'math/DegToRad.js';
 import RadToDeg from 'math/RadToDeg.js';
 import Wrap from 'math/Wrap.js';
-import Vec2 from 'math/vector/vec2/Vec2.js';
+import Vec2 from 'math/vector/vec2/Build.js';
 import ShapeFill from 'canvas/shapes/ShapeFill.js';
 import ShapeStroke from 'canvas/shapes/ShapeStroke.js';
-import Transform2D from 'components/Transform2D.js';
+import Transform from 'math/transform/2d/Transform2DLite.js';
 
-export default class Shape extends Transform2D {
+export default class Shape extends Transform {
 
     constructor ({
                     x = 0,
@@ -39,16 +39,16 @@ export default class Shape extends Transform2D {
                 } = {})
     {
 
-        super(this, null, x, y, rotation, scaleX, scaleY);
+        super(x, y, rotation, scaleX, scaleY);
 
         this.visible = visible;
 
-        this.anchor = new Vec2(anchorX, anchorY);
+        // this.anchor = Vec2(anchorX, anchorY);
 
-        if (anchor !== null)
-        {
-            this.anchor.set(anchor);
-        }
+        // if (anchor !== null)
+        // {
+            // this.anchor.set(anchor);
+        // }
 
         this.width = width;
         this.height = height;
@@ -66,7 +66,7 @@ export default class Shape extends Transform2D {
         }
 
         //  rads
-        // this.rotation = rotation;
+        this.rotation = rotation;
 
         //  degs
         if (angle !== 0)
@@ -181,17 +181,19 @@ export default class Shape extends Transform2D {
         // let tx = this.getRenderX(this.interpolate, i) + (this.anchor.x * -this.width);
         // let ty = this.getRenderY(this.interpolate, i) + (this.anchor.y * -this.height);
 
-        let tx = this.getRenderX(this.interpolate, i);
-        let ty = this.getRenderY(this.interpolate, i);
+        // let tx = this.getRenderX(this.interpolate, i);
+        // let ty = this.getRenderY(this.interpolate, i);
 
-        if (this.subPixelAdjust && this.lineWidth % 2)
-        {
-            tx -= 0.5;
-            ty -= 0.5;
-        }
+        // if (this.subPixelAdjust && this.lineWidth % 2)
+        // {
+        //     tx -= 0.5;
+        //     ty -= 0.5;
+        // }
 
-        ctx.translate(tx, ty);
-        ctx.rotate(this.rotation);
+        // ctx.translate(tx, ty);
+        // ctx.rotate(this.rotation);
+
+        this.setTransform(ctx);
 
         ctx.beginPath();
 
