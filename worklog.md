@@ -22,6 +22,13 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 15th December 2015
+
+**Thought:** Binding a Shape to a Transform on a class level seems like a bad idea (or any object actually). Feels like it would make more sense to build a 'ShapeFactory' that combined a Shape with whatever type of Transform you needed, then you could use more simple or complex ones as required.
+
+For a while now I have wanted to move away from using 'Class' pretty much anywhere in Lazer. I'm not such a religious zealot that I believe it's as bad as lots of JS devs make out, but I do firmly believe that Lazer should be able data structures, not class structures. However until today I had never found a clean way to handle getters and setters on pure Objects. I want you all to be able to do `scale.x++` and similar, and not have to break out into `scale.setX(value)` or something equally nasty. But today I finally found a good clean compromise (that I should have tried weeks ago to be honest). Basically adding the getters and setters onto the returned Object. This way I can have factory functions that spit out well formed Objects that themselves carry the properties and methods needed to just work. This is fantastic on several fronts: it allows you to keep using `scale.x` directly, it allows me to embed property update logic into those setters, and it means I can remove truckloads of 'class' instances from the code base. Win, win.
+
+
 ### 14th December 2015
 
 Monday's are always business admin days, when I usually spend time queuing up news for the Phaser site, answering support email and so on. However in order to move forwards with some areas of Lazer it's important I get a solid, if minimal, transform component nailed very quickly, so that is the focus of my remaining time today.
