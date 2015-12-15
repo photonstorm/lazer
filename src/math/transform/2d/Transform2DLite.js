@@ -195,8 +195,8 @@ export default class Transform2DLite {
         {
             //  Fast (no rotation)
             this.local[0] = this._scale[0];
-            this.local[1] = this._scale[0];
-            this.local[2] = this._scale[1];
+            this.local[1] = 0;
+            this.local[2] = 0;
             this.local[3] = this._scale[1];
             this.local[4] = this._pos[0] - this._pivot[0] * this._scale[0];
             this.local[5] = this._pos[1] - this._pivot[1] * this._scale[1];

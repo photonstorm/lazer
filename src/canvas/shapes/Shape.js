@@ -25,6 +25,7 @@ export default class Shape extends Transform {
                     anchor = null,
                     anchorX = 0,
                     anchorY = 0,
+                    scale = null,
                     scaleX = 1,
                     scaleY = 1,
                     lineWidth = 1,
@@ -52,6 +53,12 @@ export default class Shape extends Transform {
         {
             this.rotationAnchorX = anchorX;
             this.rotationAnchorY = anchorY;
+        }
+
+        if (scale !== null)
+        {
+            this.scaleX = scale;
+            this.scaleY = scale;
         }
 
         this.width = width;
@@ -198,6 +205,9 @@ export default class Shape extends Transform {
         // ctx.rotate(this.rotation);
 
         this.setTransform(ctx);
+
+        // console.log(this.local);
+        // debugger;
 
         ctx.beginPath();
 

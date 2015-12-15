@@ -34,6 +34,8 @@ Final work for tonight was getting the Transform2DLite class in a good shape. It
 
 Last minute addition: rotationAnchor added to the Transform2DLite class and supported in the Rectangle Shape. Thinking this may need moving to the Transform class so that the anchor and sub-pixel positioning support is used to derive a render x/y coordinate pair.
 
+Got the Circle rendering again and fixed an issue in Transform2DLite where it would put incorrect shear values into the context. Need to get Shape width / height dimensions based on scale.
+
 ### 11th December 2015
 
 Today was spent mostly experimenting with different ways of representing a 2D affine transform in Lazer. Every library appears to have its own way of handling this.

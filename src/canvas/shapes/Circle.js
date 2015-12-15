@@ -17,7 +17,11 @@ export default class Circle extends Shape {
 
         this.startDraw(ctx, i);
 
-        ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
+        //  Needs to be SCALED width / height
+        let dx = this.rotationAnchorX * -this.width;
+        let dy = this.rotationAnchorY * -this.height;
+
+        ctx.arc(dx, dy, this.radius, 0, 2 * Math.PI);
 
         this.endDraw(ctx);
 
