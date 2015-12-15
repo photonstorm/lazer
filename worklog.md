@@ -32,6 +32,8 @@ Could do with a mat23 class that encapsulates all of the core functions into a s
 
 Final work for tonight was getting the Transform2DLite class in a good shape. It will now accurately handle position, scaling, rotation and pivot via a handful of local Vec2 arrays and a single mat23. Have updated the Shape class to use this for now and re-tested the Shape examples and it's looking good. The only thing left it needs is a rotation anchor.
 
+Last minute addition: rotationAnchor added to the Transform2DLite class and supported in the Rectangle Shape. Thinking this may need moving to the Transform class so that the anchor and sub-pixel positioning support is used to derive a render x/y coordinate pair.
+
 ### 11th December 2015
 
 Today was spent mostly experimenting with different ways of representing a 2D affine transform in Lazer. Every library appears to have its own way of handling this.

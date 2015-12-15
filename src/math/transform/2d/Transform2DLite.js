@@ -11,11 +11,14 @@ export default class Transform2DLite {
 
     constructor (x, y, rotation = 0, scaleX = 1, scaleY = 1) {
 
+        //  Our local objects (array instances, not classes)
         this._pos = Vec2(x, y);
         this._scale = Vec2(scaleX, scaleY);
         this._pivot = Vec2(0, 0);
         this._rotation = rotation;
+        this._rotationAnchor = Vec2(0, 0);
 
+        //  pre-calc stuff
         this._prevRotation = rotation - 1;
         this._sinR = 0;
         this._cosR = 0;
@@ -65,6 +68,18 @@ export default class Transform2DLite {
     get rotation () {
 
         return this._rotation;
+
+    }
+
+    get rotationAnchorX () {
+
+        return this._rotationAnchor[0];
+
+    }
+
+    get rotationAnchorY () {
+
+        return this._rotationAnchor[1];
 
     }
 
@@ -133,6 +148,26 @@ export default class Transform2DLite {
         if (this._pivot[1] !== value)
         {
             this._pivot[1] = value;
+            this.update();
+        }
+
+    }
+
+    set rotationAnchorX (value) {
+
+        if (this._rotationAnchor[0] !== value)
+        {
+            this._rotationAnchor[0] = value;
+            this.update();
+        }
+
+    }
+
+    set rotationAnchorY (value) {
+
+        if (this._rotationAnchor[1] !== value)
+        {
+            this._rotationAnchor[1] = value;
             this.update();
         }
 

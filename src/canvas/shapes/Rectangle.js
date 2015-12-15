@@ -17,7 +17,10 @@ export default class Rectangle extends Shape {
 
         this.startDraw(ctx, i);
 
-        ctx.rect(0, 0, this.width, this.height);
+        let dx = this.rotationAnchorX * -this.width;
+        let dy = this.rotationAnchorY * -this.height;
+
+        ctx.rect(dx, dy, this.width, this.height);
 
         this.endDraw(ctx);
 

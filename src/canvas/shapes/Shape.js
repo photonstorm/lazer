@@ -43,12 +43,16 @@ export default class Shape extends Transform {
 
         this.visible = visible;
 
-        // this.anchor = Vec2(anchorX, anchorY);
-
-        // if (anchor !== null)
-        // {
-            // this.anchor.set(anchor);
-        // }
+        if (anchor !== null)
+        {
+            this.rotationAnchorX = anchor;
+            this.rotationAnchorY = anchor;
+        }
+        else
+        {
+            this.rotationAnchorX = anchorX;
+            this.rotationAnchorY = anchorY;
+        }
 
         this.width = width;
         this.height = height;
