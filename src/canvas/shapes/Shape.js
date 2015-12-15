@@ -201,13 +201,7 @@ export default class Shape extends Transform {
         //     ty -= 0.5;
         // }
 
-        // ctx.translate(tx, ty);
-        // ctx.rotate(this.rotation);
-
         this.setTransform(ctx);
-
-        // console.log(this.local);
-        // debugger;
 
         ctx.beginPath();
 
