@@ -1,14 +1,10 @@
 import Shape from 'canvas/shapes/Shape.js';
 
-export default class Rectangle extends Shape {
+export default function Rectangle (config) {
 
-    constructor (config) {
+    let shape = Shape(config);
 
-        super(config);
-
-    }
-
-    draw (ctx, i) {
+    shape.draw = function (ctx, i) {
 
         if (!this.visible)
         {
@@ -25,5 +21,7 @@ export default class Rectangle extends Shape {
         this.endDraw(ctx);
 
     }
+
+    return shape;
 
 }

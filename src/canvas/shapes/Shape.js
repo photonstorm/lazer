@@ -1,221 +1,219 @@
 import DegToRad from 'math/DegToRad.js';
 import RadToDeg from 'math/RadToDeg.js';
 import Wrap from 'math/Wrap.js';
-import Vec2 from 'math/vector/vec2/Build.js';
 import ShapeFill from 'canvas/shapes/ShapeFill.js';
 import ShapeStroke from 'canvas/shapes/ShapeStroke.js';
-import Transform from 'math/transform/2d/Transform2DLite.js';
 
-export default class Shape extends Transform {
+export default function Shape (
+                                {
+                                    x = 0,
+                                    y = 0,
+                                    width = 0, 
+                                    height = width,
+                                    rotation = 0,
+                                    stroke = '',
+                                    fill = '',
+                                    strokeFirst = false,
+                                    radius = 0,
+                                    startAngle = 0,
+                                    endAngle = 360,
+                                    antiClockwise = false,
+                                    angle = 0,
+                                    anchor = undefined,
+                                    anchorX = 0,
+                                    anchorY = 0,
+                                    scale = undefined,
+                                    scaleX = 1,
+                                    scaleY = 1,
+                                    lineWidth = 1,
+                                    lineCap = 'butt',
+                                    lineJoin = 'bevel',
+                                    miterLimit = 10,
+                                    lineDashSegments = undefined,
+                                    lineDashOffset = 0,
+                                    interpolate = true,
+                                    subPixelAdjust = true,
+                                    visible = true
+                                } = {}) {
 
-    constructor ({
-                    x = 0,
-                    y = 0,
-                    width = 0, 
-                    height = width,
-                    rotation = 0,
-                    stroke = '',
-                    fill = '',
-                    strokeFirst = false,
-                    radius = 0,
-                    startAngle = 0,
-                    endAngle = 360,
-                    antiClockwise = false,
-                    angle = 0,
-                    anchor = null,
-                    anchorX = 0,
-                    anchorY = 0,
-                    scale = null,
-                    scaleX = 1,
-                    scaleY = 1,
-                    lineWidth = 1,
-                    lineCap = 'butt',
-                    lineJoin = 'bevel',
-                    miterLimit = 10,
-                    lineDashSegments = null,
-                    lineDashOffset = 0,
-                    interpolate = true,
-                    subPixelAdjust = true,
-                    visible = true
-                } = {})
-    {
+    let shape = {
 
-        super(x, y, rotation, scaleX, scaleY);
+        visible: visible,
 
-        this.visible = visible;
+        rotationAnchorX: anchorX,
+        rotationAnchorY: anchorY,
 
-        if (anchor !== null)
-        {
-            this.rotationAnchorX = anchor;
-            this.rotationAnchorY = anchor;
-        }
-        else
-        {
-            this.rotationAnchorX = anchorX;
-            this.rotationAnchorY = anchorY;
-        }
+        scaleX: scaleX,
+        scaleY: scaleY,
 
-        if (scale !== null)
-        {
-            this.scaleX = scale;
-            this.scaleY = scale;
-        }
-
-        this.width = width;
-        this.height = height;
+        width: width,
+        height: height,
 
         //  Arc / Circle specific
-        this.radius = radius;
-        this.startAngle = startAngle;
-        this.endAngle = endAngle;
-        this.antiClockwise = antiClockwise;
+        radius: radius,
+        startAngle: startAngle,
+        endAngle: endAngle,
+        antiClockwise: antiClockwise,
 
-        if (radius !== 0)
-        {
-            this.width = radius * 2;
-            this.height = radius * 2;
-        }
+        rotation: rotation,
 
-        //  rads
-        this.rotation = rotation;
+        lineWidth: lineWidth,
+        lineCap: lineCap,
+        lineJoin: lineJoin,
+        miterLimit: miterLimit,
 
-        //  degs
-        if (angle !== 0)
-        {
-            this.angle = angle;
-        }
+        lineDashSegments: lineDashSegments,
+        lineDashOffset: lineDashOffset,
 
-        this.lineWidth = lineWidth;
-        this.lineCap = lineCap;
-        this.lineJoin = lineJoin;
-        this.miterLimit = miterLimit;
+        interpolate: interpolate,
+        subPixelAdjust: subPixelAdjust,
 
-        this.lineDashSegments = lineDashSegments;
-        this.lineDashOffset = lineDashOffset;
+        fills: [],
 
-        this.interpolate = interpolate;
-        this.subPixelAdjust = subPixelAdjust;
+        addFill () {
 
-        this.fills = [];
+            let fill = new ShapeFill(this);
 
-        if (strokeFirst)
-        {
-            if (stroke !== '')
+            this.fills.push(fill);
+
+            return fill;
+
+        },
+
+        addStroke () {
+
+            let stroke = new ShapeStroke(this);
+
+            this.fills.push(stroke);
+
+            return stroke;
+
+        },
+
+        getFill (index = 0) {
+
+            return this.fills[index];
+
+        },
+
+        lineDash (segments, offset = 0) {
+
+            this.lineDashSegments = segments;
+            this.lineDashOffset = offset;
+
+        },
+
+        set angle (value) {
+
+            this.rotation = DegToRad(Wrap(value, 0, 360));
+
+        },
+
+        get angle () {
+
+            return RadToDeg(this.rotation);
+
+        },
+
+        startDraw (ctx, i) {
+
+            ctx.save();
+
+            ctx.lineWidth = this.lineWidth;
+            ctx.lineCap = this.lineCap;
+            ctx.lineJoin = this.lineJoin;
+            ctx.miterLimit = this.miterLimit;
+
+            if (this.lineDashSegments)
             {
-                let strokeFill = this.addStroke();
-                strokeFill.setSolid(stroke);
+                ctx.setLineDash(this.lineDashSegments);
+                ctx.lineDashOffset = this.lineDashOffset;
             }
 
-            if (fill !== '')
+            // let tx = this.getRenderX(this.interpolate, i) + (this.anchor.x * -this.width);
+            // let ty = this.getRenderY(this.interpolate, i) + (this.anchor.y * -this.height);
+
+            // let tx = this.getRenderX(this.interpolate, i);
+            // let ty = this.getRenderY(this.interpolate, i);
+
+            // if (this.subPixelAdjust && this.lineWidth % 2)
+            // {
+            //     tx -= 0.5;
+            //     ty -= 0.5;
+            // }
+
+            this.transform.setTransform(ctx);
+
+            ctx.beginPath();
+
+        },
+
+        endDraw (ctx) {
+
+            for (let fill of this.fills)
             {
-                let shapeFill = this.addFill();
-                shapeFill.setSolid(fill);
-            }
-        }
-        else
-        {
-            if (fill !== '')
-            {
-                let shapeFill = this.addFill();
-                shapeFill.setSolid(fill);
+                fill.draw(ctx);
             }
 
-            if (stroke !== '')
-            {
-                let strokeFill = this.addStroke();
-                strokeFill.setSolid(stroke);
-            }
+            ctx.restore();
+
         }
 
+    };
+
+    if (anchor !== undefined)
+    {
+        shape.rotationAnchorX = anchor;
+        shape.rotationAnchorY = anchor;
     }
 
-    addFill () {
-
-        let fill = new ShapeFill(this);
-
-        this.fills.push(fill);
-
-        return fill;
-
+    if (scale !== undefined)
+    {
+        shape.scaleX = scale;
+        shape.scaleY = scale;
     }
 
-    addStroke () {
-
-        let stroke = new ShapeStroke(this);
-
-        this.fills.push(stroke);
-
-        return stroke;
-
+    if (radius !== 0)
+    {
+        shape.width = radius * 2;
+        shape.height = radius * 2;
     }
 
-    getFill (index = 0) {
-
-        return this.fills[index];
-
+    //  degs
+    if (angle !== 0)
+    {
+        shape.angle = angle;
     }
 
-    lineDash (segments, offset = 0) {
-
-        this.lineDashSegments = segments;
-        this.lineDashOffset = offset;
-
-    }
-
-    set angle (value) {
-
-        this.rotation = DegToRad(Wrap(value, 0, 360));
-
-    }
-
-    get angle () {
-
-        return RadToDeg(this.rotation);
-
-    }
-
-    startDraw (ctx, i) {
-
-        ctx.save();
-
-        ctx.lineWidth = this.lineWidth;
-        ctx.lineCap = this.lineCap;
-        ctx.lineJoin = this.lineJoin;
-        ctx.miterLimit = this.miterLimit;
-
-        if (this.lineDashSegments)
+    if (strokeFirst)
+    {
+        if (stroke !== '')
         {
-            ctx.setLineDash(this.lineDashSegments);
-            ctx.lineDashOffset = this.lineDashOffset;
+            let strokeFill = shape.addStroke();
+            strokeFill.setSolid(stroke);
         }
 
-        // let tx = this.getRenderX(this.interpolate, i) + (this.anchor.x * -this.width);
-        // let ty = this.getRenderY(this.interpolate, i) + (this.anchor.y * -this.height);
-
-        // let tx = this.getRenderX(this.interpolate, i);
-        // let ty = this.getRenderY(this.interpolate, i);
-
-        // if (this.subPixelAdjust && this.lineWidth % 2)
-        // {
-        //     tx -= 0.5;
-        //     ty -= 0.5;
-        // }
-
-        this.setTransform(ctx);
-
-        ctx.beginPath();
-
-    }
-
-    endDraw (ctx) {
-
-        for (let fill of this.fills)
+        if (fill !== '')
         {
-            fill.draw(ctx);
+            let shapeFill = shape.addFill();
+            shapeFill.setSolid(fill);
+        }
+    }
+    else
+    {
+        if (fill !== '')
+        {
+            let shapeFill = shape.addFill();
+            shapeFill.setSolid(fill);
         }
 
-        ctx.restore();
-
+        if (stroke !== '')
+        {
+            let strokeFill = shape.addStroke();
+            strokeFill.setSolid(stroke);
+        }
     }
+
+    return shape;
 
 }

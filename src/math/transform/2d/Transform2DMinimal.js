@@ -74,6 +74,8 @@ export default function Transform2DMinimal (x = 0, y = 0, rotation = 0, scaleX =
                 this.update();
             }
 
+            // console.log('setTransform', local);
+
             context.setTransform(local[0], local[1], local[2], local[3], local[4], local[5]);
 
         },
@@ -81,6 +83,7 @@ export default function Transform2DMinimal (x = 0, y = 0, rotation = 0, scaleX =
         addComponent (component) {
 
             this.components[component.name] = component;
+
             component.setParent(this);
 
         }
