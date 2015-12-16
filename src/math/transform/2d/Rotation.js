@@ -1,13 +1,15 @@
 
 const PI2 = Math.PI * 2;
 
-export default function Rotation (parent, rotation = 0) {
+export default function Rotation (rotation = 0) {
 
     return {
 
-        parent: parent,
+        name: 'rotation',
 
-        rotation: rotation,
+        parent: undefined,
+
+        value: rotation,
 
         fast: rotation % PI2,
 
@@ -32,11 +34,22 @@ export default function Rotation (parent, rotation = 0) {
                     cr = Math.cos(value);
                 }
 
-                if (parent.immediate)
-                {
-                    parent.update();
-                }
+                parent.setDirty();
             }
+
+        },
+
+        setParent (parent) {
+
+            this.parent = parent;
+
+            Object.defineProperty(parent, 'rotation', { get: () => this.get(), set: value => this.set(value) });
+
+        },
+
+        destroy () {
+
+            this.parent = undefined;
 
         }
 

@@ -25,11 +25,7 @@ export default function Pivot (parent = undefined, x = 0, y = 0) {
             if (pivot[0] !== value)
             {
                 pivot[0] = value;
-
-                if (parent.immediate)
-                {
-                    parent.update();
-                }
+                parent.setDirty();
             }
 
         },
@@ -39,11 +35,7 @@ export default function Pivot (parent = undefined, x = 0, y = 0) {
             if (pivot[1] !== value)
             {
                 pivot[1] = value;
-
-                if (parent.immediate)
-                {
-                    parent.update();
-                }
+                parent.setDirty();
             }
 
         },

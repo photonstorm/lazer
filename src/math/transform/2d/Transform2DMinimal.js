@@ -15,62 +15,84 @@ export default function Transform2DMinimal (x = 0, y = 0, rotation = 0, scaleX =
     let transform = {
 
         //  Immediate or deferred update?
-        //  If deferred (false) it's up to you to call 'update' before setTransform
+        //  If deferred (false) then 'update' is called before setTransform if dirty=true
         immediate: true,
 
-        //  If we don't want these to be "public" in the object, we can move to 'let' props like local is
-        position: undefined,
-        scale: undefined,
-        rotation: undefined,
+        //  If immediate is false then the dirty flag gets set instead and 'update' is called in 'setTransform'
+        dirty: false,
 
-        get x () {
-            return this.position.x;
-        },
+        //  The transform components (see addComponent)
+        components: {},
 
-        set x (value) {
-            this.position.x = value;
-        },
+        setDirty () {
 
-        get y () {
-            return this.position.y;
+            if (this.immediate)
+            {
+                this.update();
+            }
+            else
+            {
+                this.dirty = true;
+            }
+
         },
 
         update () {
 
-            if (this.rotation.fast)
+            let r = this.components.rotation;
+            let s = this.components.scale;
+            let p = this.components.position;
+
+            if (r.fast)
             {
                 //  Fast (no rotation)
-                local[0] = this.scale.x;
+                local[0] = s.x;
                 local[1] = 0;
                 local[2] = 0;
-                local[3] = this.scale.y;
-                local[4] = this.position.x;
-                local[5] = this.position.y;
+                local[3] = s.y;
+                local[4] = p.x;
+                local[5] = p.y;
             }
             else
             {
-                local[0] = this.rotation.cr * this.scale.x;
-                local[1] = this.rotation.sr * this.scale.x;
-                local[2] = -this.rotation.sr * this.scale.y;
-                local[3] = this.rotation.cr * this.scale.y;
-                local[4] = this.position.x;
-                local[5] = this.position.y;
+                local[0] = r.cr * s.x;
+                local[1] = r.sr * s.x;
+                local[2] = -r.sr * s.y;
+                local[3] = r.cr * s.y;
+                local[4] = p.x;
+                local[5] = p.y;
             }
+
+            this.dirty = false;
 
         },
 
         setTransform (context) {
 
+            if (this.dirty)
+            {
+                this.update();
+            }
+
             context.setTransform(local[0], local[1], local[2], local[3], local[4], local[5]);
+
+        },
+
+        addComponent (component) {
+
+            this.components[component.name] = component;
+            component.setParent(this);
 
         }
 
     };
 
-    //  Inject our components now that the transform object is created
-    transform.position = Position(transform, x, y);
-    transform.scale = Scale(transform, scaleX, scaleY);
-    transform.rotation = Rotation(transform, rotation);
+    //  Inject our components into the transform
+    //  They automatically add in transform level getters and setters
+
+    transform.addComponent(Position(x, y));
+    transform.addComponent(Scale(scaleX, scaleY));
+    transform.addComponent(Rotation(rotation));
 
     return transform;
 

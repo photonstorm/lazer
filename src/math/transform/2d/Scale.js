@@ -1,57 +1,56 @@
 import Vec2 from 'math/vector/vec2/Build.js';
 
-//  Generates a Scale compatible object that is bound to a parent Transform
-//  It doesn't care what type of Transform it is bound to, as long as it exposes
-//  an `immediate` boolean and an `update` method.
-
-export default function Scale (parent = undefined, x = 1, y = 1) {
+export default function Scale (x = 0, y = 0) {
 
     let scale = Vec2(x, y);
 
     return {
 
-        parent: parent,
+        name: 'scale',
 
-        get x () {
+        parent: undefined,
+
+        getX () {
             return scale[0];
         },
 
-        get y () {
+        getY () {
             return scale[1];
         },
 
-        set x (value) {
+        setX (value) {
 
             if (scale[0] !== value)
             {
                 scale[0] = value;
-
-                if (parent.immediate)
-                {
-                    parent.update();
-                }
+                this.parent.setDirty();
             }
 
         },
 
-        set y (value) {
+        setY (value) {
 
             if (scale[1] !== value)
             {
                 scale[1] = value;
-
-                if (parent.immediate)
-                {
-                    parent.update();
-                }
+                this.parent.setDirty();
             }
+
+        },
+
+        setParent (parent) {
+
+            this.parent = parent;
+
+            Object.defineProperty(parent, 'scaleX', { get: () => this.getX(), set: value => this.setX(value) });
+            Object.defineProperty(parent, 'scaleY', { get: () => this.getY(), set: value => this.setY(value) });
 
         },
 
         destroy () {
 
             scale = undefined;
-            parent = undefined;
+            this.parent = undefined;
 
         }
 

@@ -4,13 +4,15 @@ import Vec2 from 'math/vector/vec2/Build.js';
 //  It doesn't care what type of Transform it is bound to, as long as it exposes
 //  an `immediate` boolean and an `update` method.
 
-export default function Position (parent = undefined, x = 0, y = 0) {
+export default function Position (x = 0, y = 0) {
 
     let position = Vec2(x, y);
 
     return {
 
-        parent: parent,
+        name: 'position',
+
+        parent: undefined,
 
         getX () {
             return position[0];
@@ -20,46 +22,39 @@ export default function Position (parent = undefined, x = 0, y = 0) {
             return position[1];
         },
 
-        get x () {
-            return position[0];
-        },
-
-        get y () {
-            return position[1];
-        },
-
-        set x (value) {
+        setX (value) {
 
             if (position[0] !== value)
             {
                 position[0] = value;
-
-                if (parent.immediate)
-                {
-                    parent.update();
-                }
+                this.parent.setDirty();
             }
 
         },
 
-        set y (value) {
+        setY (value) {
 
             if (position[1] !== value)
             {
                 position[1] = value;
-
-                if (parent.immediate)
-                {
-                    parent.update();
-                }
+                this.parent.setDirty();
             }
+
+        },
+
+        setParent (parent) {
+
+            this.parent = parent;
+
+            Object.defineProperty(parent, 'x', { get: () => this.getX(), set: value => this.setX(value) });
+            Object.defineProperty(parent, 'y', { get: () => this.getY(), set: value => this.setY(value) });
 
         },
 
         destroy () {
 
             position = undefined;
-            parent = undefined;
+            this.parent = undefined;
 
         }
 

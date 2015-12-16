@@ -25,11 +25,7 @@ export default function RotationAnchor (parent = undefined, x = 0, y = 0) {
             if (anchor[0] !== value)
             {
                 anchor[0] = value;
-
-                if (parent.immediate)
-                {
-                    parent.update();
-                }
+                parent.setDirty();
             }
 
         },
@@ -39,11 +35,7 @@ export default function RotationAnchor (parent = undefined, x = 0, y = 0) {
             if (anchor[1] !== value)
             {
                 anchor[1] = value;
-
-                if (parent.immediate)
-                {
-                    parent.update();
-                }
+                parent.setDirty();
             }
 
         },
