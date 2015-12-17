@@ -40,11 +40,17 @@ export default function Shape (
 
         visible: visible,
 
-        rotationAnchorX: anchorX,
-        rotationAnchorY: anchorY,
+        //  transform level values
+        x: x,
+        y: y,
+
+        rotation: rotation,
 
         scaleX: scaleX,
         scaleY: scaleY,
+
+        rotationAnchorX: anchorX,
+        rotationAnchorY: anchorY,
 
         width: width,
         height: height,
@@ -54,8 +60,6 @@ export default function Shape (
         startAngle: startAngle,
         endAngle: endAngle,
         antiClockwise: antiClockwise,
-
-        rotation: rotation,
 
         lineWidth: lineWidth,
         lineCap: lineCap,

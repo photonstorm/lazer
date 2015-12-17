@@ -13,10 +13,12 @@ export default function Rectangle (config) {
 
         this.startDraw(ctx, i);
 
-        let dx = this.rotationAnchorX * -this.width;
-        let dy = this.rotationAnchorY * -this.height;
+        // let dx = this.rotationAnchorX * -this.width;
+        // let dy = this.rotationAnchorY * -this.height;
 
-        ctx.rect(dx, dy, this.width, this.height);
+        // ctx.rect(dx, dy, this.width, this.height);
+
+        ctx.rect(0, 0, this.width, this.height);
 
         this.endDraw(ctx);
 

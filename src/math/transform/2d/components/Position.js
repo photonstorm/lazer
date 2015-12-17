@@ -46,8 +46,18 @@ export default function Position (x = 0, y = 0) {
 
             this.parent = parent;
 
-            Object.defineProperty(parent, 'x', { get: () => this.getX(), set: value => this.setX(value) });
-            Object.defineProperty(parent, 'y', { get: () => this.getY(), set: value => this.setY(value) });
+        },
+
+        //  In theory this means a single Position component could potentially
+        //  update several targets at once (in practice I'm sure that's pointless, but
+        //  it's interesting to know)
+
+        addProperties (target) {
+
+            //  TODO: defineProperties instead (plus check things like enumerable, etc)
+
+            Object.defineProperty(target, 'x', { get: () => this.getX(), set: value => this.setX(value) });
+            Object.defineProperty(target, 'y', { get: () => this.getY(), set: value => this.setY(value) });
 
         },
 

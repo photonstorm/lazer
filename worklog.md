@@ -24,7 +24,9 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 ### 16th December 2015
 
+Sorted out the Transform2DMinimal function. Have created Transform components and moved them to their own folder, as they'll be common between all Transforms. The components can self-inject themselves to the Transform, adding in getters / setters to any target as needed and binding to a parent.
 
+Have modified Shape (canvas shape) to be a function that just exports an object now. When bound with a Transform it renders perfectly still. It makes sense that a Shape on its own wouldn't actually have a Transform, but that you'd create a GameObject that merges the two things together. Will explore this further tomorrow. In essence though we're getting quite close to the way [Stamps](https://github.com/stampit-org/stampit) work, and they may present us with a more unified structure and definition going forward. Will investigate further before making a decision, as Stamps are rather 'custom' and not a widely accepted method. They're also similar to what we're doing already, but I like the thought of using their convention definitions.
 
 ### 15th December 2015
 
