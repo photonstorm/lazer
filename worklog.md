@@ -22,6 +22,10 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 17th December 2015
+
+
+
 ### 16th December 2015
 
 Sorted out the Transform2DMinimal function. Have created Transform components and moved them to their own folder, as they'll be common between all Transforms. The components can self-inject themselves to the Transform, adding in getters / setters to any target as needed and binding to a parent.
