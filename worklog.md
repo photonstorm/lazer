@@ -22,9 +22,15 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 29th December 2015
+
+My Christmas Holidays are over and work resumes. The priority right now is working out the composition structure. Getting this right is fundamental as it has far reaching consequences through-out the entire code base. A wrong move here could cripple Lazer for a long time.
+
+
+
 ### 17th December 2015
 
-
+Today I tested out StampIt and the Entity Composer. I think of the two the Composer is going to be the most useful, combined with a "traditional" ES6 Class approach where needed. I will endeavor to stick to pure functions where possible, but when it comes to performance I'm still not yet convinced that composition wins. So I'll have to pick my battles carefully here.
 
 ### 16th December 2015
 
