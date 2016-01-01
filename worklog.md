@@ -22,11 +22,15 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 1st January 2016
+
+Being a public holiday I'm not expecting to get much done today, maybe just an hours coding. As I'm limited on time I'm going to port over some small quick parts of Phaser.
+
+
+
 ### 29th December 2015
 
 My Christmas Holidays are over and work resumes. The priority right now is working out the composition structure. Getting this right is fundamental as it has far reaching consequences through-out the entire code base. A wrong move here could cripple Lazer for a long time.
-
-
 
 ### 17th December 2015
 
