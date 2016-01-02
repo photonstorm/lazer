@@ -22,6 +22,10 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 2nd January 2016
+
+Updated RenderToCanvas to take a configuration object instead of parameters. This has allowed me to specify a default palette (Arne16), set the pixelWidth from a single property and also add in the resizeCanvas and clear boolean options. Previously this would have needed 6 arguments alone, but a single config object makes more sense for a function like this, where it's highly unlikely to ever be called 'in anger'. Also updated all the tests to use the new format. As today is the weekend that's likely to be all I do for now.
+
 ### 1st January 2016
 
 Being a public holiday I'm not expecting to get much done today, maybe just an hours coding. As I'm limited on time I'm going to port over some small quick parts of Phaser.

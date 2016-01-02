@@ -1,20 +1,42 @@
+import { PALETTE_ARNE } from 'create/palettes/Arne16.js';
 import Canvas from 'canvas/Canvas.js';
 import GetContext from 'canvas/GetContext.js';
+import Resize from 'canvas/Resize.js';
 
 //  data = Pixel Data Array
 //  canvas = either a Canvas object, or null / undefined / false
 //  palette = Create Palette Array
 
-export default function RenderToCanvas (data, canvas, palette, pixelWidth = 8, pixelHeight = 8) {
+export default function RenderToCanvas (data, { 
+                                            canvas = undefined,
+                                            palette = PALETTE_ARNE,
+                                            pixelWidth = 8,
+                                            pixelHeight = pixelWidth,
+                                            resizeCanvas = true,
+                                            clear = true
+                                        } = {}) {
+
+    let width = data[0].length * pixelWidth;
+    let height = data.length * pixelHeight;
 
     if (!canvas)
     {
-        let w = data[0].length * pixelWidth;
-        let h = data.length * pixelHeight;
-        canvas = Canvas(w, h);
+        canvas = Canvas(width, height);
+        resizeCanvas = false;
+        clear = false;
     }
 
     let ctx = GetContext(canvas);
+
+    if (resizeCanvas)
+    {
+        Resize(canvas, width, height);
+    }
+
+    if (clear)
+    {
+        ctx.clearRect(0, 0, width, height);
+    }
 
     let x = 0;
     let y = 0;

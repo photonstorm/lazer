@@ -1,5 +1,5 @@
 
-export default function (canvas, width, height = width) {
+export default function Resize (canvas, width, height = width) {
 
     width = Math.abs(width);
     height = Math.abs(height);
