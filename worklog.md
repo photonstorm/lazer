@@ -26,7 +26,7 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 Being a public holiday I'm not expecting to get much done today, maybe just an hours coding. As I'm limited on time I'm going to port over some small quick parts of Phaser.
 
-
+I decided to do the 'Create' class from Phaser. So I've ported over the 5 palettes it used, into their own files. I've also recoded the 'texture' method into `RenderToCanvas`. This now lets you render sprite data to either the provided canvas, or let it create one for you. You can feed in any palette, of any size, and it's now using parseInt to handle the look-up, making the palettes more compact and generic in the process (being plain arrays now). Not bad for a bank holiday :)
 
 ### 29th December 2015
 
