@@ -21,6 +21,11 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Add in the 'no rotation' transform update version
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
+* Add preRender and postRender callbacks to RenderToCanvas Create function.
+
+### 3rd January 2016
+
+Managed to get a few hours to port over the Grid function from the Phaser Create class. This has been expanded lots. You can now specify alternate grid colors, drawLines and even pre and post render callbacks. Much more flexible :) Created lots of test cases to show it in use. There is one bug remaining: the drawLines function overlaps the final column.
 
 ### 2nd January 2016
 
