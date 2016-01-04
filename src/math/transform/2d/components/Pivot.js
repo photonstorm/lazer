@@ -1,52 +1,36 @@
-import Vec2 from 'math/vector/vec2/Build.js';
+import BaseTransformComponent from 'math/transform/2d/components/BaseTransformComponent.js';
 
-//  Generates a Pivot compatible object that is bound to a parent Transform
-//  It doesn't care what type of Transform it is bound to, as long as it exposes
-//  an `immediate` boolean and an `update` method.
+export default class Pivot extends BaseTransformComponent {
 
-export default function Pivot (parent = undefined, x = 0, y = 0) {
+    constructor (transform, x = 0, y = 0) {
 
-    let pivot = Vec2(x, y);
+        super(transform, x, y);
 
-    return {
+    }
 
-        parent: parent,
+    addProperties (target) {
 
-        get x () {
-            return pivot[0];
-        },
-
-        get y () {
-            return pivot[1];
-        },
-
-        set x (value) {
-
-            if (pivot[0] !== value)
-            {
-                pivot[0] = value;
-                parent.setDirty();
-            }
-
-        },
-
-        set y (value) {
-
-            if (pivot[1] !== value)
-            {
-                pivot[1] = value;
-                parent.setDirty();
-            }
-
-        },
-
-        destroy () {
-
-            pivot = undefined;
-            parent = undefined;
-
+        if (!target.hasOwnProperty('pivot'))
+        {
+            target.pivot = {};
         }
 
-    };
+        Object.defineProperties(target.pivot, {
+
+            'x': {
+                enumerable: true,
+                get: () => this.getX(),
+                set: (value) => this.setX(value)
+            },
+
+            'y': {
+                enumerable: true,
+                get: () => this.getY(),
+                set: (value) => this.setY(value)
+            }
+
+        });
+
+    }
 
 }

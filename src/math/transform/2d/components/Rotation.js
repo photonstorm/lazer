@@ -1,58 +1,66 @@
+import { PI2 } from 'math/Constants.js';
 
-const PI2 = Math.PI * 2;
+export default class Rotation {
 
-export default function Rotation (rotation = 0) {
+    constructor (transform, rotation = 0) {
 
-    return {
+        this.transform = transform;
+        this._v = rotation;
+        this.fast = rotation % PI2;
 
-        name: 'rotation',
+        this.sr = 0;
+        this.cr = 0;
 
-        parent: undefined,
+    }
 
-        value: rotation,
+    getValue () {
+        return this._v;
+    }
 
-        fast: rotation % PI2,
+    setValue (value) {
 
-        sr: 0,
-        cr: 0,
+        if (this._v !== value)
+        {
+            this._v = value;
+            this.fast = value % PI2;
 
-        get () {
-            return rotation;
-        },
-
-        set (value) {
-
-            if (rotation !== value)
+            if (this.fast)
             {
-                rotation = value;
-                fast = value % PI2;
-
-                if (fast)
-                {
-                    //  Update the cache if the rotation != 0
-                    sr = Math.sin(value);
-                    cr = Math.cos(value);
-                }
-
-                parent.setDirty();
+                //  Update the cache if the rotation != 0
+                this.sr = Math.sin(value);
+                this.cr = Math.cos(value);
             }
 
-        },
-
-        setParent (parent) {
-
-            this.parent = parent;
-
-            Object.defineProperty(parent, 'rotation', { get: () => this.get(), set: value => this.set(value) });
-
-        },
-
-        destroy () {
-
-            this.parent = undefined;
-
+            this.transform.setDirty();
         }
 
-    };
+    }
+
+    setTransform (transform) {
+
+        this.transform = transform;
+
+    }
+
+    addProperties (target) {
+
+        Object.defineProperties(target, {
+
+            'rotation': {
+                enumerable: true,
+                get: () => this.getValue(),
+                set: (value) => this.setValue(value)
+            }
+
+        });
+
+    }
+
+    destroy () {
+
+        this._v = undefined;
+        this.transform = undefined;
+
+    }
 
 }

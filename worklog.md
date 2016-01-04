@@ -72,6 +72,14 @@ addProperties (target, element) {
 
 Which allows me to do: `bob.transform.addProperties(bob);` and then all of a sudden the `bob` object will have `x` and `y` getters and setters, which route through to the Position component automatically. Using this same approach I could do the same for `bob.scale` and so on. The difference between this and how Phaser works is that all of the components will actually be part of the single Transform instance, but you'll still be able to interface with them via `sprite.scale.y` and so on. It also means I don't have to create masses of Vec2 instances and so on just for a single Transform. The down-side is that it will change the object shape of `bob`, but right now I'm not sure how much that will matter in the real-world.
 
+Update: 22:55
+
+Have moved the Math constants to Constants.js and now reference those in various functions instead (such as PI2).
+
+Have refactored all of the Transform components into classes with local value arrays. Given how many Transforms are likely to exist in any given game (typically thousands) it's important they are built on the prototype, and don't carry around all kinds of duplicate functions. Also updated 2d/Transform to use them and built lots of tests for it, and it's all working well. You can inject the transform properties into any object, allowing for my `sprite.x` use-case. You can also use Transform as a base class to extend from, rather than having it as an object property, and it'll work just fine without the need for property injection.
+
+The tests are running nicely, so the next move will be to take the Transform class I've got and add in child transform support.
+
 ### 3rd January 2016
 
 Managed to get a few hours to port over the Grid function from the Phaser Create class. This has been expanded lots. You can now specify alternate grid colors, drawLines and even pre and post render callbacks. Much more flexible :) Created lots of test cases to show it in use. There is one bug remaining: the drawLines function overlaps the final column.

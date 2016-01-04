@@ -1,59 +1,36 @@
-import Vec2 from 'math/vector/vec2/Build.js';
+import BaseTransformComponent from 'math/transform/2d/components/BaseTransformComponent.js';
 
-export default function Scale (x = 0, y = 0) {
+export default class Scale extends BaseTransformComponent {
 
-    let scale = Vec2(x, y);
+    constructor (transform, x = 0, y = 0) {
 
-    return {
+        super(transform, x, y);
 
-        name: 'scale',
+    }
 
-        parent: undefined,
+    addProperties (target) {
 
-        getX () {
-            return scale[0];
-        },
-
-        getY () {
-            return scale[1];
-        },
-
-        setX (value) {
-
-            if (scale[0] !== value)
-            {
-                scale[0] = value;
-                this.parent.setDirty();
-            }
-
-        },
-
-        setY (value) {
-
-            if (scale[1] !== value)
-            {
-                scale[1] = value;
-                this.parent.setDirty();
-            }
-
-        },
-
-        setParent (parent) {
-
-            this.parent = parent;
-
-            Object.defineProperty(parent, 'scaleX', { get: () => this.getX(), set: value => this.setX(value) });
-            Object.defineProperty(parent, 'scaleY', { get: () => this.getY(), set: value => this.setY(value) });
-
-        },
-
-        destroy () {
-
-            scale = undefined;
-            this.parent = undefined;
-
+        if (!target.hasOwnProperty('scale'))
+        {
+            target.scale = {};
         }
 
-    };
+        Object.defineProperties(target.scale, {
+
+            'x': {
+                enumerable: true,
+                get: () => this.getX(),
+                set: (value) => this.setX(value)
+            },
+
+            'y': {
+                enumerable: true,
+                get: () => this.getY(),
+                set: (value) => this.setY(value)
+            }
+
+        });
+
+    }
 
 }
