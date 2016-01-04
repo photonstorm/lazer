@@ -91,8 +91,6 @@ export default class BaseTransformComponent {
 
     destroy () {
 
-        this[0] = 0;
-        this[1] = 0;
         this.transform = undefined;
 
     }
