@@ -80,6 +80,14 @@ Have refactored all of the Transform components into classes with local value ar
 
 The tests are running nicely, so the next move will be to take the Transform class I've got and add in child transform support.
 
+Update: 23:30
+
+Created a transform/2d/basic folder and moved relevant files in there. This will help distinguish it from other more complex 2D Transforms (i.e. those with parenting support).
+
+Updated BaseTransformComponent so it now uses local [0][1] properties (like the Vec2 class does) instead of the _v property data array. This means you can now pass any Transform component such as Position or Scale to _any_ function that expects a Vec2 data type. This makes it extremely flexible.
+
+Created BaseTransform class, which can be used by a Game Object as a base class to extend from. It hides away the Transform methods you don't want to inherit and adds in some useful property accessors.
+
 ### 3rd January 2016
 
 Managed to get a few hours to port over the Grid function from the Phaser Create class. This has been expanded lots. You can now specify alternate grid colors, drawLines and even pre and post render callbacks. Much more flexible :) Created lots of test cases to show it in use. There is one bug remaining: the drawLines function overlaps the final column.

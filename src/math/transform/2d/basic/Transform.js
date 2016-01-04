@@ -4,6 +4,10 @@ import Position from 'math/transform/2d/components/Position.js';
 import Rotation from 'math/transform/2d/components/Rotation.js';
 import RotationAnchor from 'math/transform/2d/components/RotationAnchor.js';
 
+//  A Basic 2D Transform class
+//  Components: Position, Scale, Rotation and RotationAnchor baked to a Mat23
+//  Supports: immediate and deferred update (defaults to deferred)
+
 export default class Transform {
 
     constructor (x = 0, y = 0, rotation = 0, scaleX = 1, scaleY = 1) {
@@ -17,12 +21,10 @@ export default class Transform {
 
         //  Immediate or deferred update?
         //  If deferred (false) then 'update' is called before setTransform if dirty=true
-        this.immediate = true;
+        this.immediate = false;
 
         //  If immediate is false then the dirty flag gets set instead and 'update' is called in 'setTransform'
-        this.dirty = false;
-
-        this.update();
+        this.dirty = true;
 
     }
 
@@ -45,7 +47,7 @@ export default class Transform {
 
         if (this.immediate)
         {
-            this.update();
+            this.updateTransform();
         }
         else
         {
@@ -56,7 +58,7 @@ export default class Transform {
 
     }
 
-    update () {
+    updateTransform () {
 
         if (this.rotation.fast === 0)
         {
@@ -87,7 +89,7 @@ export default class Transform {
 
         if (this.dirty)
         {
-            this.update();
+            this.updateTransform();
         }
 
         context.setTransform(
