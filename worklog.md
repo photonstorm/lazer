@@ -21,7 +21,56 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Add in the 'no rotation' transform update version
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
-* Add preRender and postRender callbacks to RenderToCanvas Create function.
+
+### 4th January 2016
+
+Added the preRender and postRender callbacks to Create.RenderToCanvas. To be honest this function name probably needs changing (RenderSpriteData?) but I'm not really sure to what.
+
+The rest of my time today was spent playing with how to handle Transform properties on Game Objects. It's quite an interesting problem, with many different ways to address it (it's just a case of finding the right one).
+
+What I want is for you to be able to do things like this:
+
+```
+sprite.x = 100;
+sprite.scale.y = 2;
+sprite.rotation = 0.34;
+```
+
+... and for it to update the Game Object AND it's children immediately, rather than having a deferred update like Phaser/Pixi has. However I also want these things wrapped up in a single Transform object (position, scale, rotation, pivot and so on). The problem is that I don't really want each element to be an instance of a Vec2 class. However I still want you to be able to set and get the values directly as in the code above.
+
+With a deferred transform this is easy - you just let the user manipulate those values as much as they like, and it's not until the render pass that you bake them into the transform. But for reasons discussed earlier this isn't a good way of doing it, which means I need the setter for `scale.x` for example to notify the parent Transform that a change has happened.
+
+I could create an Observable Vec2, which notifies its parent on change. Alternatively I could create Transform components (Position, Scale and so on) but this means having Vec2 instances for each component. One single Transform would then end up with a staggering 8 objects _and_ a Matrix23. That's a lot of objects for a single transform, especially if you consider you may have thousands of Sprites in your game (each with their own transforms).
+
+Alternatively I could have a single Transform class that doesn't create any Vec2 instances, but instead just creates Vec2 data arrays and manages property access itself: `Transform.getPositionX` for example, as a function, not a getter. Then you'd have `sprite.transform` and a whole host of methods available to manipulate it. This is quite a step away from Phaser though, and breaks my 'friendly API' rule.
+
+So I've been experimenting with Object.defineProperties and think this could end-up working out well. So each Transform component (Position, Scale and so on) has this function:
+
+```
+addProperties (target, element) {
+
+    target[element] = {};
+
+    Object.defineProperties(target[element], {
+
+        'x': {
+            enumerable: true,
+            get: () => this.getX(),
+            set: (value) => this.setX(value)
+        },
+
+        'y': {
+            enumerable: true,
+            get: () => this.getY(),
+            set: (value) => this.setY(value)
+        }
+
+    });
+
+}
+```
+
+Which allows me to do: `bob.transform.addProperties(bob);` and then all of a sudden the `bob` object will have `x` and `y` getters and setters, which route through to the Position component automatically. Using this same approach I could do the same for `bob.scale` and so on. The difference between this and how Phaser works is that all of the components will actually be part of the single Transform instance, but you'll still be able to interface with them via `sprite.scale.y` and so on. It also means I don't have to create masses of Vec2 instances and so on just for a single Transform. The down-side is that it will change the object shape of `bob`, but right now I'm not sure how much that will matter in the real-world.
 
 ### 3rd January 2016
 

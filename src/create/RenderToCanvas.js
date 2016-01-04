@@ -13,7 +13,9 @@ export default function RenderToCanvas (data, {
                                             pixelWidth = 8,
                                             pixelHeight = pixelWidth,
                                             resizeCanvas = true,
-                                            clear = true
+                                            clear = true,
+                                            preRender = undefined,
+                                            postRender = undefined
                                         } = {}) {
 
     let width = data[0].length * pixelWidth;
@@ -38,6 +40,12 @@ export default function RenderToCanvas (data, {
         ctx.clearRect(0, 0, width, height);
     }
 
+    //  preRender Callback?
+    if (preRender)
+    {
+        preRender(canvas, ctx);
+    }
+
     let x = 0;
     let y = 0;
 
@@ -59,6 +67,12 @@ export default function RenderToCanvas (data, {
         }
 
         y += pixelHeight;
+    }
+
+    //  postRender Callback?
+    if (postRender)
+    {
+        postRender(canvas, ctx);
     }
 
     return canvas;
