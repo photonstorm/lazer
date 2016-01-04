@@ -5,8 +5,9 @@ export default class Rotation {
     constructor (transform, rotation = 0) {
 
         this.transform = transform;
-        this._v = rotation;
-        this.fast = rotation % PI2;
+
+        this[0] = rotation;
+        this[1] = rotation % PI2;
 
         this.sr = 0;
         this.cr = 0;
@@ -14,17 +15,19 @@ export default class Rotation {
     }
 
     getValue () {
-        return this._v;
+
+        return this[0];
+
     }
 
     setValue (value) {
 
-        if (this._v !== value)
+        if (this[0] !== value)
         {
-            this._v = value;
-            this.fast = value % PI2;
+            this[0] = value;
+            this[1] = value % PI2;
 
-            if (this.fast)
+            if (this[1])
             {
                 //  Update the cache if the rotation != 0
                 this.sr = Math.sin(value);
@@ -33,6 +36,12 @@ export default class Rotation {
 
             this.transform.setDirty();
         }
+
+    }
+
+    get isFast () {
+
+        return (this[1] === 0);
 
     }
 
@@ -58,7 +67,6 @@ export default class Rotation {
 
     destroy () {
 
-        this._v = undefined;
         this.transform = undefined;
 
     }
