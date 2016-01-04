@@ -5,7 +5,7 @@ import Rotation from 'math/transform/2d/components/Rotation.js';
 import RotationAnchor from 'math/transform/2d/components/RotationAnchor.js';
 
 //  A Basic 2D Transform class
-//  Components: Position, Scale, Rotation and RotationAnchor baked to a Mat23
+//  Components: Position, Scale, Rotation and RotationAnchor, baked to a Mat23
 //  Supports: immediate and deferred update (defaults to deferred)
 
 export default class Transform {
@@ -28,6 +28,7 @@ export default class Transform {
 
     }
 
+    //  Inject the transform properties to the given target
     addProperties (target) {
 
         //  Property getter/setter injection
@@ -60,24 +61,24 @@ export default class Transform {
 
     updateTransform () {
 
-        if (this.rotation.fast === 0)
+        if (this.rotation.isFast)
         {
             //  Fast (no rotation)
-            this.local[0] = this.scale.x;
+            this.local[0] = this.scale[0];
             this.local[1] = 0;
             this.local[2] = 0;
-            this.local[3] = this.scale.y;
+            this.local[3] = this.scale[1];
         }
         else
         {
-            this.local[0] = this.rotation.cr * this.scale.x;
-            this.local[1] = this.rotation.sr * this.scale.x;
-            this.local[2] = -this.rotation.sr * this.scale.y;
-            this.local[3] = this.rotation.cr * this.scale.y;
+            this.local[0] = this.rotation.cr * this.scale[0];
+            this.local[1] = this.rotation.sr * this.scale[0];
+            this.local[2] = -this.rotation.sr * this.scale[1];
+            this.local[3] = this.rotation.cr * this.scale[1];
         }
 
-        this.local[4] = this.position.x;
-        this.local[5] = this.position.y;
+        this.local[4] = this.position[0];
+        this.local[5] = this.position[1];
 
         this.dirty = false;
 
