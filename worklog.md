@@ -36,6 +36,10 @@ Created new Transform sets: Minimal, Basic and Standard. These relate to the num
 
 Have created lots of test cases showing the new Transforms in action, very happy with how quickly this is coming together. Will soon be able
 
+Big update to the Lazer-Dev Test Runner. It now looks lovely and is much easier to use. It's based on the Phaser one I use locally and includes the ability to run tests in a div or iframe, screen grab and other things. It runs from php, just because, but should work fine on any set-up.
+
+Time to start thinking about Texture support, starting with how Frames and FrameData will be represented internally. Made a start by creating the Frame function along with SetTrim. Also created a massive multipack + rotation texture atlas in the lazer-dev repo to test from. This is going to need a new way to handle things from Phaser. Probably `Sprite.frameSet`, `Sprite.frameName` (the name of the frame within the atlas) and `Sprite.frame` (the number of the frame within the frameName, if a Sprite Sheet, or within frameSet).
+
 ### 4th January 2016
 
 Added the preRender and postRender callbacks to Create.RenderToCanvas. To be honest this function name probably needs changing (RenderSpriteData?) but I'm not really sure to what.
