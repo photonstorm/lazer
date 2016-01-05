@@ -1,4 +1,4 @@
-export default function (element) {
+export default function RemoveFromDOM (element) {
 
     if (element.parentNode)
     {

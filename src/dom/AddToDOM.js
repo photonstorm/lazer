@@ -1,6 +1,6 @@
-export default function (element, parent = null, overflowHidden = true) {
+export default function AddToDOM (element, parent = null, overflowHidden = true) {
 
-    var target;
+    let target;
 
     if (parent)
     {
