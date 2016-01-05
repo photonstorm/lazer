@@ -7,16 +7,18 @@ import Resize from 'canvas/Resize.js';
 //  canvas = either a Canvas object, or null / undefined / false
 //  palette = Create Palette Array
 
-export default function RenderToCanvas (data, { 
-                                            canvas = undefined,
-                                            palette = PALETTE_ARNE,
-                                            pixelWidth = 8,
-                                            pixelHeight = pixelWidth,
-                                            resizeCanvas = true,
-                                            clear = true,
-                                            preRender = undefined,
-                                            postRender = undefined
-                                        } = {}) {
+export default function RenderToCanvas (
+    data, 
+    { 
+        canvas = undefined,
+        palette = PALETTE_ARNE,
+        pixelWidth = 8,
+        pixelHeight = pixelWidth,
+        resizeCanvas = true,
+        clear = true,
+        preRender = undefined,
+        postRender = undefined
+    } = {}) {
 
     let width = data[0].length * pixelWidth;
     let height = data.length * pixelHeight;
