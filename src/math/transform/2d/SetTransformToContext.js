@@ -1,8 +1,8 @@
-export default function SetTransformToContext (transform, context) {
+export default function SetTransformToContext (transform, context, i = 1) {
 
     if (transform.dirty)
     {
-        transform.updateTransform();
+        transform.updateTransform(i);
     }
 
     context.setTransform(

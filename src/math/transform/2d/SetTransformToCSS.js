@@ -1,8 +1,8 @@
-export default function SetTransformToCSS (transform, element) {
+export default function SetTransformToCSS (transform, element, i = 1) {
 
     if (transform.dirty)
     {
-        transform.updateTransform();
+        transform.updateTransform(i);
     }
 
     let t = transform.local;

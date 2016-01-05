@@ -14,6 +14,10 @@ export default class BaseTransformComponent {
         this[0] = x;
         this[1] = y;
 
+        //  Old values (for interpolation based Transforms)
+        this[2] = x;
+        this[3] = y;
+
     }
 
     getX () {
@@ -28,10 +32,23 @@ export default class BaseTransformComponent {
 
     }
 
+    getDeltaX (i = 0) {
+
+        return (this[2] + (this[0] - this[2]) * i);
+
+    }
+
+    getDeltaY (i = 0) {
+
+        return (this[3] + (this[1] - this[3]) * i);
+
+    }
+
     setX (value) {
 
         if (this[0] !== value)
         {
+            this[2] = this[0];
             this[0] = value;
             this.transform.setDirty();
         }
@@ -42,6 +59,7 @@ export default class BaseTransformComponent {
 
         if (this[1] !== value)
         {
+            this[3] = this[1];
             this[1] = value;
             this.transform.setDirty();
         }
@@ -76,8 +94,40 @@ export default class BaseTransformComponent {
 
     set (x, y = x) {
 
+        this[2] = this[0];
+        this[3] = this[1];
+
         this[0] = x;
         this[1] = y;
+
+        this.transform.setDirty();
+
+    }
+
+    resetX (value) {
+
+        this[0] = value;
+        this[2] = value;
+
+        this.transform.setDirty();
+
+    }
+
+    resetY (value) {
+
+        this[1] = value;
+        this[3] = value;
+
+        this.transform.setDirty();
+
+    }
+
+    reset (x, y = x) {
+
+        this[0] = x;
+        this[1] = y;
+        this[2] = x;
+        this[3] = y;
 
         this.transform.setDirty();
 

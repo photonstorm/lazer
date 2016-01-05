@@ -32,6 +32,10 @@ Created BaseTransform class, which can be used by a Game Object as a base class 
 
 Moved the setTransform method out into the `SetTransformToContext` function. Also created `SetTransformToCSS` along with a new test (06-css1.js) and it works great, happily rendering 50 <div> elements, rotating and translating them across a container 'game' div, all from the same base Transform class as used for Canvas (and soon WebGL).
 
+Created new Transform sets: Minimal, Basic and Standard. These relate to the number of components they have enabled, and thus their complexity within their update functions. Minimal just has the Position and Scale components, nothing else, so is the quickest of them all. Basic has Rotation and RotationAnchor support added, so is the next most complex. Standard adds Pivot support onto this, which is really useful but adds another layer of complexity to the update logic. The final set to create will be ones allowing for child transforms. I'm likely going to create several of those - again ranging in complexity the more calculations are needed.
+
+Have created lots of test cases showing the new Transforms in action, very happy with how quickly this is coming together. Will soon be able
+
 ### 4th January 2016
 
 Added the preRender and postRender callbacks to Create.RenderToCanvas. To be honest this function name probably needs changing (RenderSpriteData?) but I'm not really sure to what.

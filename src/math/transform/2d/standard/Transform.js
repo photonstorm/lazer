@@ -1,12 +1,13 @@
 import Mat23 from 'math/matrix/mat23/Build.js';
 import Scale from 'math/transform/2d/components/Scale.js';
+import Pivot from 'math/transform/2d/components/Pivot.js';
 import Position from 'math/transform/2d/components/Position.js';
 import Rotation from 'math/transform/2d/components/Rotation.js';
 import RotationAnchor from 'math/transform/2d/components/RotationAnchor.js';
 
-//  A Basic 2D Transform class
+//  A Standard 2D Transform class
 
-//  Components: Position, Scale, Rotation and RotationAnchor, baked to a Mat23
+//  Components: Position, Scale, Pivot, Rotation and RotationAnchor, baked to a Mat23
 //  Supports: Immediate or Deferred Updates, Interpolation.
 
 export default class Transform {
@@ -15,6 +16,7 @@ export default class Transform {
 
         this.position = new Position(this, x, y);
         this.scale = new Scale(this, scaleX, scaleY);
+        this.pivot = new Pivot(this, 0, 0);
         this.rotation = new Rotation(this, rotation);
         this.rotationAnchor = new RotationAnchor(this, 0, 0);
 
@@ -35,6 +37,7 @@ export default class Transform {
 
         //  Component references
         target.position = this.position;
+        target.pivot = this.pivot;
         target.scale = this.scale;
         target.rotationAnchor = this.rotationAnchor;
 
@@ -95,6 +98,9 @@ export default class Transform {
 
     updateTransform (i = 1) {
 
+        let tx = (this.interpolate) ? this.position.getDeltaX(i) : this.position[0];
+        let ty = (this.interpolate) ? this.position.getDeltaY(i) : this.position[1];
+
         if (this.rotation.isFast)
         {
             //  Fast (no rotation)
@@ -102,24 +108,17 @@ export default class Transform {
             this.local[1] = 0;
             this.local[2] = 0;
             this.local[3] = this.scale[1];
+            this.local[4] = tx - this.pivot[0] * this.scale[0];
+            this.local[5] = ty - this.pivot[1] * this.scale[1];
         }
         else
         {
-            this.local[0] = this.rotation.cr * this.scale[0];
-            this.local[1] = this.rotation.sr * this.scale[0];
-            this.local[2] = -this.rotation.sr * this.scale[1];
-            this.local[3] = this.rotation.cr * this.scale[1];
-        }
-
-        if (this.interpolate)
-        {
-            this.local[4] = this.position.getDeltaX(i);
-            this.local[5] = this.position.getDeltaY(i);
-        }
-        else
-        {
-            this.local[4] = this.position[0];
-            this.local[5] = this.position[1];
+            this.local[0] = this.rotation.cr * this.scale[0];       // a
+            this.local[1] = this.rotation.sr * this.scale[0];       // b
+            this.local[2] = -this.rotation.sr * this.scale[1];      // c
+            this.local[3] = this.rotation.cr * this.scale[1];       // d
+            this.local[4] = tx - this.pivot[0] * this.local[0] + this.pivot[1] * this.local[2];
+            this.local[5] = ty - this.pivot[0] * this.local[1] + this.pivot[1] * this.local[3];
         }
 
         this.dirty = false;
@@ -132,6 +131,7 @@ export default class Transform {
 
         this.position.destroy();
         this.scale.destroy();
+        this.pivot.destroy();
         this.rotation.destroy();
         this.rotationAnchor.destroy();
 
