@@ -18,9 +18,16 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Game Config objects (things like PixelArt, Transparent, etc) - can be loaded into the game when it boots, rather than loads of arguments.
 * A Transform cache
 * Add interpolation to Shape rotation
-* Add in the 'no rotation' transform update version
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
+
+### 6th January 2016
+
+More work on Textures and Frame handling. Have created some new Texture Packer parsers (will add in Starling and some others later). Frame is a nice generic object. FrameSet is a collection of Frame objects.
+
+Pixi works on the basis of a BaseTexture which contains just the source image and a few other settings (including a FrameData collection), then it uses a Texture for each Sprite, which can have custom crop etc applied without messing with the underlying Frame objects. This is a quite nice approach although I can't help but feel we could simplify things a little.
+
+
 
 ### 5th January 2016
 

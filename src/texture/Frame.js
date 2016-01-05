@@ -3,21 +3,31 @@
 *
 * @class Frame
 * @constructor
-* @param {number} index - The index of this Frame within the FrameData set it is being added to.
+* @param {number} index - The index of this Frame within the FrameSet.
 * @param {number} x - X position of the frame within the texture image.
 * @param {number} y - Y position of the frame within the texture image.
 * @param {number} width - Width of the frame within the texture image.
 * @param {number} height - Height of the frame within the texture image.
 * @param {string} [name] - The name of the frame. In Texture Atlas data this is usually set to the filename.
 */
-export default function Frame (index, x, y, width, height, name = '') {
+export default function Frame (index, name, x, y, width, height) {
 
     return {
 
         /**
-        * @property {number} index - The index of this Frame within its FrameData set.
+        * @property {number} index - The index of this Frame within its FrameSet.
         */
         index: index,
+
+        /**
+        * @property {string} name - If the Frame is part of a Texture Atlas this is the 'filename' or key value. Can contain a / or \ if 'Folder names' was enabled in Texture Packer.
+        */
+        name: name,
+
+        /**
+        * @property {FrameSet} frameSet - The FrameSet this Frame belongs to (all Frames belong to FrameSets)
+        */
+        frameSet: undefined,
 
         /**
         * @property {number} x - X position within the image to cut from (in atlas json: frame.x)
@@ -38,11 +48,6 @@ export default function Frame (index, x, y, width, height, name = '') {
         * @property {number} height - Height of the frame to cut from the image (in atlas json: frame.h)
         */
         height: height,
-
-        /**
-        * @property {string} name - If the Frame is part of a Texture Atlas this is the 'filename' or key value. Can contain a / or \ if 'Folder names' was enabled in Texture Packer.
-        */
-        name: name,
 
         /**
         * @property {boolean} spriteSheet - Is this frame a Sprite Sheet? (i.e. contains child frame data)

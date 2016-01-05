@@ -2,8 +2,10 @@ import Frame from 'texture/Frame.js';
 
 export default class FrameSet {
 
-    constructor () {
+    //  A name for the FrameSet (should usually be unique, from a Cache point of view)
+    constructor (name) {
 
+        this.name = name;
         this.frames = new Map();
         
     }
@@ -15,6 +17,8 @@ export default class FrameSet {
 
     //  Frame object
     add (frame) {
+
+        frame.frameSet = this;
 
         this.frames.set(frame.name, frame);
 
