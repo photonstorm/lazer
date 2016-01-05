@@ -22,6 +22,16 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 5th January 2016
+
+Created a transform/2d/basic folder and moved relevant files in there. This will help distinguish it from other more complex 2D Transforms (i.e. those with parenting support).
+
+Updated BaseTransformComponent so it now uses local [0][1] properties (like the Vec2 class does) instead of the _v property data array. This means you can now pass any Transform component such as Position or Scale to _any_ function that expects a Vec2 data type. This makes it extremely flexible.
+
+Created BaseTransform class, which can be used by a Game Object as a base class to extend from. It hides away the Transform methods you don't want to inherit and adds in some useful property accessors.
+
+Moved the setTransform method out into the `SetTransformToContext` function. Also created `SetTransformToCSS` along with a new test (06-css1.js) and it works great, happily rendering 50 <div> elements, rotating and translating them across a container 'game' div, all from the same base Transform class as used for Canvas (and soon WebGL).
+
 ### 4th January 2016
 
 Added the preRender and postRender callbacks to Create.RenderToCanvas. To be honest this function name probably needs changing (RenderSpriteData?) but I'm not really sure to what.
@@ -79,14 +89,6 @@ Have moved the Math constants to Constants.js and now reference those in various
 Have refactored all of the Transform components into classes with local value arrays. Given how many Transforms are likely to exist in any given game (typically thousands) it's important they are built on the prototype, and don't carry around all kinds of duplicate functions. Also updated 2d/Transform to use them and built lots of tests for it, and it's all working well. You can inject the transform properties into any object, allowing for my `sprite.x` use-case. You can also use Transform as a base class to extend from, rather than having it as an object property, and it'll work just fine without the need for property injection.
 
 The tests are running nicely, so the next move will be to take the Transform class I've got and add in child transform support.
-
-Update: 23:30
-
-Created a transform/2d/basic folder and moved relevant files in there. This will help distinguish it from other more complex 2D Transforms (i.e. those with parenting support).
-
-Updated BaseTransformComponent so it now uses local [0][1] properties (like the Vec2 class does) instead of the _v property data array. This means you can now pass any Transform component such as Position or Scale to _any_ function that expects a Vec2 data type. This makes it extremely flexible.
-
-Created BaseTransform class, which can be used by a Game Object as a base class to extend from. It hides away the Transform methods you don't want to inherit and adds in some useful property accessors.
 
 ### 3rd January 2016
 

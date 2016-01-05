@@ -52,10 +52,4 @@ export default class BaseTransform {
 
     }
 
-    setTransform (context) {
-
-        return this.transform.setTransform(context);
-
-    }
-
 }

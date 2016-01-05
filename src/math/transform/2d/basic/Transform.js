@@ -86,26 +86,6 @@ export default class Transform {
 
     }
 
-    setTransform (context) {
-
-        if (this.dirty)
-        {
-            this.updateTransform();
-        }
-
-        context.setTransform(
-            this.local[0],  // scale x
-            this.local[1],  // shear y
-            this.local[2],  // shear x
-            this.local[3],  // scale y
-            this.local[4],  // translate x
-            this.local[5]   // translate y
-        );
-
-        return this;
-
-    }
-
     destroy () {
 
         this.position.destroy();
