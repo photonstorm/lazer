@@ -27,13 +27,11 @@ export default function XHRLoader (file) {
         (resolve, reject) => {
 
             xhr.onload = () => {
-                file.state = FILE.LOADED;
-                file.onComplete(xhr);
+                file.onLoad(xhr);
                 resolve(file);
             };
 
             xhr.onerror = () => {
-                file.state = FILE.FAILED;
                 file.onError(xhr);
                 reject(file);
             };

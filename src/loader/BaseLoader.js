@@ -6,7 +6,7 @@ export default class BaseLoader {
 
     constructor () {
 
-        this.resetLocked = false;
+        this.resetLocked = false; // for state changes, probably not needed any more
 
         this.crossOrigin = false;
     
@@ -48,7 +48,7 @@ export default class BaseLoader {
 
     }
 
-    add (file) {
+    addFile (file) {
 
         if (!this.list.has(file))
         {
@@ -92,12 +92,18 @@ export default class BaseLoader {
 
             this.queue.clear();
 
-            // this.updateProgress();
+            this.updateProgress();
 
             this.processLoadQueue();
         }
 
         return promise;
+
+    }
+
+    updateProgress () {
+
+        //  TODO
 
     }
 
@@ -114,7 +120,7 @@ export default class BaseLoader {
 
         for (let file of this.list)
         {
-            if (!file.isLoading && this.queue.size <= this.maxParallelDownloads)
+            if (file.state === FILE.PENDING && this.queue.size <= this.maxParallelDownloads)
             {
                 this.queue.add(file);
 
@@ -137,8 +143,6 @@ export default class BaseLoader {
 
         console.log('BaseLoader loadFile', file.src);
 
-        //  Need to set the full URL here
-
         if (file.loader === 'xhr')
         {
             XHRLoader(file).then(() => this.nextFile());
@@ -146,6 +150,10 @@ export default class BaseLoader {
         else if (file.loader === 'tag')
         {
             TagLoader(file).then(() => this.nextFile());
+        }
+        else if (file.loader === 'custom')
+        {
+            file.customLoader().then(() => this.nextFile());
         }
 
     }
@@ -163,7 +171,7 @@ export default class BaseLoader {
             //  Check the queue is clear
             for (let file of this.queue)
             {
-                if (file.isLoading)
+                if (file.state === FILE.LOADING)
                 {
                     //  If anything is still loading we bail out
                     return;
@@ -201,11 +209,11 @@ export default class BaseLoader {
 
         for (let file of this.queue)
         {
-            if (file.parent && file.parent.onProcess)
+            if (file.parent)
             {
                 file.parent.onProcess();
             }
-            else if (file.onProcess)
+            else
             {
                 file.onProcess();
             }
@@ -219,11 +227,11 @@ export default class BaseLoader {
 
     getLoadedFiles (output = []) {
 
-        //  Return an array of all files that have state = LOADED
+        //  Return an array of all files that have state = COMPLETE (which means loaded + processed)
 
         for (let file of this.queue)
         {
-            if (file.state === FILE.LOADED)
+            if (file.state === FILE.COMPLETE)
             {
                 output.push(file);
             }

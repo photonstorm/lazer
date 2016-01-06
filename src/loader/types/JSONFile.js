@@ -1,43 +1,39 @@
-import BaseFile from 'loader/types/BaseFile.js';
+import File from 'loader/File.js';
+import { FILE } from 'loader/Constants.js';
 
-export default class JSONFile extends BaseFile {
+export default function JSONFile (key, url = '', data = undefined) {
 
-    constructor (loader, key, url = '', data = null) {
-
-        if (url === '' && !data)
-        {
-            url = key + '.json';
-        }
-
-        super(loader, key, url);
-
-        this.type = 'text';
-
-        this.json = null;
-
-        if (data)
-        {
-            //  Already loaded!
-            this.data = data;
-        }
-
+    if (url === '' && !data)
+    {
+        url = key + '.json';
     }
 
-    complete (xhr) {
+    let file = File(key, url, 'text');
 
-        super.complete(xhr.responseText);
+    file.onLoad = function (xhr) {
 
+        this.state = FILE.LOADED;
+        this.data = xhr.responseText;
+
+    };
+
+    file.onProcess = function () {
+
+        //  try/catch?
+        this.data = JSON.parse(this.data);
+
+        console.log(this.data);
+
+        this.state = FILE.COMPLETE;
+
+    };
+
+    if (data)
+    {
+        file.data = data;
+        file.onProcess();
     }
 
-    process () {
-
-        super.process();
-
-        //  try / catch?
-        this.json = JSON.parse(this.data);
-
-        console.log(this.json);
-
-    }
+    return file;
 
 }

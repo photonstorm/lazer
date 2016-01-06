@@ -20,9 +20,18 @@ export default function File (key, url, type, loader = 'xhr') {
         path: '',
         src: '',
 
-        type: type,
+        type: type, // the file type, i.e. 'image', 'json', etc (can control which cache it gets added to)
+
+        state: FILE.PENDING,
 
         loader: loader,
+        customLoader: undefined,
+
+        parent: undefined,
+
+        linkFile: undefined,
+
+        data: undefined,
 
         //  xhr credentials
         user: '',
@@ -38,16 +47,24 @@ export default function File (key, url, type, loader = 'xhr') {
         //  xhr overrideMimeType
         overrideMimeType: '',
 
-        parent: null,
+        //  These functions are overwritten by the custom file types
 
-        linkFile: null,
+        onLoad: function () {
 
-        data: null,
+            this.state = FILE.LOADED;
 
-        state: FILE.PENDING,
+        },
 
-        get isLoading () {
-            return (this.state === FILE.LOADING);
+        onError: function () {
+
+            this.state = FILE.FAILED;
+
+        },
+
+        onProcess: function () {
+
+            this.state = FILE.COMPLETE;
+
         }
 
     };
