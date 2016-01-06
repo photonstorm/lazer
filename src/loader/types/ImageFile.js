@@ -74,8 +74,6 @@ export default class ImageFile extends BaseFile {
 
         super.process();
 
-        // document.body.appendChild(this.data);
-
     }
 
 }

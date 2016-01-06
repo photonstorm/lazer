@@ -17,9 +17,9 @@ import AtlasXMLFile from 'loader/types/AtlasXMLFile.js';
  */
 export default class Loader extends BaseLoader {
 
-    constructor (game) {
+    constructor () {
 
-        super(game);
+        super();
 
     }
 

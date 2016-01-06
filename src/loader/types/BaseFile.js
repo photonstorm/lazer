@@ -21,6 +21,17 @@ export default class BaseFile {
 
         this.type = '';
 
+        //  xhr credentials
+        this.user = '';
+        this.password = '';
+        //  xhr timeout (0 = no timeout)
+        this.timeout = 0;
+        //  setRequestHeader
+        this.header = '';
+        this.headerValue = '';
+        //  overrideMimeType
+        this.overrideMimeType = '';
+
         this.parent = null;
 
         this.linkFile = null;
@@ -50,6 +61,7 @@ export default class BaseFile {
 
     }
 
+    /*
     add () {
 
         //  It's a Set so it won't allow multiple identical objects
@@ -71,10 +83,13 @@ export default class BaseFile {
         );
 
     }
+    */
 
-    load () {
+    load (src) {
 
-        this.src = this.loader.getURL(this);
+        this.src = src;
+
+        // this.src = this.loader.getURL(this);
 
         if (!this.customLoad)
         {

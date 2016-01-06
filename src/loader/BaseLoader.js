@@ -1,9 +1,10 @@
+import XHRLoader from 'loader/XHRLoader.js';
+import TagLoader from 'loader/TagLoader.js';
+import { LOADER, FILE } from 'loader/Constants.js';
 
 export default class BaseLoader {
 
-    constructor (game) {
-
-        this.game = game;
+    constructor () {
 
         this.resetLocked = false;
 
@@ -43,11 +44,23 @@ export default class BaseLoader {
 
     get loading () {
 
-        return (this._state === BaseLoader.LOADING);
+        return (this._state === LOADER.LOADING);
+
+    }
+
+    add (file) {
+
+        if (!this.list.has(file))
+        {
+            file.path = this.path;
+            this.list.add(file);
+        }
 
     }
 
     start () {
+
+        console.log('BaseLoader start', this.list.size);
 
         if (this.loading)
         {
@@ -57,11 +70,11 @@ export default class BaseLoader {
         const promise = new Promise(
             (resolve, reject) => {
                 this.onStateChange = function () {
-                    if (this.state === BaseLoader.COMPLETE)
+                    if (this.state === LOADER.COMPLETE)
                     {
                         resolve(this);
                     }
-                    else if (this.state == BaseLoader.FAILED)
+                    else if (this.state == LOADER.FAILED)
                     {
                         reject(this);
                     }
@@ -75,7 +88,7 @@ export default class BaseLoader {
         }
         else
         {
-            this.state = BaseLoader.LOADING;
+            this.state = LOADER.LOADING;
 
             this.queue.clear();
 
@@ -90,6 +103,8 @@ export default class BaseLoader {
 
     processLoadQueue () {
 
+        console.log('BaseLoader processLoadQueue', this.list.size);
+
         if (!this.loading)
         {
             console.warn('Lazer.Loader - active loading canceled / reset');
@@ -99,7 +114,7 @@ export default class BaseLoader {
 
         for (let file of this.list)
         {
-            if (!file.loading && this.queue.size <= this.maxParallelDownloads)
+            if (!file.isLoading && this.queue.size <= this.maxParallelDownloads)
             {
                 this.queue.add(file);
 
@@ -118,11 +133,26 @@ export default class BaseLoader {
 
     loadFile (file) {
 
-        file.load();
+        file.src = this.getURL(file);
+
+        console.log('BaseLoader loadFile', file.src);
+
+        //  Need to set the full URL here
+
+        if (file.loader === 'xhr')
+        {
+            XHRLoader(file).then(() => this.nextFile());
+        }
+        else if (file.loader === 'tag')
+        {
+            TagLoader(file).then(() => this.nextFile());
+        }
 
     }
 
     nextFile () {
+
+        console.log('nextFile');
 
         if (this.list.size > 0)
         {
@@ -133,7 +163,7 @@ export default class BaseLoader {
             //  Check the queue is clear
             for (let file of this.queue)
             {
-                if (file.loading)
+                if (file.isLoading)
                 {
                     //  If anything is still loading we bail out
                     return;
@@ -165,43 +195,41 @@ export default class BaseLoader {
     
     finishedLoading () {
 
-        console.log('finishedLoading, about to start processing');
+        console.log('BaseLoader PROCESSING');
 
-        this.state = BaseLoader.PROCESSING;
+        this.state = LOADER.PROCESSING;
 
         for (let file of this.queue)
         {
-            if (file.parent)
+            if (file.parent && file.parent.onProcess)
             {
-                file.parent.process();
+                file.parent.onProcess();
             }
-            else
+            else if (file.onProcess)
             {
-                file.process();
+                file.onProcess();
             }
         }
 
-        this.state = BaseLoader.COMPLETE;
+        console.log('BaseLoader COMPLETE');
+
+        this.state = LOADER.COMPLETE;
 
     }
 
-    xhrLoad (file) {
+    getLoadedFiles (output = []) {
 
-        console.log('xhrLoad', file.src);
+        //  Return an array of all files that have state = LOADED
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', file.src, true);
-        xhr.responseType = file.type;
+        for (let file of this.queue)
+        {
+            if (file.state === FILE.LOADED)
+            {
+                output.push(file);
+            }
+        }
 
-        xhr.onload = () => {
-            file.complete(xhr);
-        };
-
-        xhr.onerror = () => {
-            file.error(xhr);
-        };
-
-        xhr.send();
+        return output;
 
     }
 
@@ -210,17 +238,8 @@ export default class BaseLoader {
         this.list.clear();
         this.queue.clear();
 
-        this.state = BaseLoader.DESTROYED;
+        this.state = LOADER.DESTROYED;
 
     }
 
 }
-
-//  Class constants
-
-BaseLoader.PENDING = 0;
-BaseLoader.LOADING = 1;
-BaseLoader.PROCESSING = 2;
-BaseLoader.COMPLETE = 3;
-BaseLoader.FAILED = 4;
-BaseLoader.DESTROYED = 5;
