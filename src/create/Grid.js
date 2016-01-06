@@ -1,23 +1,24 @@
 import Canvas from 'canvas/Canvas.js';
 import GetContext from 'canvas/GetContext.js';
 
-export default function Grid (
-    {
-        canvas = undefined,
-        width = 256,
-        height = width,
-        cellWidth = 32,
-        cellHeight = cellWidth,
-        color1 = '#fff',
-        color2 = '#000',
-        drawLines = false,
-        lineColor = '#ff0000',
-        alternate = true,
-        resizeCanvas = true,
-        clear = true,
-        preRender = undefined,
-        postRender = undefined
-    } = {}) {
+export default function Grid  (
+        {
+            canvas = undefined,
+            width = 256,
+            height = width,
+            cellWidth = 32,
+            cellHeight = cellWidth,
+            color1 = '#fff',
+            color2 = '#000',
+            drawLines = false,
+            lineColor = '#ff0000',
+            alternate = true,
+            resizeCanvas = true,
+            clear = true,
+            preRender = undefined,
+            postRender = undefined
+        } = {}
+    ) {
 
     if (!canvas)
     {

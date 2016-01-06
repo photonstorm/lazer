@@ -1,23 +1,18 @@
 /**
-* A Frame is a single frame of an animation and is part of a FrameData collection.
+* A Frame is a single frame of texture atlas (or a whole image)
 *
 * @class Frame
 * @constructor
-* @param {number} index - The index of this Frame within the FrameSet.
+* @param {string} [name] - The name of the frame. In Texture Atlas data this is usually set to the filename.
+* @param {Image|Canvas} source - Reference to the source image / canvas.
 * @param {number} x - X position of the frame within the texture image.
 * @param {number} y - Y position of the frame within the texture image.
 * @param {number} width - Width of the frame within the texture image.
 * @param {number} height - Height of the frame within the texture image.
-* @param {string} [name] - The name of the frame. In Texture Atlas data this is usually set to the filename.
 */
-export default function Frame (index, name, x, y, width, height) {
+export default function Frame (name, source, x, y, width, height) {
 
     return {
-
-        /**
-        * @property {number} index - The index of this Frame within its FrameSet.
-        */
-        index: index,
 
         /**
         * @property {string} name - If the Frame is part of a Texture Atlas this is the 'filename' or key value. Can contain a / or \ if 'Folder names' was enabled in Texture Packer.
@@ -25,9 +20,9 @@ export default function Frame (index, name, x, y, width, height) {
         name: name,
 
         /**
-        * @property {FrameSet} frameSet - The FrameSet this Frame belongs to (all Frames belong to FrameSets)
+        * @property {Image|Canvas} source - A reference to the source image (or canvas) that this frame is bound to.
         */
-        frameSet: undefined,
+        source: source,
 
         /**
         * @property {number} x - X position within the image to cut from (in atlas json: frame.x)
@@ -48,11 +43,6 @@ export default function Frame (index, name, x, y, width, height) {
         * @property {number} height - Height of the frame to cut from the image (in atlas json: frame.h)
         */
         height: height,
-
-        /**
-        * @property {boolean} spriteSheet - Is this frame a Sprite Sheet? (i.e. contains child frame data)
-        */
-        spriteSheet: false,
 
         /**
         * @property {number} rotation - If the frame is rotated this holds the amount of rotation to be applied.

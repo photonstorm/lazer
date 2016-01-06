@@ -27,7 +27,19 @@ More work on Textures and Frame handling. Have created some new Texture Packer p
 
 Pixi works on the basis of a BaseTexture which contains just the source image and a few other settings (including a FrameData collection), then it uses a Texture for each Sprite, which can have custom crop etc applied without messing with the underlying Frame objects. This is a quite nice approach although I can't help but feel we could simplify things a little.
 
+--
 
+
+** Convert Frame to SpriteSheet (FrameSet?) / Parse Frame - that is how we'll allow you to embed a sprite sheet into an atlas and still create animation data from it **
+
+** I need to find a way to define an Animation with either indexes or frame names (like currently), but that can span multiple images. Maybe an Animation just contains _references_ to Frame objects, and it doesn't matter what cache they are in: How to tell if texture needs updating? Don't, just set currentFrame and handle it then.
+
+
+
+
+Frames are part of a FrameData set, but what I'm wondering now is why? What benefit does that provide? My thought is 'frame name lookup'. Should there be 1 FrameData per atlas? (and thus 1 per single image too), or just one massive FrameCache, split into 'cache names', then FrameData per name?
+
+Needed outcome: Ability to just pass a Texture to a renderer, not a Sprite. Therefore Texture needs to know about the source image + crop rect + frame + uv data + blend mode.
 
 ### 5th January 2016
 
