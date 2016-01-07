@@ -9,17 +9,13 @@ export default function ImageFile (key, url = '', data = undefined) {
 
     let file = File(key, url, 'image');
 
-    file.load = function (loader) {
+    file.load = function () {
 
         this.data = new Image();
 
         if (this.crossOrigin)
         {
             this.data.crossOrigin = this.crossOrigin;
-        }
-        else if (loader.crossOrigin)
-        {
-            this.data.crossOrigin = loader.crossOrigin;
         }
 
         return new Promise(

@@ -23,12 +23,6 @@ export default class BaseLoader {
         //  xhr specific global settings (can be overridden on a per-file basis)
         this.xhr = XHRSettings();
 
-        //  Default xhr values
-        this.xhr.async = true;
-        this.xhr.timeout = 0;
-        this.xhr.user = '';
-        this.xhr.password = '';
-
         this.crossOrigin = undefined;
 
         this.list = new Set();
@@ -167,9 +161,14 @@ export default class BaseLoader {
 
         file.src = this.getURL(file);
 
-        console.log('BaseLoader loadFile', file.src);
+        //  If the file doesn't have its own crossOrigin set, we'll use the Loaders (which is undefined by default)
+        if (file.crossOrigin === undefined && this.crossOrigin)
+        {
+            file.crossOrigin = this.crossOrigin;
+        }
 
-        file.load(this).then(() => this.nextFile());
+        //  The argument is an XHRSettings object
+        file.load(this.xhr).then(() => this.nextFile());
 
     }
 

@@ -1,28 +1,24 @@
+import MergeXHRSettings from 'loader/MergeXHRSettings.js';
 
-export default function XHRLoader (file, loader) {
+export default function XHRLoader (file, globalXHRSettings) {
 
-    let async = file.xhr.async ? file.xhr.async : loader.xhr.async;
-    let user = file.xhr.user ? file.xhr.user : loader.xhr.user;
-    let password = file.xhr.password ? file.xhr.password : loader.xhr.password;
-    let header = file.xhr.header ? file.xhr.header : loader.xhr.header;
-    let headerValue = file.xhr.headerValue ? file.xhr.headerValue : loader.xhr.headerValue;
-    let overrideMimeType = file.xhr.overrideMimeType ? file.xhr.overrideMimeType : loader.xhr.overrideMimeType;
+    let config = MergeXHRSettings(globalXHRSettings, file.xhr);
 
     let xhr = new XMLHttpRequest();
 
-    xhr.open('GET', file.src, async, user, password);
+    xhr.open('GET', file.src, config.async, config.user, config.password);
 
     xhr.responseType = file.xhr.responseType;
-    xhr.timeout = file.xhr.timeout ? file.xhr.timeout : loader.xhr.timeout;
+    xhr.timeout = config.timeout;
 
-    if (header && headerValue)
+    if (config.header && config.headerValue)
     {
-        xhr.setRequestHeader(header, headerValue);
+        xhr.setRequestHeader(config.header, config.headerValue);
     }
 
-    if (overrideMimeType)
+    if (config.overrideMimeType)
     {
-        xhr.overrideMimeType(overrideMimeType);
+        xhr.overrideMimeType(config.overrideMimeType);
     }
 
     return new Promise(

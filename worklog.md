@@ -21,6 +21,14 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 7th January 2016
+
+A few more refinements to the Loader. Updated it so that files can now load themselves entirely, without the need for the BaseLoader at all. You are responsible for processing them when you do this, but it still means you can literally just create an ImageFile and call `load` on it and it'll just work.
+
+Created a new XHRSettings object, which the Loader and File share. Created some xhr test cases.
+
+
+
 ### 6th January 2016
 
 Complete rewrite of the Loader. The Files are now entirely independent of the Loader and don't hold any references to the Loader at all. They are fully Promise based. The BaseLoader no longer cares about what the File is or does, as long as it exposes the properties and methods it needs. The File is responsible for handling its own loading (be it XHR or Tag based) and simply returns a Promise to the Loader.

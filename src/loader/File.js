@@ -31,9 +31,9 @@ export default function File (key, url, type) {
 
         url: url,
 
-        //  Both of these are set by the BaseLoader
+        //  Both of these are overriden by the BaseLoader (if being used)
         path: '',
-        src: '',
+        src: url,
 
         type: type, // the file type, i.e. 'image', 'json', etc which can be used to control which cache it gets added to
 
@@ -79,12 +79,12 @@ export default function File (key, url, type) {
 
         //  These functions are usually overridden by the custom file types
 
-        load: function (loader) {
+        load: function (globalXHRSettings) {
 
             this.onStateChange(LOADING);
 
             //  Returns a Promise from the XHRLoader
-            return XHRLoader(this, loader);
+            return XHRLoader(this, globalXHRSettings);
 
         },
 

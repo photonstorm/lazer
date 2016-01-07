@@ -1,20 +1,20 @@
-//  Creates an XHRSettings Object
+//  Creates an XHRSettings Object with default values
 
-export default function XHRSettings (responseType = '') {
+export default function XHRSettings (responseType = '', async = true, user = '', password = '', timeout = 0) {
 
     return {
 
         //  Ignored by the Loader, only used by File.
         responseType: responseType,
 
-        async: undefined,
+        async: async,
 
         //  credentials
-        user: undefined,
-        password: undefined,
+        user: user,
+        password: password,
 
         //  timeout in ms (0 = no timeout)
-        timeout: undefined,
+        timeout: timeout,
 
         //  setRequestHeader
         header: undefined,
