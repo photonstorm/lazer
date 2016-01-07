@@ -51,7 +51,7 @@ export default function ImageFile (key, url = '', data = undefined) {
                 {
                     this.data.onload = null;
                     this.data.onerror = null;
-                    this.onStateChange(FILE.LOADED);
+                    this.onStateChange(FILE.COMPLETE);
                     resolve(file);
                 }
 

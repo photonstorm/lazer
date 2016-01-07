@@ -1,5 +1,4 @@
 import BaseLoader from 'loader/BaseLoader.js';
-
 import ImageFile from 'loader/types/ImageFile.js';
 import JSONFile from 'loader/types/JSONFile.js';
 import XMLFile from 'loader/types/XMLFile.js';
@@ -9,12 +8,8 @@ import BinaryFile from 'loader/types/BinaryFile.js';
 import AtlasJSONFile from 'loader/types/AtlasJSONFile.js';
 import AtlasXMLFile from 'loader/types/AtlasXMLFile.js';
 
-/**
- * TODO:
- *
- * + Allow a way to specify which Cache a file is added to when processed
- * 
- */
+//  This is our Phaser-like Loader class. You don't have to use it :)
+
 export default class Loader extends BaseLoader {
 
     constructor () {
@@ -25,7 +20,7 @@ export default class Loader extends BaseLoader {
 
     image (key, url = '') {
 
-        return new ImageFile(this, key, url).add();
+        return this.addFile(ImageFile(key, url));
 
     }
  
@@ -52,49 +47,53 @@ export default class Loader extends BaseLoader {
 
     json (key, url = '') {
 
-        return new JSONFile(this, key, url).add();
+        return this.addFile(JSONFile(key, url));
 
     }
 
     text (key, url = '') {
 
-        return new TextFile(this, key, url).add();
+        return this.addFile(TextFile(key, url));
 
     }
 
     glsl (key, url = '') {
 
-        return new GLSLFile(this, key, url).add();
+        return this.addFile(GLSLFile(key, url));
 
     }
 
     shader (key, url = '') {
 
-        return new GLSLFile(this, key, url).add();
+        return this.addFile(GLSLFile(key, url));
 
     }
 
     xml (key, url = '') {
 
-        return new XMLFile(this, key, url).add();
+        return this.addFile(XMLFile(key, url));
 
     }
 
-    binary (key, url = '', callback = null) {
+    binary (key, url = '', callback = undefined) {
 
-        return new BinaryFile(this, key, url, callback).add();
+        let file = BinaryFile(key, url);
 
-    }
+        file.processCallback = callback;
 
-    atlas (key, textureURL = '', atlasURL = '', atlasData = null) {
-
-        return new AtlasJSONFile(this, key, textureURL, atlasURL, atlasData).add();
+        return this.addFile(file);
 
     }
 
-    atlasXML (key, textureURL = '', atlasURL = '', atlasData = null) {
+    atlas (key, textureURL = '', atlasURL = '', atlasData = undefined) {
 
-        return new AtlasXMLFile(this, key, textureURL, atlasURL, atlasData).add();
+        return this.addFile(AtlasJSONFile(key, textureURL, atlasURL, atlasData));
+
+    }
+
+    atlasXML (key, textureURL = '', atlasURL = '', atlasData = undefined) {
+
+        return this.addFile(AtlasXMLFile(key, textureURL, atlasURL, atlasData));
 
     }
 

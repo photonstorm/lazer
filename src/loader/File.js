@@ -66,13 +66,14 @@ export default function File (key, url, type) {
             {
                 this.state = value;
 
-                if (value === LOADED)
+                //  Loaded AND Processed
+                if (value === COMPLETE)
                 {
                     //  Part of a multipart load?
                     if (this.multipart)
                     {
                         //  Has the linked file loaded too?
-                        if (this.linkFile.state === LOADED && this.multipart.resolve)
+                        if (this.linkFile.state === COMPLETE && this.multipart.resolve)
                         {
                             //  Send the Promise for the multipart file
                             this.multipart.resolve(this.multipart);

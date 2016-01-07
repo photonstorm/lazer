@@ -29,7 +29,9 @@ Created a new XHRSettings object, which the Loader and File share. Created some 
 
 MultiFile support is now added. This is a special file type that consists of two separate files. For example the AtlasJSONFile is a MultiFile that contains a JSONFile and an ImageFile. When MultiFiles are added to the BaseLoader the Promise is only sent once both files are loaded successfully (or rejected if just one of them fails). They are also linked by the linkFile property, so further processing knows how to combine them together again i.e. for adding to the Cache.
 
+Updated the File onStateChange so it doesn't resolve the Promise until the file is loaded AND parsed, otherwise you just get loads of incomplete data if you use a file-level Promise. The Promise will reject if the file fails loading OR parsing.
 
+TexturePackerJSONArray is working and extracting the right data from the atlas.
 
 ### 6th January 2016
 
