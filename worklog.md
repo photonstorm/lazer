@@ -23,21 +23,27 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 ### 6th January 2016
 
+Complete rewrite of the Loader. The Files are now entirely independent of the Loader and don't hold any references to the Loader at all. They are fully Promise based. The BaseLoader no longer cares about what the File is or does, as long as it exposes the properties and methods it needs. The File is responsible for handling its own loading (be it XHR or Tag based) and simply returns a Promise to the Loader.
+
+The Files are no longer Classes either, but pure JavaScript objects with a few helper functions.
+
+Lots of new XHR level properties have been added to the files and the Loader. You can now set XHR login credentials (username, password), a file-specific timeout value, request headers and mime type overrides. These can all be set on a per-file basis, or globally in the Loader itself (file level properties override global ones always)
+
+Image Files have a new crossOrigin property, as does the Loader. So files can have their own CORs settings, not just a Loader level one.
+
+Files also now have a process callback, which is invoked after the default File Handler process function has run. The Loader now works differently to Phaser - before once the file was loaded it was instantly processed. For example if you loaded a huge JSON it would be parsed immediately on load, even while other files were loading. This is a performance issue, so the Loader now works in two stages: Loading of files and Processing of them. Only once all the files have loaded are they processed (i.e. JSON is parsed, XML is evaluated, etc).
+
+---
+
 More work on Textures and Frame handling. Have created some new Texture Packer parsers (will add in Starling and some others later). Frame is a nice generic object. FrameSet is a collection of Frame objects.
 
 Pixi works on the basis of a BaseTexture which contains just the source image and a few other settings (including a FrameData collection), then it uses a Texture for each Sprite, which can have custom crop etc applied without messing with the underlying Frame objects. This is a quite nice approach although I can't help but feel we could simplify things a little.
 
---
+Thought: Convert Frame to SpriteSheet (FrameSet?) / Parse Frame - that is how we'll allow you to embed a sprite sheet into an atlas and still create animation data from it **
 
+Thought: I need to find a way to define an Animation with either indexes or frame names (like currently), but that can span multiple images. Maybe an Animation just contains _references_ to Frame objects, and it doesn't matter what cache they are in: How to tell if texture needs updating? Don't, just set currentFrame and handle it then.
 
-** Convert Frame to SpriteSheet (FrameSet?) / Parse Frame - that is how we'll allow you to embed a sprite sheet into an atlas and still create animation data from it **
-
-** I need to find a way to define an Animation with either indexes or frame names (like currently), but that can span multiple images. Maybe an Animation just contains _references_ to Frame objects, and it doesn't matter what cache they are in: How to tell if texture needs updating? Don't, just set currentFrame and handle it then.
-
-
-
-
-Frames are part of a FrameData set, but what I'm wondering now is why? What benefit does that provide? My thought is 'frame name lookup'. Should there be 1 FrameData per atlas? (and thus 1 per single image too), or just one massive FrameCache, split into 'cache names', then FrameData per name?
+Thought: Frames are part of a FrameData set, but what I'm wondering now is why? What benefit does that provide? My thought is 'frame name lookup'. Should there be 1 FrameData per atlas? (and thus 1 per single image too), or just one massive FrameCache, split into 'cache names', then FrameData per name?
 
 Needed outcome: Ability to just pass a Texture to a renderer, not a Sprite. Therefore Texture needs to know about the source image + crop rect + frame + uv data + blend mode.
 

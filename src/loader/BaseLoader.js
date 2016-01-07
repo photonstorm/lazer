@@ -1,15 +1,17 @@
-import XHRLoader from 'loader/XHRLoader.js';
-import TagLoader from 'loader/TagLoader.js';
-import { LOADER, FILE } from 'loader/Constants.js';
+import XHRSettings from 'loader/XHRSettings.js';
+import File, * as FILE from 'loader/File.js';
+
+export const PENDING = 0;
+export const LOADING = 1;
+export const PROCESSING = 2;
+export const COMPLETE = 3;
+export const FAILED = 4;
+export const DESTROYED = 5;
 
 export default class BaseLoader {
 
     constructor () {
 
-        this.resetLocked = false; // for state changes, probably not needed any more
-
-        this.crossOrigin = false;
-    
         this.baseURL = '';
 
         this.path = '';
@@ -18,11 +20,22 @@ export default class BaseLoader {
 
         this.maxParallelDownloads = 4;
 
+        //  xhr specific global settings (can be overridden on a per-file basis)
+        this.xhr = XHRSettings();
+
+        //  Default xhr values
+        this.xhr.async = true;
+        this.xhr.timeout = 0;
+        this.xhr.user = '';
+        this.xhr.password = '';
+
+        this.crossOrigin = undefined;
+
         this.list = new Set();
         this.queue = new Set();
 
         this.onStateChange = null;
-        this._state = 0;
+        this._state = PENDING;
 
     }
 
@@ -44,7 +57,7 @@ export default class BaseLoader {
 
     get loading () {
 
-        return (this._state === LOADER.LOADING);
+        return (this._state === LOADING);
 
     }
 
@@ -53,14 +66,26 @@ export default class BaseLoader {
         if (!this.list.has(file))
         {
             file.path = this.path;
+
             this.list.add(file);
+
+            return new Promise(
+                (resolve, reject) => {
+
+                    //  When this file loads we need to call 'resolve'
+                    file.resolve = resolve;
+                    file.reject = reject;
+
+                }
+            );
+
         }
 
     }
 
     start () {
 
-        console.log('BaseLoader start', this.list.size);
+        console.log('BaseLoader start. Files to load:', this.list.size);
 
         if (this.loading)
         {
@@ -70,11 +95,11 @@ export default class BaseLoader {
         const promise = new Promise(
             (resolve, reject) => {
                 this.onStateChange = function () {
-                    if (this.state === LOADER.COMPLETE)
+                    if (this.state === COMPLETE)
                     {
-                        resolve(this);
+                        resolve(this.getLoadedFiles(), this);
                     }
-                    else if (this.state == LOADER.FAILED)
+                    else if (this.state === FAILED)
                     {
                         reject(this);
                     }
@@ -88,7 +113,7 @@ export default class BaseLoader {
         }
         else
         {
-            this.state = LOADER.LOADING;
+            this.state = LOADING;
 
             this.queue.clear();
 
@@ -137,24 +162,14 @@ export default class BaseLoader {
 
     }
 
+    //  private
     loadFile (file) {
 
         file.src = this.getURL(file);
 
         console.log('BaseLoader loadFile', file.src);
 
-        if (file.loader === 'xhr')
-        {
-            XHRLoader(file).then(() => this.nextFile());
-        }
-        else if (file.loader === 'tag')
-        {
-            TagLoader(file).then(() => this.nextFile());
-        }
-        else if (file.loader === 'custom')
-        {
-            file.customLoader().then(() => this.nextFile());
-        }
+        file.load(this).then(() => this.nextFile());
 
     }
 
@@ -205,8 +220,9 @@ export default class BaseLoader {
 
         console.log('BaseLoader PROCESSING');
 
-        this.state = LOADER.PROCESSING;
+        this.state = PROCESSING;
 
+        //  This could be Promise based as well, allowing for async processing
         for (let file of this.queue)
         {
             if (file.parent)
@@ -217,11 +233,27 @@ export default class BaseLoader {
             {
                 file.onProcess();
             }
+
+            //  The File specific process handler has run
+            //  Now run any custom callbacks
+            if (file.processCallback)
+            {
+                file.processCallback(file);
+            }
+
+            if (file.parent)
+            {
+                file.parent.onComplete();
+            }
+            else
+            {
+                file.onComplete();
+            }
         }
 
         console.log('BaseLoader COMPLETE');
 
-        this.state = LOADER.COMPLETE;
+        this.state = COMPLETE;
 
     }
 
@@ -246,7 +278,7 @@ export default class BaseLoader {
         this.list.clear();
         this.queue.clear();
 
-        this.state = LOADER.DESTROYED;
+        this.state = DESTROYED;
 
     }
 

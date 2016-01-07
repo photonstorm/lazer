@@ -1,26 +1,28 @@
-import { FILE } from 'loader/Constants.js';
 
-export default function XHRLoader (file) {
+export default function XHRLoader (file, loader) {
 
-    console.log('XHRLoader', file);
-
-    file.state = FILE.LOADING;
+    let async = file.xhr.async ? file.xhr.async : loader.xhr.async;
+    let user = file.xhr.user ? file.xhr.user : loader.xhr.user;
+    let password = file.xhr.password ? file.xhr.password : loader.xhr.password;
+    let header = file.xhr.header ? file.xhr.header : loader.xhr.header;
+    let headerValue = file.xhr.headerValue ? file.xhr.headerValue : loader.xhr.headerValue;
+    let overrideMimeType = file.xhr.overrideMimeType ? file.xhr.overrideMimeType : loader.xhr.overrideMimeType;
 
     let xhr = new XMLHttpRequest();
 
-    xhr.open('GET', file.src, true, file.user, file.password);
+    xhr.open('GET', file.src, async, user, password);
 
-    xhr.responseType = file.type;
-    xhr.timeout = file.timeout;
+    xhr.responseType = file.xhr.responseType;
+    xhr.timeout = file.xhr.timeout ? file.xhr.timeout : loader.xhr.timeout;
 
-    if (file.header !== '')
+    if (header && headerValue)
     {
-        xhr.setRequestHeader(file.header, file.headerValue);
+        xhr.setRequestHeader(header, headerValue);
     }
 
-    if (file.overrideMimeType !== '')
+    if (overrideMimeType)
     {
-        xhr.overrideMimeType(file.overrideMimeType);
+        xhr.overrideMimeType(overrideMimeType);
     }
 
     return new Promise(

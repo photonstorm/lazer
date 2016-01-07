@@ -1,38 +1,31 @@
-import BaseFile from 'loader/types/BaseFile.js';
+import File, * as FILE from 'loader/File.js';
 
-export default class BinaryFile extends BaseFile {
+export default function BinaryFile (key, url = '', data = undefined) {
 
-    constructor (loader, key, url = '', callback = null) {
-
-        if (url === '')
-        {
-            url = key + '.bin';
-        }
-
-        super(loader, key, url);
-
-        this.type = 'arraybuffer';
-
-        this.callback = callback;
-
+    if (url === '' && !data)
+    {
+        url = key + '.bin';
     }
 
-    complete (xhr) {
+    let file = File(key, url, 'binary');
 
-        super.complete(xhr.response);
+    //  Set the expected XHR response type
+    file.xhr.responseType = 'arraybuffer';
 
+    file.onLoad = function (xhr) {
+
+        this.data = xhr.response;
+
+        this.onStateChange(FILE.LOADED);
+
+    };
+
+    if (data)
+    {
+        file.data = data;
+        file.onProcess();
     }
 
-    process () {
-
-        super.process();
-
-        if (this.callback)
-        {
-            //  scope check
-            this.data = this.callback(this.key, this.data);
-        }
-
-    }
+    return file;
 
 }

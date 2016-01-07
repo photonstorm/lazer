@@ -1,8 +1,23 @@
-import { FILE } from 'loader/Constants.js';
+import XHRLoader from 'loader/XHRLoader.js';
+import XHRSettings from 'loader/XHRSettings.js';
+
+//  File level consts
+
+export const PENDING = 0;      // file is in the load queue but not yet started
+export const LOADING = 1;      // file has been started to load by the loader (onLoad called)
+export const LOADED = 2;       // file has loaded successfully, awaiting processing
+export const FAILED = 3;       // file failed to load
+export const PROCESSING = 4;   // file is being processed (onProcess callback)
+export const COMPLETE = 5;     // file has finished processing
+export const DESTROYED = 6;    // file has been destroyed
 
 //  Our base File object (from which all File Types extend)
 
-export default function File (key, url, type, loader = 'xhr') {
+//  key = user level file key (can be filename or other string based value)
+//  url = the URL to load the file from, doesn't include baseURL or Path (which are both set by the Loader)
+//  type = a user-level value that can control which cache the file is added to
+
+export default function File (key, url, type) {
 
     if (!key)
     {
@@ -20,12 +35,9 @@ export default function File (key, url, type, loader = 'xhr') {
         path: '',
         src: '',
 
-        type: type, // the file type, i.e. 'image', 'json', etc (can control which cache it gets added to)
+        type: type, // the file type, i.e. 'image', 'json', etc which can be used to control which cache it gets added to
 
-        state: FILE.PENDING,
-
-        loader: loader,
-        customLoader: undefined,
+        state: PENDING,
 
         parent: undefined,
 
@@ -33,37 +45,81 @@ export default function File (key, url, type, loader = 'xhr') {
 
         data: undefined,
 
-        //  xhr credentials
-        user: '',
-        password: '',
+        //  For CORs based loading.
+        //  If this is undefined then the File will check BaseLoader.crossOrigin and use that (if set)
+        crossOrigin: undefined,
 
-        //  xhr timeout in ms (0 = no timeout)
-        timeout: 0,
+        //  Optionally set by the Promise returned from BaseLoader.addFile.
+        resolve: undefined,
+        reject: undefined,
 
-        //  xhr setRequestHeader
-        header: '',
-        headerValue: '',
+        //  maybe you have to set it in the Promise?
+        processCallback: undefined,
 
-        //  xhr overrideMimeType
-        overrideMimeType: '',
+        //  xhr specific settings (ignored by TagLoaded files)
+        xhr: XHRSettings('text'),
 
-        //  These functions are overwritten by the custom file types
+        onStateChange: function (value) {
+
+            if (this.state !== value)
+            {
+                this.state = value;
+
+                if (value === LOADED && this.resolve)
+                {
+                    this.resolve(this);
+                }
+                else if (value === FAILED && this.reject)
+                {
+                    this.reject(this);
+                }
+            }
+
+        },
+
+        //  These functions are usually overridden by the custom file types
+
+        load: function (loader) {
+
+            this.onStateChange(LOADING);
+
+            //  Returns a Promise from the XHRLoader
+            return XHRLoader(this, loader);
+
+        },
 
         onLoad: function () {
 
-            this.state = FILE.LOADED;
+            //  If overridden it must set `state` to LOADED
+            this.onStateChange(LOADED);
 
         },
 
         onError: function () {
 
-            this.state = FILE.FAILED;
+            //  If overridden it must set `state` to FAILED
+            this.onStateChange(FAILED);
 
         },
 
         onProcess: function () {
 
-            this.state = FILE.COMPLETE;
+            //  If overridden it must set `state` to PROCESSING
+            this.onStateChange(PROCESSING);
+
+        },
+
+        onComplete: function () {
+
+            //  If overridden it must set `state` to COMPLETE
+            this.onStateChange(COMPLETE);
+
+        },
+
+        onDestroy: function () {
+
+            //  If overridden it must set `state` to DESTROYED
+            this.onStateChange(DESTROYED);
 
         }
 

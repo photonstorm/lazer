@@ -1,5 +1,4 @@
-import File from 'loader/File.js';
-import { FILE } from 'loader/Constants.js';
+import File, * as FILE from 'loader/File.js';
 
 export default function JSONFile (key, url = '', data = undefined) {
 
@@ -8,23 +7,24 @@ export default function JSONFile (key, url = '', data = undefined) {
         url = key + '.json';
     }
 
-    let file = File(key, url, 'text');
+    let file = File(key, url, 'json');
+
+    //  Set the expected XHR response type
+    file.xhr.responseType = 'text';
 
     file.onLoad = function (xhr) {
 
-        this.state = FILE.LOADED;
         this.data = xhr.responseText;
+
+        this.onStateChange(FILE.LOADED);
 
     };
 
     file.onProcess = function () {
 
-        //  try/catch?
+        this.onStateChange(FILE.PROCESSING);
+
         this.data = JSON.parse(this.data);
-
-        console.log(this.data);
-
-        this.state = FILE.COMPLETE;
 
     };
 

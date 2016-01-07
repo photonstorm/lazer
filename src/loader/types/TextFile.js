@@ -1,38 +1,31 @@
-import BaseFile from 'loader/types/BaseFile.js';
+import File, * as FILE from 'loader/File.js';
 
-export default class TextFile extends BaseFile {
+export default function TextFile (key, url = '', data = undefined) {
 
-    constructor (loader, key, url = '', data = null) {
-
-        if (url === '' && !data)
-        {
-            url = key + '.txt';
-        }
-
-        super(loader, key, url);
-
-        this.type = 'text';
-
-        if (data)
-        {
-            //  Already loaded!
-            this.data = data;
-        }
-
+    if (url === '' && !data)
+    {
+        url = key + '.txt';
     }
 
-    complete (xhr) {
+    let file = File(key, url, 'text');
 
-        super.complete(xhr.responseText);
+    //  Set the expected XHR response type
+    file.xhr.responseType = 'text';
 
+    file.onLoad = function (xhr) {
+
+        this.data = xhr.responseText;
+
+        this.onStateChange(FILE.LOADED);
+
+    };
+
+    if (data)
+    {
+        file.data = data;
+        file.onProcess();
     }
 
-    process () {
-
-        super.process();
-
-        console.log(this.data);
-
-    }
+    return file;
 
 }

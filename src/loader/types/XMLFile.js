@@ -1,48 +1,49 @@
-import BaseFile from 'loader/types/BaseFile.js';
 import ParseXML from 'system/ParseXML.js';
+import File, * as FILE from 'loader/File.js';
 
-export default class XMLFile extends BaseFile {
+export default function XMLFile (key, url = '', data = undefined) {
 
-    constructor (loader, key, url = '', data = null) {
-
-        if (url === '' && !data)
-        {
-            url = key + '.xml';
-        }
-
-        super(loader, key, url);
-
-        this.type = 'text';
-
-        this.xml = null;
-
-        if (data)
-        {
-            //  Already loaded!
-            this.data = data;
-        }
-
+    if (url === '' && !data)
+    {
+        url = key + '.xml';
     }
 
-    complete (xhr) {
+    let file = File(key, url, 'xml');
 
-        super.complete(xhr.responseText);
+    //  Set the expected XHR response type
+    file.xhr.responseType = 'text';
 
-    }
+    file.onLoad = function (xhr) {
 
-    process () {
+        this.data = xhr.responseText;
 
-        super.process();
+        this.onStateChange(FILE.LOADED);
 
-        this.xml = ParseXML(this.data);
+    };
 
-        if (!this.xml)
+    file.onProcess = function () {
+
+        this.onStateChange(FILE.PROCESSING);
+
+        let xml = ParseXML(this.data);
+
+        if (!xml)
         {
-            throw new Error('Lazer.Loader.XMLFile: Invalid XML');
+            throw new Error('XMLFile: Invalid XML');
+        }
+        else
+        {
+            this.data = xml;
         }
 
-        console.log(this.xml);
+    };
 
+    if (data)
+    {
+        file.data = data;
+        file.onProcess();
     }
+
+    return file;
 
 }
