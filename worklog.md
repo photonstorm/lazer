@@ -27,6 +27,8 @@ A few more refinements to the Loader. Updated it so that files can now load them
 
 Created a new XHRSettings object, which the Loader and File share. Created some xhr test cases.
 
+MultiFile support is now added. This is a special file type that consists of two separate files. For example the AtlasJSONFile is a MultiFile that contains a JSONFile and an ImageFile. When MultiFiles are added to the BaseLoader the Promise is only sent once both files are loaded successfully (or rejected if just one of them fails). They are also linked by the linkFile property, so further processing knows how to combine them together again i.e. for adding to the Cache.
+
 
 
 ### 6th January 2016

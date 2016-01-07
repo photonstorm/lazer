@@ -57,29 +57,37 @@ export default class BaseLoader {
 
     addFile (file) {
 
-        if (!this.list.has(file))
+        //  Multipart file?
+        if (file.multipart)
+        {
+            file.fileA.path = this.path;
+            file.fileB.path = this.path;
+
+            this.list.add(file.fileA);
+            this.list.add(file.fileB);
+        }
+        else
         {
             file.path = this.path;
 
             this.list.add(file);
-
-            return new Promise(
-                (resolve, reject) => {
-
-                    //  When this file loads we need to call 'resolve'
-                    file.resolve = resolve;
-                    file.reject = reject;
-
-                }
-            );
-
         }
+
+        return new Promise(
+            (resolve, reject) => {
+
+                //  When this file loads we need to call 'resolve'
+                file.resolve = resolve;
+                file.reject = reject;
+
+            }
+        );
 
     }
 
     start () {
 
-        console.log('BaseLoader start. Files to load:', this.list.size);
+        // console.log('BaseLoader start. Files to load:', this.list.size);
 
         if (this.loading)
         {
@@ -128,11 +136,11 @@ export default class BaseLoader {
 
     processLoadQueue () {
 
-        console.log('BaseLoader processLoadQueue', this.list.size);
+        // console.log('BaseLoader processLoadQueue', this.list.size);
 
         if (!this.loading)
         {
-            console.warn('Lazer.Loader - active loading canceled / reset');
+            // console.warn('Lazer.Loader - active loading canceled / reset');
             this.finishedLoading(true);
             return;
         }
@@ -161,6 +169,8 @@ export default class BaseLoader {
 
         file.src = this.getURL(file);
 
+        // console.log('loadFile', file.src);
+
         //  If the file doesn't have its own crossOrigin set, we'll use the Loaders (which is undefined by default)
         if (file.crossOrigin === undefined && this.crossOrigin)
         {
@@ -168,16 +178,17 @@ export default class BaseLoader {
         }
 
         //  The argument is an XHRSettings object
-        file.load(this.xhr).then(() => this.nextFile());
+        file.load(this.xhr).then((file) => this.nextFile(file));
 
     }
 
-    nextFile () {
+    nextFile (previousFile) {
 
-        console.log('nextFile');
+        // console.log('nextFile - previousFile was', previousFile.src);
 
         if (this.list.size > 0)
         {
+            // console.log('nextFile - still something in the list, running processLoadQueue again');
             this.processLoadQueue();
         }
         else
@@ -185,13 +196,18 @@ export default class BaseLoader {
             //  Check the queue is clear
             for (let file of this.queue)
             {
+                // console.log('Checking Queue');
+                // console.log(file);
+
                 if (file.state === FILE.LOADING)
                 {
                     //  If anything is still loading we bail out
+                    // console.log('nextFile - still something pending or loading, so bail out');
                     return;
                 }
             }
 
+            // console.log('nextFile calling finishedLoading');
             this.finishedLoading();
         }
 
@@ -217,21 +233,14 @@ export default class BaseLoader {
     
     finishedLoading () {
 
-        console.log('BaseLoader PROCESSING');
+        // console.log('BaseLoader.finishedLoading PROCESSING');
 
         this.state = PROCESSING;
 
         //  This could be Promise based as well, allowing for async processing
         for (let file of this.queue)
         {
-            if (file.parent)
-            {
-                file.parent.onProcess();
-            }
-            else
-            {
-                file.onProcess();
-            }
+            file.onProcess();
 
             //  The File specific process handler has run
             //  Now run any custom callbacks
@@ -240,17 +249,10 @@ export default class BaseLoader {
                 file.processCallback(file);
             }
 
-            if (file.parent)
-            {
-                file.parent.onComplete();
-            }
-            else
-            {
-                file.onComplete();
-            }
+            file.onComplete();
         }
 
-        console.log('BaseLoader COMPLETE');
+        // console.log('BaseLoader COMPLETE');
 
         this.state = COMPLETE;
 

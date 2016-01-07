@@ -39,10 +39,11 @@ export default function File (key, url, type) {
 
         state: PENDING,
 
-        parent: undefined,
-
+        //  Multipart file? (i.e. an atlas and its json)
+        multipart: undefined,
         linkFile: undefined,
 
+        //  The actual processed file data
         data: undefined,
 
         //  For CORs based loading.
@@ -65,13 +66,43 @@ export default function File (key, url, type) {
             {
                 this.state = value;
 
-                if (value === LOADED && this.resolve)
+                if (value === LOADED)
                 {
-                    this.resolve(this);
+                    //  Part of a multipart load?
+                    if (this.multipart)
+                    {
+                        //  Has the linked file loaded too?
+                        if (this.linkFile.state === LOADED && this.multipart.resolve)
+                        {
+                            //  Send the Promise for the multipart file
+                            this.multipart.resolve(this.multipart);
+                        }
+                    }
+
+                    //  Send the Promise for this file
+                    if (this.resolve)
+                    {
+                        this.resolve(this);
+                    }
                 }
-                else if (value === FAILED && this.reject)
+                else if (value === FAILED)
                 {
-                    this.reject(this);
+                    //  Part of a multipart load?
+                    if (this.multipart)
+                    {
+                        //  Has the linked file loaded too?
+                        if (this.multipart.reject)
+                        {
+                            //  Send the Promise for the multipart file
+                            this.multipart.reject(this.multipart);
+                        }
+                    }
+
+                    //  Send the Promise for this file
+                    if (this.reject)
+                    {
+                        this.reject(this);
+                    }
                 }
             }
 
