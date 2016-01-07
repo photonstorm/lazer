@@ -11,6 +11,8 @@ export default function ImageFile (key, url = '', data = undefined) {
 
     file.load = function () {
 
+        this.onStateChange(FILE.LOADING);
+
         this.data = new Image();
 
         if (this.crossOrigin)
@@ -26,6 +28,7 @@ export default function ImageFile (key, url = '', data = undefined) {
                     {
                         this.data.onload = null;
                         this.data.onerror = null;
+                        this.onStateChange(FILE.LOADED);
                         resolve(file);
                     }
                 };
@@ -35,6 +38,7 @@ export default function ImageFile (key, url = '', data = undefined) {
                     {
                         this.data.onload = null;
                         this.data.onerror = null;
+                        this.onStateChange(FILE.FAILED);
                         reject(file, event);
                     }
                 };
@@ -47,6 +51,7 @@ export default function ImageFile (key, url = '', data = undefined) {
                 {
                     this.data.onload = null;
                     this.data.onerror = null;
+                    this.onStateChange(FILE.LOADED);
                     resolve(file);
                 }
 
