@@ -18,8 +18,6 @@ export default class FrameSet {
     //  Frame object
     add (frame) {
 
-        frame.frameSet = this;
-
         this.frames.set(frame.name, frame);
 
     }

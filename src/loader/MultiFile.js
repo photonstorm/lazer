@@ -26,8 +26,31 @@ export default function MultiFile (fileA, fileB) {
                     this.resolve = resolve;
                     this.reject = reject;
 
-                    this.fileA.load();
-                    this.fileB.load();
+                    this.fileA.load().then(file => {
+
+                        file.onProcess();
+
+                        if (file.processCallback)
+                        {
+                            file.processCallback(file);
+                        }
+
+                        file.onComplete();
+
+                    }).catch(file => { file.onError() });
+
+                    this.fileB.load().then(file => {
+
+                        file.onProcess();
+
+                        if (file.processCallback)
+                        {
+                            file.processCallback(file);
+                        }
+
+                        file.onComplete();
+
+                    }).catch(file => { file.onError() });
 
                 }
             );

@@ -33,6 +33,15 @@ Updated the File onStateChange so it doesn't resolve the Promise until the file 
 
 TexturePackerJSONArray is working and extracting the right data from the atlas.
 
+--
+
+Added a new feature to the BaseLoader: `startFileGroup`. This allows you to tag files as being in a specific group. You can then filter the group with `BaseLoader.getLoadedFiles(tag)`. The group tags are non-unique strings. It means you could tag a set of files as being used for the 'MainMenu', and then get just the MainMenu files from the Loader when it has completed, for further caching.
+
+Fixed a bug in the BaseLoader where the queue size wasn't being properly checked against the maxDownloads. Am now using an inflight Set which will only ever be the size of maxDownloads. Once a file loads it is moved to the queue Set ready for processing (or to the failed Set if it failed). At the end once all files are loaded and processed they are put into the Storage Set and the remaining sets are cleared out. You can then process the storage Set as needed.
+
+
+
+
 ### 6th January 2016
 
 Complete rewrite of the Loader. The Files are now entirely independent of the Loader and don't hold any references to the Loader at all. They are fully Promise based. The BaseLoader no longer cares about what the File is or does, as long as it exposes the properties and methods it needs. The File is responsible for handling its own loading (be it XHR or Tag based) and simply returns a Promise to the Loader.

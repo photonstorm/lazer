@@ -28,7 +28,7 @@ export default function ImageFile (key, url = '', data = undefined) {
                     {
                         this.data.onload = null;
                         this.data.onerror = null;
-                        this.onStateChange(FILE.LOADED);
+                        this.state = FILE.LOADED;
                         resolve(file);
                     }
                 };
@@ -38,8 +38,9 @@ export default function ImageFile (key, url = '', data = undefined) {
                     {
                         this.data.onload = null;
                         this.data.onerror = null;
-                        this.onStateChange(FILE.FAILED);
-                        reject(file, event);
+                        this.error = event;
+                        this.state = FILE.FAILED;
+                        reject(file);
                     }
                 };
 
@@ -51,7 +52,7 @@ export default function ImageFile (key, url = '', data = undefined) {
                 {
                     this.data.onload = null;
                     this.data.onerror = null;
-                    this.onStateChange(FILE.COMPLETE);
+                    this.state = FILE.LOADED;
                     resolve(file);
                 }
 

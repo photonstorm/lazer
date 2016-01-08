@@ -31,9 +31,11 @@ export default function File (key, url, type) {
 
         url: url,
 
-        //  Both of these are overriden by the BaseLoader (if being used)
+        //  Both of these are overridden by the BaseLoader (if being used)
         path: '',
         src: url,
+
+        tag: '',    // Tag this file, this is a non-unique string. For example you could tag a collection of files as 'level1', or 'mainmenu'.
 
         type: type, // the file type, i.e. 'image', 'json', etc which can be used to control which cache it gets added to
 
@@ -61,6 +63,8 @@ export default function File (key, url, type) {
         xhr: XHRSettings('text'),
 
         onStateChange: function (value) {
+
+            // console.log('onStateChange', this.url, 'from', this.state, 'to', value);
 
             if (this.state !== value)
             {
@@ -95,7 +99,7 @@ export default function File (key, url, type) {
                         if (this.multipart.reject)
                         {
                             //  Send the Promise for the multipart file
-                            this.multipart.reject(this.multipart);
+                            this.multipart.reject(this.multipart, error);
                         }
                     }
 
