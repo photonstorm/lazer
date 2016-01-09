@@ -95,7 +95,6 @@ export default function File (key, url, type) {
                     //  Part of a multipart load?
                     if (this.multipart)
                     {
-                        //  Has the linked file loaded too?
                         if (this.multipart.reject)
                         {
                             //  Send the Promise for the multipart file
