@@ -5,11 +5,17 @@ export default function Texture2D (frame) {
 
     return {
 
+        //  Frame object defining the area of the Texture
         frame: frame,
 
         blendMode: 0,
 
-        crop: { x: frame.x, y: frame.y, width: frame.width, height: frame.height }
+        //  The actual area that will be used when drawing the Texture
+        //  Modifying crop will modify this area, within the bounds of the frame dimensions
+
+        area: { x: frame.x, y: frame.y, width: frame.width, height: frame.height },
+
+        crop: undefined
 
     };
     

@@ -21,6 +21,10 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 
+### 9th January 2016
+
+Added in all of the Canvas and WebGL Blend Modes and left it open so it's easy for you to add your own (or tweak single blend modes yourself, without effecting the rest of Lazer)
+
 ### 7th January 2016
 
 A few more refinements to the Loader. Updated it so that files can now load themselves entirely, without the need for the BaseLoader at all. You are responsible for processing them when you do this, but it still means you can literally just create an ImageFile and call `load` on it and it'll just work.
