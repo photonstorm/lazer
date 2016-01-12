@@ -152,5 +152,5 @@ export default function (name) {
     let color = CSSMap.get(name);
 
     return { r: color[0], g: color[1], b: color[2] };
-    
+
 }
