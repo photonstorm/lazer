@@ -1,5 +1,7 @@
-Lazer.Version = {
-    'version': '0.0.1',
-    'build': 1,
-    'date': '17th November 2015'
+export const Version = {
+    major: 1,
+    minor: 2,
+    point: 3,
+    build: 1,
+    date: '12th January 2016'
 };

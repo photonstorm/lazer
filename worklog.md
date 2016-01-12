@@ -20,6 +20,17 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Add interpolation to Shape rotation
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
+* The MultiFile and File relationship is slightly wrong, it should be a chained Promise and not store a reference to the resolve / reject functions, but instead return Promise.resolve.
+
+### 12th January 2016
+
+Created utils/Banner.js to handle the console.log output for Lazer. You can pass in your own game title, in which case it outputs `game powered by Lazer`. Or you can just not call it at all, and it won't output anything. Made two tests to accompany.
+
+Updated Version.js to export properly without requiring a `Lazer` global.
+
+Created dom/Boot.js to handle DOM content loading. The function returns a Promise allowing you to react to the eventual dom event.
+
+Added in default textures: blank 32x32 PNG and missing image one from Phaser. You can now easily add your own, or just not include them at all.
 
 ### 11th January 2016
 
