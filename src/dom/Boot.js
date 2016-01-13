@@ -1,6 +1,6 @@
 let isBooted = false;
 
-export default function DOMBoot () {
+export default function Boot () {
 
     if (isBooted)
     {

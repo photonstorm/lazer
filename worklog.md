@@ -32,6 +32,8 @@ Created dom/Boot.js to handle DOM content loading. The function returns a Promis
 
 Added in default textures: blank 32x32 PNG and missing image one from Phaser. You can now easily add your own, or just not include them at all.
 
+
+
 ### 11th January 2016
 
 Created the Texture2D and TextureWebGL functions, that generate Lazer Texture objects from the given Frame data. Also added UpdateUVs function.
