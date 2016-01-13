@@ -1,15 +1,26 @@
 import { Version } from 'Version.js';
 
-export default function Banner (gameTitle = '') {
+export default function Banner (title, url) {
 
     let msg = '%c %c %c %c %c  ';
 
-    if (gameTitle)
+    if (title)
     {
-        msg = msg.concat(gameTitle + ' powered by ');
+        msg = msg.concat(title + ' powered by ');
     }
 
-    msg = msg.concat('Lazer v' + Version.major + '.' + Version.minor + ' - https://lazerjs.io  ');
+    msg = msg.concat('Lazer v' + Version.major + '.' + Version.minor);
+
+    if (url === undefined)
+    {
+        msg = msg.concat(' - https://lazerjs.io');
+    }
+    else if (url !== '')
+    {
+        msg = msg.concat(' - ' + url);
+    }
+
+    msg = msg.concat('  ');
 
     console.log.apply(console, [
         msg,

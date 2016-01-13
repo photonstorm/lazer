@@ -15,12 +15,61 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * An Array Matrix walker could be good (allow you to move around within a matrix, turn, step, etc)
 * Array Matrix Resize could be useful too (both up and down)
 * A horizontal and vertical convolve function would be very useful for combined filters like Sobel
-* Game Config objects (things like PixelArt, Transparent, etc) - can be loaded into the game when it boots, rather than loads of arguments.
 * A Transform cache
 * Add interpolation to Shape rotation
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 * The MultiFile and File relationship is slightly wrong, it should be a chained Promise and not store a reference to the resolve / reject functions, but instead return Promise.resolve.
+
+### 13th January 2016
+
+//  Old version = lots of arguments
+var game = Game(800, 600, 'canvas', '', { preload: preload, create: create, update: update });
+
+//  #1 GameConfig handler
+let config = GameConfig();
+
+config.add(Dimensions(800, 600));
+config.add(Transparent(true));
+config.add(PixelArt(true));
+config.add(DOMParent('lazer-example'));
+config.add(State({ preload: preload, create: create, update: update }));
+
+//  #2 GameConfig handler with spread arguments
+let config = GameConfig(
+    Dimensions(800, 600),
+    Transparent(true),
+    PixelArt(true),
+    DOMParent('lazer-example'),
+    State({ preload: preload, create: create, update: update })
+);
+
+let config = [
+    Dimensions(800, 600),
+    Transparent(true),
+    PixelArt(true),
+    DOMParent('lazer-example'),
+    State({ preload: preload, create: create, update: update })
+];
+
+let game = Game(config);
+
+let game = Game([
+    Dimensions(800, 600),
+    Transparent(true),
+    PixelArt(true),
+    DOMParent('lazer-example'),
+    State({ preload: preload, create: create, update: update })
+]);
+
+let game = Game({
+    width: 800, 
+    height: 600,
+    transparent: true,
+    pixelArt: true,
+    parent: 'lazer-example',
+    state: { preload: preload, create: create, update: update }
+});
 
 ### 12th January 2016
 
@@ -31,8 +80,6 @@ Updated Version.js to export properly without requiring a `Lazer` global.
 Created dom/Boot.js to handle DOM content loading. The function returns a Promise allowing you to react to the eventual dom event.
 
 Added in default textures: blank 32x32 PNG and missing image one from Phaser. You can now easily add your own, or just not include them at all.
-
-
 
 ### 11th January 2016
 
