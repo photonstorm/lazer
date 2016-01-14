@@ -1,7 +1,7 @@
 import Config from 'config/Config.js';
-import Dimensions from 'config/Dimensions.js';
-import Parent from 'config/Parent.js';
-import FrameRate from 'config/FrameRate.js';
+import Dimensions from 'config/settings/Dimensions.js';
+import Parent from 'config/settings/Parent.js';
+import FrameRate from 'config/settings/FrameRate.js';
 import Boot from 'dom/Boot.js';
 import Banner from 'utils/Banner.js';
 import MainLoop from 'system/MainLoop.js';
@@ -63,10 +63,26 @@ export default class Game {
         //     this.start();
         // }
 
-        Clear(this.context, true, 150, 50, 5);
+        this.loop = new MainLoop(this.config.get('frameRate'));
+
+        this.loop.begin = (t => this.begin(t));
+        this.loop.update = (delta => this.update(delta));
+        this.loop.draw = (t => this.render(t));
 
     }
 
+    begin () {
 
+        Clear(this.context, false);
+
+    }
+
+    update (delta) {
+
+    }
+
+    render (t) {
+
+    }
 
 }

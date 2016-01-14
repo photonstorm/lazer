@@ -23,53 +23,58 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 ### 13th January 2016
 
-//  Old version = lots of arguments
-var game = Game(800, 600, 'canvas', '', { preload: preload, create: create, update: update });
+Today I got the Game Configuration Loader working. Instead of using a butt-load of constructor arguments (or a giant config object) like in Phaser:
 
-//  #1 GameConfig handler
-let config = GameConfig();
+`var game = Game(800, 600, 'canvas', '', { preload: preload, create: create, update: update });`
+
+You can now use the new Config function:
+
+```
+let config = Config(
+    Parent('game'),
+    GameTitle('BobVaders')
+);
+
+let game = new Game(config);
+```
+
+The Config handler allows different ways of specifying the settings. It can be one-by-one:
+
+```
+let config = Config();
 
 config.add(Dimensions(800, 600));
 config.add(Transparent(true));
-config.add(PixelArt(true));
 config.add(DOMParent('lazer-example'));
-config.add(State({ preload: preload, create: create, update: update }));
+```
 
-//  #2 GameConfig handler with spread arguments
-let config = GameConfig(
+Or it can be via spread arguments:
+
+```
+let config = Config(
     Dimensions(800, 600),
     Transparent(true),
-    PixelArt(true),
     DOMParent('lazer-example'),
-    State({ preload: preload, create: create, update: update })
 );
+```
 
-let config = [
-    Dimensions(800, 600),
-    Transparent(true),
-    PixelArt(true),
-    DOMParent('lazer-example'),
-    State({ preload: preload, create: create, update: update })
-];
+Or you can mix them both. The Game itself can tell the Config loader which settings it requires, and what those default values should be. But if you have provided them it will use your settings instead.
 
-let game = Game(config);
+So far I've created settings for:
 
-let game = Game([
-    Dimensions(800, 600),
-    Transparent(true),
-    PixelArt(true),
-    DOMParent('lazer-example'),
-    State({ preload: preload, create: create, update: update })
-]);
+* Game Dimensions
+* FrameRate
+* Game Title and URL
+* Parent DOM Element
+* Transparent
+* Pixel Art Scale Mode
+* Disable WebGL (for debugging)
+* Disable Audio (for debugging)
+* Disable WebAudio (for debugging)
 
-let game = Game({
-    width: 800, 
-    height: 600,
-    transparent: true,
-    pixelArt: true,
-    parent: 'lazer-example',
-    state: { preload: preload, create: create, update: update }
-});
+I've also created game/nano/Game.js which is the start of porting over the functionality from Phaser Nano to Lazer.
+
+Finally I created state/State.js which is the new base template State object. Tomorrow I'll tackle the State Manager, and get all kinds of fun State things happening (like parallel states, State render priority, etc)
 
 ### 12th January 2016
 

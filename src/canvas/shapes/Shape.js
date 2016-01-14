@@ -5,36 +5,37 @@ import ShapeFill from 'canvas/shapes/ShapeFill.js';
 import ShapeStroke from 'canvas/shapes/ShapeStroke.js';
 
 export default function Shape (
-                                {
-                                    x = 0,
-                                    y = 0,
-                                    width = 0, 
-                                    height = width,
-                                    rotation = 0,
-                                    stroke = '',
-                                    fill = '',
-                                    strokeFirst = false,
-                                    radius = 0,
-                                    startAngle = 0,
-                                    endAngle = 360,
-                                    antiClockwise = false,
-                                    angle = 0,
-                                    anchor = undefined,
-                                    anchorX = 0,
-                                    anchorY = 0,
-                                    scale = undefined,
-                                    scaleX = 1,
-                                    scaleY = 1,
-                                    lineWidth = 1,
-                                    lineCap = 'butt',
-                                    lineJoin = 'bevel',
-                                    miterLimit = 10,
-                                    lineDashSegments = undefined,
-                                    lineDashOffset = 0,
-                                    interpolate = true,
-                                    subPixelAdjust = true,
-                                    visible = true
-                                } = {}) {
+        {
+            x = 0,
+            y = 0,
+            width = 0, 
+            height = width,
+            rotation = 0,
+            stroke = '',
+            fill = '',
+            strokeFirst = false,
+            radius = 0,
+            startAngle = 0,
+            endAngle = 360,
+            antiClockwise = false,
+            angle = 0,
+            anchor = undefined,
+            anchorX = 0,
+            anchorY = 0,
+            scale = undefined,
+            scaleX = 1,
+            scaleY = 1,
+            lineWidth = 1,
+            lineCap = 'butt',
+            lineJoin = 'bevel',
+            miterLimit = 10,
+            lineDashSegments = undefined,
+            lineDashOffset = 0,
+            interpolate = true,
+            subPixelAdjust = true,
+            visible = true
+        } = {}
+    ) {
 
     let shape = {
 
