@@ -21,6 +21,16 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 * The MultiFile and File relationship is slightly wrong, it should be a chained Promise and not store a reference to the resolve / reject functions, but instead return Promise.resolve.
 
+### 14th January 2016
+
+`Loader.getLoadedFilesByType` is a new method that allows you to get all of the loaded files of a specific type. All of the Loader file types have had new consts added to make them more secure. You can now for example do `getLoadedFilesByType(ImageFile.TYPE)` to get just the loaded images. There is an optional `group` argument as well.
+
+The Cache has been recoded to be a pure object, rather than a class.
+
+The Nano Game has been updated to include a default State, a working main loop and has the loader hooked up.
+
+Added an Image parser to the Texture Frame Parsers. This will create a Frame object for a single image (needed by the Cache). Made the ImageFile loader set the image key as its `name` property. This property exists natively on the Image objects and is unset, so we may as well use it.
+
 ### 13th January 2016
 
 Today I got the Game Configuration Loader working. Instead of using a butt-load of constructor arguments (or a giant config object) like in Phaser:

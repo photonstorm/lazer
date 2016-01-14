@@ -1,6 +1,8 @@
 import ParseXML from 'system/ParseXML.js';
 import File, * as FILE from 'loader/File.js';
 
+export const TYPE = 'xml';
+
 export default function XMLFile (key, url = '', data = undefined) {
 
     if (url === '' && !data)
@@ -8,7 +10,7 @@ export default function XMLFile (key, url = '', data = undefined) {
         url = key + '.xml';
     }
 
-    let file = File(key, url, 'xml');
+    let file = File(key, url, TYPE);
 
     //  Set the expected XHR response type
     file.xhr.responseType = 'text';

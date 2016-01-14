@@ -1,5 +1,7 @@
 import File, * as FILE from 'loader/File.js';
 
+export const TYPE = 'image';
+
 export default function ImageFile (key, url = '', data = undefined) {
 
     if (url === '' && !data)
@@ -7,7 +9,7 @@ export default function ImageFile (key, url = '', data = undefined) {
         url = key + '.png';
     }
 
-    let file = File(key, url, 'image');
+    let file = File(key, url, TYPE);
 
     file.load = function () {
 
@@ -44,6 +46,7 @@ export default function ImageFile (key, url = '', data = undefined) {
                     }
                 };
 
+                this.data.name = key;
                 this.data.src = this.src;
 
                 // Image is immediately-available or cached

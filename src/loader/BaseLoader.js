@@ -299,13 +299,29 @@ export default class BaseLoader {
 
     }
 
+    getLoadedFilesByType (type, group = '', output = []) {
+
+        //  Return an array of all files that have state = COMPLETE (which means loaded + processed)
+
+        for (let file of this.storage)
+        {
+            if (file.state === FILE.COMPLETE && file.tag === group && file.type === type)
+            {
+                output.push(file);
+            }
+        }
+
+        return output;
+
+    }
+
     getLoadedFiles (group = '', output = []) {
 
         //  Return an array of all files that have state = COMPLETE (which means loaded + processed)
 
         for (let file of this.storage)
         {
-            if (file.state === FILE.COMPLETE && file.tag === group)
+            if (file.state === FILE.COMPLETE && file.tag === group && (type !== '' && file.type === type))
             {
                 output.push(file);
             }

@@ -9,15 +9,15 @@ export default function State (
         {
             name = '',
             status = PENDING,
-            init = NOOP(),
-            preload = NOOP(),
-            create = NOOP(),
-            update = NOOP(),
-            preRender = NOOP(),
-            render = NOOP(),
-            postRender = NOOP(),
-            shutdown = NOOP(),
-            destroy = NOOP(),
+            init = NOOP,
+            preload = NOOP,
+            create = NOOP,
+            update = NOOP,
+            preRender = NOOP,
+            render = NOOP,
+            postRender = NOOP,
+            shutdown = NOOP,
+            destroy = NOOP,
         } = {}
     ) {
 

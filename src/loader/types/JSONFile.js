@@ -1,5 +1,7 @@
 import File, * as FILE from 'loader/File.js';
 
+export const TYPE = 'json';
+
 export default function JSONFile (key, url = '', data = undefined) {
 
     if (url === '' && !data)
@@ -7,7 +9,7 @@ export default function JSONFile (key, url = '', data = undefined) {
         url = key + '.json';
     }
 
-    let file = File(key, url, 'json');
+    let file = File(key, url, TYPE);
 
     //  Set the expected XHR response type
     file.xhr.responseType = 'text';

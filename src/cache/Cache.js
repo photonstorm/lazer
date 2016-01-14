@@ -1,16 +1,40 @@
-import BaseCache from 'cache/BaseCache.js';
-import ImageCache from 'cache/ImageCache.js';
 
-//  This is a 'single cache' that contains multiple cache types (image, audio, etc)
-//  Each State will have its own cache, as well as there being a global game-wide cache.
-//  Loader files should be able to be cache directed too.
+export default function Cache () {
 
-export default class Cache {
+    let files = new Map();
 
-    constructor () {
+    return {
 
-        this.images = new ImageCache();
+        add: function (key, data) {
 
-    }
+            files.set(key, data);
+
+        },
+
+        has: function (key) {
+
+            return files.has(key);
+
+        },
+
+        get: function (key) {
+
+            return files.get(key);
+
+        },
+
+        remove: function (key) {
+
+            files.delete(key);
+
+        },
+
+        destroy: function () {
+
+            files.clear();
+
+        }
+
+    };
 
 }

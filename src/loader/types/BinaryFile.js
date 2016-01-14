@@ -1,5 +1,7 @@
 import File, * as FILE from 'loader/File.js';
 
+export const TYPE = 'binary';
+
 export default function BinaryFile (key, url = '', data = undefined) {
 
     if (url === '' && !data)
@@ -7,7 +9,7 @@ export default function BinaryFile (key, url = '', data = undefined) {
         url = key + '.bin';
     }
 
-    let file = File(key, url, 'binary');
+    let file = File(key, url, TYPE);
 
     //  Set the expected XHR response type
     file.xhr.responseType = 'arraybuffer';
