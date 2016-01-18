@@ -4,7 +4,103 @@ Richard Davey (rich@photonstorm.com)
 
 I've decided to keep a record of my work on Lazer (previously known as Phaser 3) here in the repo. It can be removed when the project goes live, but will serve as a handy log of what I'm doing and thinking during development.
 
-### TODO
+## Phaser Port Progress
+
+* Animation Manager
+* Animations
+* Bone support: Creature
+* Frame and Frame Data
+* Camera
+* Create
+    * Dynamic Textures
+    * Grid
+    * Palettes
+* Filters
+* FlexGrid / FlexLayer
+* Group
+* Plugin and Plugin Manager
+* Scale Manager
+* Signals
+* State Manager + States
+* Game World
+* Game Objects
+    * BitmapData
+    * BitmapText
+    * Button
+    * Graphics
+    * Image
+    * Particle
+    * RenderTexture
+    * RetroFont
+    * Rope
+    * Sprite
+    * Text
+    * Layer
+    * TileSprite
+    * Video
+* Geometry
+    * Circle
+    * Ellipse
+    * Line
+    * Point
+    * Polygon
+    * Rectangle
+    * Rounded Rectangle
+* Input
+    * Keyboard
+    * Mouse
+    * MSPointer
+    * Touch
+    * Gamepad
+* Loader
+* Math
+    * QuadTree
+    * Random Data Generator
+* Particles
+    * Arcade Particles
+* Physics
+    * Arcade Physics
+    * Ninja Physics
+    * P2 Physics
+* Sound
+    * Sound Manager
+    * Sound
+    * Audio Sprite
+    * Dynamic Audio
+    * SFXR
+* System
+    * Canvas
+    * Device
+    * DOM
+    * RAF
+* Tilemap
+    * Tilemap
+    * Tilemap Layer
+    * Tiled Parser
+    * Tileset
+    * Tile
+    * Image Collection
+* Time
+    * Master Clock
+    * Clock
+    * Timer
+    * Timed Events
+* Tweens
+    * Tween Manager
+    * Tweens
+    * Easing
+    * Custom Eases
+    * GSAP Bindings
+* Utils
+    * Array Set
+    * Array Utils
+    * String Utils
+    * Color
+    * Debug
+    * Linked List
+
+
+### Misc. TODO
 
 I'll add to this bullet list as I think of things while writing the entries below.
 
@@ -20,6 +116,14 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 * The MultiFile and File relationship is slightly wrong, it should be a chained Promise and not store a reference to the resolve / reject functions, but instead return Promise.resolve.
+
+### 18th January 2016
+
+Ported over the Circle class and broke it down into a nicer and much smaller plain object, plus supporting functions such as Circumference, Clone, ContainsXY, Equals, Random and Translate.
+
+Wrote tests for all of the functions and managed to optimize several of them in the process.
+
+Trying to decide what to do with the geometry intersection functions, they could either live in geom/intersects or in the actual shape folders, such as geom/circle/intersects/.
 
 ### 14th January 2016
 

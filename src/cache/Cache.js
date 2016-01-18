@@ -29,7 +29,13 @@ export default function Cache () {
 
         },
 
-        destroy: function () {
+        total: function () {
+
+            return files.size;
+
+        },
+
+        flush: function () {
 
             files.clear();
 

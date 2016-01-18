@@ -31,11 +31,39 @@ export default class StateManager {
 
     }
 
+    flush () {
+
+    }
+
     switch () {
 
     }
 
+    start () {
+
+    }
+
+    pause () {
+
+    }
+
+    resume () {
+
+    }
+
     reload () {
+
+    }
+
+    stop () {
+
+    }
+
+    shutdown () {
+
+    }
+
+    destroy () {
 
     }
     
