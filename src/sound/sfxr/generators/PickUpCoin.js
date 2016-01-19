@@ -1,14 +1,19 @@
 import Effect from 'sound/sfxr/Effect.js';
+import GetShape, * as SHAPE from 'sound/sfxr/Shapes.js';
 
-export default function PickUpCoin () {
+//  rnd = function that takes one argument and returns a random number between 0 and it
+//  frnd = function that takes one argument and returns a random number between 0 and X
+
+export default function PickUpCoin (rnd, frnd) {
 
     let fx = Effect();
 
-    // result.wave_type = Math.floor(frnd(SHAPES.length));
+    fx.waveType = GetShape(frnd);
 
-    // if (result.wave_type === 3) {
-    //   result.wave_type = 0;
-    // }
+    if (fx.waveType === SHAPE.NOISE)
+    {
+        fx.waveType = SHAPE.SQUARE;
+    }
 
     fx.tone.frequency = 0.4 + frnd(0.5);
     fx.envelope.attack = 0;

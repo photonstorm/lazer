@@ -1,5 +1,5 @@
 
-export default function Duty (
+export default function SquareDuty (
         {
             duty = 0,
             ramp = 0
