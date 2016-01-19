@@ -1,214 +1,77 @@
-import Vec2 from 'math/vector/vec2/Vec2.js';
 
-export default class Rectangle {
+//  Encapsulates a 2D rectangle defined by its corner point in the top-left
+//  and its extends in x (width) and y (height)
 
-    constructor (x = 0, y = 0, width = 0, height = 0) {
+export default function Rectangle (x = 0, y = 0, width = 0, height = 0) {
 
-        this._width = 0;
-        this._height = 0;
+    return {
 
-        this.points = [ new Vec2(), new Vec2(), new Vec2(), new Vec2() ];
+        x,
 
-        this.setTo(x, y, width, height);
+        y,
 
-    }
+        width,
 
-    setTo (x, y, width, height) {
+        height,
 
-        this._width = width;
-        this._height = height;
+        set: function (x, y, width, height) {
 
-        //  top-left      0, 0
-        //  top-right     1, 0
-        //  bottom-right  1, 1
-        //  bottom-left   0, 1
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
 
-        this.points[0].setTo(x, y);
-        this.points[1].setTo(width + x, y);
-        this.points[2].setTo(width + x, height + y);
-        this.points[3].setTo(x, height + y);
+            return this;
 
-        return this;
+        },
 
-    }
+        setPosition: function (x, y = x) {
 
-    get x () {
-        return this.points[0].x;
-    }
+            this.x = x;
+            this.y = y;
 
-    get y () {
-        return this.points[0].y;
-    }
+            return this;
 
-    get left () {
-        return this.points[0].x;
-    }
+        },
 
-    get right () {
-        return this.points[1].x;
-    }
+        setSize: function (width, height = width) {
 
-    get top () {
-        return this.points[0].y;
-    }
+            this.width = width;
+            this.height = height;
 
-    get bottom () {
-        return this.points[2].y;
-    }
+            return this;
 
-    get width () {
-        return this._width;
-    }
+        },
 
-    get height () {
-        return this._height;
-    }
+        get left () {
 
-    get halfWidth () {
-        return this._width / 2;
-    }
+            return this.x;
 
-    get halfHeight () {
-        return this._height / 2;
-    }
+        },
 
-    get topLeft () {
-        return this.points[0];
-    }
+        get right () {
 
-    get topRight () {
-        return this.points[1];
-    }
+            return this.x + this.width;
 
-    get bottomLeft () {
-        return this.points[3];
-    }
+        },
 
-    get bottomRight () {
-        return this.points[2];
-    }
+        get top () {
 
-    get volume () {
-        return this.width * this.height;
-    }
+            return this.y;
 
-    get perimeter () {
-        return (this.width * 2) + (this.height * 2);
-    }
+        },
 
-    get randomX () {
-        return this.x + (Math.random() * this.width);
-    }
+        get bottom () {
 
-    get randomY () {
-        return this.y + (Math.random() * this.height);
-    }
+            return this.y + this.height;
 
-    get empty () {
-        return (this.width === 0 || this.height === 0)
-    }
+        },
 
-    set x (value) {
+        toString: function () {
 
-        if (value !== this.x)
-        {
-            this.setTo(value, this.y, this.width, this.height);
+            return `[Rectangle (x=${this.x}, y=${this.y}, width=${this.width}, height=${this.height})]`;
+
         }
-
-    }
-
-    set y (value) {
-
-        if (value !== this.y)
-        {
-            this.setTo(this.x, value, this.width, this.height);
-        }
-
-    }
-
-    set width (value) {
-
-        if (value !== this.width)
-        {
-            this.setTo(this.x, this.y, value, this.height);
-        }
-
-    }
-
-    set height (value) {
-
-        if (value !== this.height)
-        {
-            this.setTo(this.x, this.y, this.width, value);
-        }
-
-    }
-
-    set empty (value) {
-
-        if (value)
-        {
-            this.setTo(0, 0, 0, 0);
-        }
-
-    }
-
-    clone () {
-
-        return new Rectangle(this.x, this.y, this.width, this.height);
-
-    }
-
-    copyFrom (rect) {
-
-        this.setTo(rect.x, rect.y, rect.width, rect.height);
-
-    }
-
-    copyTo (rect) {
-
-        rect.setTo(this.x, this.y, this.width, this.height);
-
-    }
-
-    scale (x, y) {
-
-        this.setTo(this.x, this.y, this.width * x, this.height * y);
-
-    }
-
-    translate (x, y) {
-
-        this.setTo(this.x + x, this.y + y, this.width, this.height);
-
-    }
-
-    centerOn (x, y) {
-
-        this.setTo(x - (this.width / 2), y - (this.height / 2), this.width, this.height);
-
-    }
-
-    resize (width, height = this.height) {
-
-        this.setTo(this.x, this.y, width, height);
-
-    }
-
-    equals (rect) {
-
-        return (
-            (this.x === rect.x) &&
-            (this.y === rect.y) &&
-            (this.width === rect.width) &&
-            (this.height === rect.height)
-        );
-
-    }
-
-    toString () {
-
-        return `[Rectangle (x=${this.x}, y=${this.y}, width=${this.width}, height=${this.height})]`;
 
     }
 

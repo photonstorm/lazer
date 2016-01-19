@@ -1,11 +1,11 @@
 import Rectangle from 'geom/rectangle/Rectangle.js';
 
-export default function (rectA, rectB, output = new Rectangle()) {
+export default function Union (rectA, rectB, output = Rectangle()) {
 
-    const x = Math.min(rectA.left, rectB.left);
-    const y = Math.min(rectA.top, rectB.top);
+    let x = Math.min(rectA.x, rectB.x);
+    let y = Math.min(rectA.y, rectB.y);
 
-    return output.setTo(
+    return output.set(
         x,
         y,
         Math.max(rectA.right, rectB.right) - x,

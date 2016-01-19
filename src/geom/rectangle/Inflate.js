@@ -1,21 +1,20 @@
-export function byValue (rect, x, y) {
+//  Increases the size of the Rectangle object by the specified amounts.
+//  The center point of the Rectangle object stays the same, and its size increases 
+//  to the left and right by the x value, and to the top and the bottom by the y value.
 
-    const x = rect.x -= x;
-    const y = rect.y -= y;
-    const w = rect.width += 2 * x;
-    const h = rect.height += 2 * y;
+export default function Inflate (rect, x, y) {
 
-    return rect.setTo(x, y, w, h);
-    
-}
+    //  Get the current center
+    let cx = rect.x + (rect.width / 2);
+    let cy = rect.y + (rect.height / 2);
 
-export function byVec2 (rect, vec2) {
+    //  Inflate
+    rect.width = 2 * x;
+    rect.height = 2 * y;
 
-    const x = rect.x -= vec2.x;
-    const y = rect.y -= vec2.y;
-    const w = rect.width += 2 * vec2.x;
-    const h = rect.height += 2 * vec2.y;
+    rect.x = x - (rect.width / 2);
+    rect.y = y - (rect.height / 2);
 
-    return rect.setTo(x, y, w, h);
+    return rect;
     
 }
