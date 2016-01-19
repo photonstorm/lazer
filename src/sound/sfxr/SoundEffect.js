@@ -1,7 +1,6 @@
 import Rand from 'sound/sfxr/Rand.js';
 import RandFloat from 'sound/sfxr/RandFloat.js';
 
-
 export default function SoundEffect (length, sampleRate) {
 
     let context = AudioContext;

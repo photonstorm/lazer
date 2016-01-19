@@ -1,14 +1,14 @@
 
 export default function SquareDuty (
         {
-            duty = 0,
+            value = 0,
             ramp = 0
         } = {}
     ) {
 
     return {
 
-        duty,        // Square Duty
+        value,        // Square Duty
         ramp       // Duty Sweep
 
     };
