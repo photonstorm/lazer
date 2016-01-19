@@ -1,17 +1,13 @@
 import GenerateData from 'sound/sfxr/generate/GenerateData.js';
 import UpdateData from 'sound/sfxr/generate/UpdateData.js';
-
 import Envelope from 'sound/sfxr/generate/Envelope.js';
 import Filter from 'sound/sfxr/generate/Filter.js';
 import Noise from 'sound/sfxr/generate/Noise.js';
 import Phaser from 'sound/sfxr/generate/Phaser.js';
 import Vibrato from 'sound/sfxr/generate/Vibrato.js';
 import Repeat from 'sound/sfxr/generate/Repeat.js';
-
 import SoundEffect from 'sound/sfxr/SoundEffect.js';
-
 import GetShape, * as SHAPE from 'sound/sfxr/Shapes.js';
-
 
 const MIN_SAMPLE_RATE = 22050;
 const SOUND_VOL = 0.25;
@@ -43,14 +39,16 @@ export default function GenerateWebAudio (fx) {
     var buffer_length = Math.ceil(envelope.total_length / summands);
     var buffer_complete = false;
 
+    let sound;
+
     if (fx.sampleRate < MIN_SAMPLE_RATE)
     {
         // Assume 4x gets close enough to MIN_SAMPLE_RATE
-        let sound = SoundEffect(4 * buffer_length, MIN_SAMPLE_RATE);
+        sound = SoundEffect(4 * buffer_length, MIN_SAMPLE_RATE);
     }
     else
     {
-        let sound = SoundEffect(buffer_length, fx.sampleRate);
+        sound = SoundEffect(buffer_length, fx.sampleRate);
     }
 
     let buffer = sound.getBuffer();
@@ -58,13 +56,13 @@ export default function GenerateWebAudio (fx) {
     for (var t = 0;; ++t)
     {
         // Repeats
-        if (repeat.limit !== 0 && ++data.rep_time >== repeat.limit)
+        if (repeat.limit !== 0 && ++data.rep_time >= repeat.limit)
         {
             UpdateData(data, fx);
         }
 
         // Arpeggio (single)
-        if (data.arp_limit !== 0 && t >== data.arp_limit)
+        if (data.arp_limit !== 0 && t >= data.arp_limit)
         {
             data.arp_limit = 0;
             data.fperiod *= data.arp_mod;
@@ -173,7 +171,7 @@ export default function GenerateWebAudio (fx) {
 
             phaser.phase++;
 
-            if (phaser.phase >== data.period)
+            if (phaser.phase >= data.period)
             {
                 phaser.phase %= data.period;
 
@@ -270,7 +268,7 @@ export default function GenerateWebAudio (fx) {
         // Accumulate samples appropriately for sample rate
         sample_sum += sample;
 
-        if (++num_summed >== summands)
+        if (++num_summed >= summands)
         {
             num_summed = 0;
             sample = sample_sum / summands;
@@ -282,7 +280,7 @@ export default function GenerateWebAudio (fx) {
         }
 
         sample = sample / 8 * masterVolume;
-        sample *= gain;
+        sample *= data.gain;
 
         buffer[buffer_i++] = sample;
 

@@ -1,15 +1,15 @@
 export default function Phaser (fx) {
 
-    let fphase = Math.pow(ps.phaser.offset, 2) * 1020;
+    let fphase = Math.pow(fx.phaser.offset, 2) * 1020;
 
-    if (ps.phaser.offset < 0)
+    if (fx.phaser.offset < 0)
     {
         fphase = -fphase;
     }
 
-    let fdphase = Math.pow(ps.phaser.ramp, 2) * 1;
+    let fdphase = Math.pow(fx.phaser.ramp, 2) * 1;
 
-    if (ps.phaser.ramp < 0)
+    if (fx.phaser.ramp < 0)
     {
         fdphase = -fdphase;
     }

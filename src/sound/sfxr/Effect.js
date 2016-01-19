@@ -13,7 +13,7 @@ export default function Effect (volume = 0.5, sampleRate = 44100, bitDepth = 8) 
 
     return {
 
-        waveType: SHAPE.SQUARE;
+        waveType: SHAPE.SQUARE,
 
         envelope: Envelope(),
         tone: Tone(),

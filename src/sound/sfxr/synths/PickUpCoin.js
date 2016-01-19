@@ -1,9 +1,6 @@
 import Effect from 'sound/sfxr/Effect.js';
 import GetShape, * as SHAPE from 'sound/sfxr/Shapes.js';
 
-//  rnd = function that takes one argument and returns a random number between 0 and it
-//  frnd = function that takes one argument and returns a random number between 0 and X
-
 export default function PickUpCoin (rnd, frnd) {
 
     let fx = Effect();

@@ -3,7 +3,7 @@ import RandFloat from 'sound/sfxr/RandFloat.js';
 
 export default function SoundEffect (length, sampleRate) {
 
-    let context = AudioContext;
+    let context = new AudioContext();
     let buffer = context.createBuffer(1, length, sampleRate);
 
     return {

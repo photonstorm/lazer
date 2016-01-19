@@ -130,6 +130,9 @@ Also created lots of Rectangle support functions: Area, Ceil, CeilAll, CenterOn,
 
 Started creating Ava tests for all of the new Rectangle functions.
 
+Finished the SFXR port. Dynamic audio effects are now generating and playing perfectly :) I've done all of the synth effects, all of the generators and the Web Audio implementation of it. So far I've ported over the pre-defined synths: Explosion, LaserShoot, PickUpCoin, PowerUp and PushSound.
+
+Still need to do the rest of the synths and add the synth cache, but it works and plays just great.
 
 ### 18th January 2016
 
