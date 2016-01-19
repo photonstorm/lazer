@@ -128,7 +128,7 @@ Finished work on the Rectangle class and broke it down as with Circle. It's now 
 
 Also created lots of Rectangle support functions: Area, Ceil, CeilAll, CenterOn, Clone, ContainsRect, ContainsXY, Copy, FitInside, FitOutside, Floor, FloorAll, GetAspectRatio, GetCenter, GetSize, Inflate, MergePoints, MergeRect, MergeXY, Overlaps, Perimeter, Random, Scale, Translate and Union. Phew :)
 
-Need to do tests for them all now (*sigh*!)
+Started creating Ava tests for all of the new Rectangle functions.
 
 
 ### 18th January 2016
