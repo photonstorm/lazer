@@ -116,6 +116,16 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could have option to ignore control keys (shift, arrows, etc), or limit to specific range
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 * The MultiFile and File relationship is slightly wrong, it should be a chained Promise and not store a reference to the resolve / reject functions, but instead return Promise.resolve.
+* Split up math/angle.js
+
+### 19th January 2016
+
+Split the math distance file up into 3 separate functions, now in math/distance.
+
+Created geom/intersect and added `CircleToCircle` and `CircleToRectangle` to it.
+
+
+
 
 ### 18th January 2016
 
