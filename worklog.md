@@ -125,6 +125,8 @@ Wrote tests for all of the functions and managed to optimize several of them in 
 
 Trying to decide what to do with the geometry intersection functions, they could either live in geom/intersects or in the actual shape folders, such as geom/circle/intersects/.
 
+Started working on porting SFXR. Have created the base Effect object, along with all of its modifiers: Duty, Envelope, HighPassFilter, LowPassFilter, Phaser, Repeat, Tonal, Tone and Vibrato. Also created one synth (PickUpCoin).
+
 ### 14th January 2016
 
 `Loader.getLoadedFilesByType` is a new method that allows you to get all of the loaded files of a specific type. All of the Loader file types have had new consts added to make them more secure. You can now for example do `getLoadedFilesByType(ImageFile.TYPE)` to get just the loaded images. There is an optional `group` argument as well.
