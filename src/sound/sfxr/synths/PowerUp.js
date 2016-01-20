@@ -1,4 +1,4 @@
-import Effect from 'sound/sfxr/Effect.js';
+import Effect from 'sound/sfxr/effects/Effect.js';
 import GetShape, * as SHAPE from 'sound/sfxr/Shapes.js';
 
 export default function PowerUp (rnd, frnd) {

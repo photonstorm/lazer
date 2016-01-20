@@ -1,12 +1,12 @@
-import GenerateData from 'sound/sfxr/generate/GenerateData.js';
-import UpdateData from 'sound/sfxr/generate/UpdateData.js';
-import Envelope from 'sound/sfxr/generate/Envelope.js';
-import Filter from 'sound/sfxr/generate/Filter.js';
-import Noise from 'sound/sfxr/generate/Noise.js';
-import Phaser from 'sound/sfxr/generate/Phaser.js';
-import Vibrato from 'sound/sfxr/generate/Vibrato.js';
-import Repeat from 'sound/sfxr/generate/Repeat.js';
-import SoundEffect from 'sound/sfxr/SoundEffect.js';
+import GenerateData from 'sound/sfxr/data/GenerateData.js';
+import UpdateData from 'sound/sfxr/data/UpdateData.js';
+import Envelope from 'sound/sfxr/data/generators/Envelope.js';
+import Filter from 'sound/sfxr/data/generators/Filter.js';
+import Noise from 'sound/sfxr/data/generators/Noise.js';
+import Phaser from 'sound/sfxr/data/generators/Phaser.js';
+import Vibrato from 'sound/sfxr/data/generators/Vibrato.js';
+import Repeat from 'sound/sfxr/data/generators/Repeat.js';
+import SoundEffect from 'sound/sfxr/webaudio/SoundEffect.js';
 import GetShape, * as SHAPE from 'sound/sfxr/Shapes.js';
 
 const MIN_SAMPLE_RATE = 44100;
@@ -21,7 +21,7 @@ let phaser;
 let noise;
 let repeat;
 
-export default function GenerateWebAudio (fx, masterVolume = 1) {
+export default function Generate (fx, masterVolume = 1) {
 
     let data = UpdateData(GenerateData(fx), fx);
 
