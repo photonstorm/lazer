@@ -23,9 +23,7 @@ let repeat;
 
 export default function GenerateWebAudio (fx, masterVolume = 1) {
 
-    let data = GenerateData(fx);
-
-    UpdateData(data, fx);
+    let data = UpdateData(GenerateData(fx), fx);
 
     filter = Filter(fx);
     vibrato = Vibrato(fx);
