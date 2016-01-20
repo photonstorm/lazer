@@ -120,6 +120,9 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 ### 20th January 2016
 
+Tidied up the sfxr files lots. Refactored them to remove invalid variable names, moved more globals into the data object and sorted out the Generate main loop to get rid of hacky for-loop calls.
+
+Added in the missing synths: BlipSelect, HitHurt and Random. All generating and sounding good. Need to test it with a seedable RNG, but am happy with the output.
 
 
 ### 19th January 2016
