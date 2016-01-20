@@ -11,7 +11,7 @@ export default function Envelope (fx) {
         stage: 0,
         time: 0,
         length,
-        total_length: length[0] + length[1] + length[2]
+        totalLength: length[0] + length[1] + length[2]
     };
 
 }

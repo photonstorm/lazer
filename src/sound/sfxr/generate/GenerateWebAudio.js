@@ -34,7 +34,7 @@ export default function GenerateWebAudio (fx, masterVolume = 1) {
     noise = Noise(fx);
     repeat = Repeat(fx);
 
-    data.bufferLength = Math.ceil(envelope.total_length / data.summands);
+    data.bufferLength = Math.ceil(envelope.totalLength / data.summands);
 
     let sound;
 
@@ -49,10 +49,11 @@ export default function GenerateWebAudio (fx, masterVolume = 1) {
     }
 
     let buffer = sound.getBuffer();
+    let t = 0;
 
-    for (let t = 0;; t++)
-    {
-        // Repeats
+    do {
+
+        //  Repeats
         if (repeat.limit !== 0 && ++data.repeatTime >= repeat.limit)
         {
             UpdateData(data, fx);
@@ -94,8 +95,10 @@ export default function GenerateWebAudio (fx, masterVolume = 1) {
 
         if (data.bufferComplete)
         {
-            for (; data.bufferIndex < data.bufferLength; data.bufferIndex++)
-            {
+            do {
+
+                data.bufferIndex++;
+
                 if (fx.sampleRate < MIN_SAMPLE_RATE)
                 {
                     buffer[data.bufferIndex++] = 0;
@@ -104,11 +107,13 @@ export default function GenerateWebAudio (fx, masterVolume = 1) {
                 }
 
                 buffer[data.bufferIndex] = 0;
-            }
 
-            break;
+            } while (data.bufferIndex < data.bufferLength);
         }
-    }
+
+        t++;
+
+    } while (!data.bufferComplete);
 
     return sound;
 
@@ -218,9 +223,9 @@ function applyPhaser (data, fx) {
         phaser.iphase = 1023;
     }
 
-    if (filter.hp_d !== 0)
+    if (filter.hpd !== 0)
     {
-        filter.hp *= filter.hp_d;
+        filter.hp *= filter.hpd;
 
         if (filter.hp < 0.00001)
         {
@@ -301,7 +306,7 @@ function apply8xSuperSampling (data, fx) {
         // Low-pass filter
         let pp = filter.p;
 
-        filter.w *= filter.w_d;
+        filter.w *= filter.wd;
 
         if (filter.w < 0)
         {

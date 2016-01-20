@@ -12,11 +12,11 @@ export default function Filter (fx) {
         p: 0,
         dp: 0,
         w,
-        w_d: 1 + fx.lpf.ramp * 0.0001,
+        wd: 1 + fx.lpf.ramp * 0.0001,
         dmp,
         php: 0,
         hp: Math.pow(fx.hpf.frequency, 2) * 0.1,
-        hp_d: 1 + fx.hpf.ramp * 0.0003
+        hpd: 1 + fx.hpf.ramp * 0.0003
     };
 
 }
