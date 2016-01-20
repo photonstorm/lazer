@@ -14,27 +14,25 @@ const SOUND_VOL = 0.25;
 const SAMPLE_RATE = 5512;
 const BIT_DEPTH = 8;
 
-let masterVolume = 1;
+let filter;
+let vibrato;
+let envelope;
+let phaser;
+let noise;
+let repeat;
 
-// let filter;
-// let vibrato;
-// let envelope;
-// let phaser;
-// let noise;
-// let repeat;
-
-export default function GenerateWebAudio (fx) {
+export default function GenerateWebAudio (fx, masterVolume = 1) {
 
     let data = GenerateData(fx);
 
     UpdateData(data, fx);
 
-    let filter = Filter(fx);
-    let vibrato = Vibrato(fx);
-    let envelope = Envelope(fx);
-    let phaser = Phaser(fx);
-    let noise = Noise(fx);
-    let repeat = Repeat(fx);
+    filter = Filter(fx);
+    vibrato = Vibrato(fx);
+    envelope = Envelope(fx);
+    phaser = Phaser(fx);
+    noise = Noise(fx);
+    repeat = Repeat(fx);
 
     data.bufferLength = Math.ceil(envelope.total_length / data.summands);
 
@@ -62,9 +60,9 @@ export default function GenerateWebAudio (fx) {
 
         applyArpeggio(data, t);
         applyFrequencySlide(data, fx);
-        applyVibrato(data, fx, vibrato);
-        applyEnvelope(data, fx, envelope);
-        applyPhaser(data, fx, phaser, filter);
+        applyVibrato(data, fx);
+        applyEnvelope(data, fx);
+        applyPhaser(data, fx);
 
         let sample = apply8xSuperSampling(data, fx, phaser, noise, filter, envelope);
 
@@ -145,7 +143,7 @@ function applyFrequencySlide (data, fx) {
 
 }
 
-function applyVibrato (data, fx, vibrato) {
+function applyVibrato (data, fx) {
 
     // Vibrato
     let rfPeriod = data.fPeriod;
@@ -177,7 +175,7 @@ function applyVibrato (data, fx, vibrato) {
 
 }
 
-function applyEnvelope (data, fx, envelope) {
+function applyEnvelope (data, fx) {
 
     // Volume envelope
     envelope.time++;
@@ -208,7 +206,7 @@ function applyEnvelope (data, fx, envelope) {
 
 }
 
-function applyPhaser (data, fx, phaser, filter) {
+function applyPhaser (data, fx) {
 
     // Phaser step
     phaser.fphase += phaser.fdphase;
@@ -237,7 +235,7 @@ function applyPhaser (data, fx, phaser, filter) {
 
 }
 
-function apply8xSuperSampling (data, fx, phaser, noise, filter, envelope) {
+function apply8xSuperSampling (data, fx) {
 
     // 8x supersampling
     let sample = 0;
