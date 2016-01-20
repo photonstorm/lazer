@@ -2,31 +2,37 @@ export default function GenerateData (fx) {
 
     return {
 
-        rep_time: 0,
+        repeatTime: 0,
         
-        fperiod: 0,
+        fPeriod: 0,
         
         period: 0,
         
-        fmaxperiod: 0,
+        fMaxPeriod: 0,
         
-        fslide: 0,
+        fSlide: 0,
         
-        fdslide: 0,
+        fDeltaSlide: 0,
         
-        square_duty: 0, 
+        squareDuty: 0, 
 
-        square_slide: 0,
+        squareSlide: 0,
         
-        arp_mod: 0,
+        arpMod: 0,
 
-        arp_time: 0,
+        arpTime: 0,
 
-        arp_limit: 0,
+        arpLimit: 0,
 
         gain: Math.exp(fx.volume) - 1,
     
-        num_clipped: 0
+        sampleSum: 0,
+        numSummed: 0,
+        summands: Math.floor(44100 / fx.sampleRate),
+
+        bufferIndex: 0,
+        bufferLength: 0,
+        bufferComplete: false
 
     };
 

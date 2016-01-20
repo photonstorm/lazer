@@ -8,7 +8,7 @@ export default function SoundEffect (length, sampleRate) {
 
     return {
 
-        minSampleRate: 22050,
+        minSampleRate: 44100,
 
         getBuffer: function() {
             return buffer.getChannelData(0);

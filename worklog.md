@@ -118,6 +118,10 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * The MultiFile and File relationship is slightly wrong, it should be a chained Promise and not store a reference to the resolve / reject functions, but instead return Promise.resolve.
 * Split up math/angle.js
 
+### 20th January 2016
+
+
+
 ### 19th January 2016
 
 Split the math distance file up into 3 separate functions, now in math/distance.
