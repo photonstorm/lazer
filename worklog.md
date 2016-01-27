@@ -117,13 +117,19 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * KeyCombo could allow you to set the combo in any order (not just start to finish)
 * The MultiFile and File relationship is slightly wrong, it should be a chained Promise and not store a reference to the resolve / reject functions, but instead return Promise.resolve.
 * Split up math/angle.js
+* Line rotation
+
+### 27th January 2016
+
+After a few days off ill I decided to work on the Line geometry functions. Created the core Line object and support functions for: Angle, BresenhamLine, CenterOn, Clone, Copy, GetMidPoint, Height, Length, NormalAngle, NormalX, NormalY, PerpSlope, Slope, PointOnLine, PointOnSegment, Random, Reflect, SetFromAngle, Slope and Width.
+
+Also created two new Intersects functions: LineToLine and LineSegmentToLineSegment.
 
 ### 20th January 2016
 
 Tidied up the sfxr files lots. Refactored them to remove invalid variable names, moved more globals into the data object and sorted out the Generate main loop to get rid of hacky for-loop calls.
 
 Added in the missing synths: BlipSelect, HitHurt and Random. All generating and sounding good. Need to test it with a seedable RNG, but am happy with the output.
-
 
 ### 19th January 2016
 

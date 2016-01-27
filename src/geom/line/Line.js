@@ -1,134 +1,56 @@
-import Vec2 from 'math/vector/Vec2.js';
+//  A Line Segment (a defined starting and end point)
 
-export default class Line {
+export default function Line (x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
 
-    constructor (x1, y1, x2, y2) {
+    return {
 
-        this.points = [ new Vec2(), new Vec2(), new Vec2(), new Vec2() ];
+        x1,
+        y1,
+        x2,
+        y2,
 
-        this.setTo(x1, y1, x2, y2);
+        set: function (x1, y1, x2, y2) {
 
-    }
-    
-    setTo (x1, y1, x2, y2) {
+            this.x1 = x1;
+            this.y1 = y1;
 
-        //  start
-        this.points[0].setTo(x1, y1);
+            this.x2 = x2;
+            this.y2 = y2;
 
-        //  end
-        this.points[1].setTo(x2, y2);
+            return this;
 
-        //  midPoint
-        this.points[2].setTo(x1 + x2 / 2, y1 + y2 / 2);
+        },
 
-        //  length
-        this.points[3].setTo(x2 - x1, y2 - y1);
+        get left () {
 
-    }
+            return Math.min(this.x1, this.x2);
 
-    get x () {
-        return Math.min(this.start.x, this.end.x);
-    }
+        },
 
-    get y () {
-        return Math.min(this.start.y, this.end.y);
-    }
+        get right () {
 
-    get left () {
-        return Math.min(this.start.x, this.end.x);
-    }
+            return Math.max(this.x1, this.x2);
 
-    get right () {
-        return Math.max(this.start.x, this.end.x);
-    }
+        },
 
-    get top () {
-        return Math.min(this.start.y, this.end.y);
-    }
+        get top () {
 
-    get bottom () {
-        return Math.max(this.start.y, this.end.y);
-    }
+            return Math.min(this.y1, this.y2);
 
-    get width () {
-        return Math.abs(this.start.x - this.end.x);
-    }
+        },
 
-    get height () {
-        return Math.abs(this.start.y - this.end.y);
-    }
+        get bottom () {
 
-    get start () {
-        return this.points[0];
-    }
+            return Math.max(this.y1, this.y2);
 
-    get end () {
-        return this.points[1];
-    }
+        },
 
-    //  readonly
-    get midPoint () {
-        return this.points[2];
-    }
+        toString: function () {
 
-    get length () {
+            return `[Line (x1=${this.x1}, y1=${this.y1}, x2=${this.x2}, y2=${this.y2})]`;
 
-        return Math.sqrt(this.points[3].x * this.points[3].x + this.points[3].y * this.points[3].y);
+        }
 
-    }
+    };
 
-    get angle () {
-
-        return Math.atan2(this.points[3].x, this.points[3].y);
-
-    }
-
-    get slope () {
-
-        return this.points[3].y / this.points[3].x;
-
-    }
-
-    get perpSlope () {
-
-        return -(this.points[3].y / this.points[3].x);
-
-    }
-
-    get normalX () {
-
-        return Math.cos(this.angle - 1.5707963267948966);
-
-    }
-
-    get normalY () {
-
-        return Math.sin(this.angle - 1.5707963267948966);
-
-    }
-
-    clone () {
-        return new Line(this.start.x, this.start.y, this.end.x, this.end.y);
-    }
-
-    copyFrom (line) {
-        this.setTo(line.start.x, line.start.y, line.end.x, line.end.y);
-    }
-
-    copyTo (line) {
-        line.setTo(this.start.x, this.start.y, this.end.x, this.end.y);
-    }
-
-    equals (line) {
-
-        return (this.start.equals(line.start) && this.end.equals(line.end));
-
-    }
-
-    toString () {
-
-        return `[Line (start.x=${this.start.x}, start.y=${this.start.y}, end.x=${this.end.x}, end.y=${this.end.y})]`;
-
-    }
-    
 }
