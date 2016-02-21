@@ -30,16 +30,45 @@ export default class Starfield2D {
 
         let stars = [];
 
-        for (let i = 0; i < qty; i++)
+        if (typeof(qty) === 'function')
         {
-            let x = Between(-this.paddingX, (this.width + this.paddingX));
-            let y = Between(-this.paddingY, (this.height + this.paddingY));
+            //  User defined function
+            let x = -this.paddingX;
+            let y = -this.paddingY;
+            let width = this.width + this.paddingX;
+            let height = this.height + this.paddingY;
 
-            //  Delta values for rendering interpolation
-            let dx = x;
-            let dy = y;
+            stars = qty(x, y, width, height);
 
-            stars.push({ x, y, dx, dy });
+            //  Add the dx/dy values
+            for (let star of stars)
+            {
+                if (star.dx === undefined)
+                {
+                    star.dx = star.x;
+                }
+
+                if (star.dy === undefined)
+                {
+                    star.dy = star.y;
+                }
+            }
+        }
+        else
+        {
+            //  Random spread of stars
+
+            for (let i = 0; i < qty; i++)
+            {
+                let x = Between(-this.paddingX, (this.width + this.paddingX));
+                let y = Between(-this.paddingY, (this.height + this.paddingY));
+
+                //  Delta values for rendering interpolation
+                let dx = x;
+                let dy = y;
+
+                stars.push({ x, y, dx, dy });
+            }
         }
 
         return stars;

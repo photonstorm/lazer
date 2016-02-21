@@ -121,7 +121,11 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 ### 21st February 2016
 
-Updated Starfield2D to add in a new Wave Layer feature. Might as well let the class take care of more interesting sin / cos based movement patterns. Just give it a few values when you create it and voila. Also thinking it'd make a good base class and maybe extend with things like 'Starfield2DImage' which you just give an Image object and a context, or maybe 'Starfield2DDot' which could use fillRect (or setPixel maybe? on a locked canvas), could also include ability to set the starting star patterns from your own function rather than random.
+Updated Starfield2D to add in a new Wave Layer feature. Might as well let the class take care of more interesting sin / cos based movement patterns. Just give it a few values when you create it and voila. 
+
+Added the ability for the `qty` value (of stars to create) to be your own callback, then it uses that instead of the default x/y random plot.
+
+Also thinking it'd make a good base class and maybe extend with things like 'Starfield2DImage' which you just give an Image object and a context, or maybe 'Starfield2DDot' which could use fillRect (or setPixel maybe? on a locked canvas)
 
 ### 20th February 2016
 
