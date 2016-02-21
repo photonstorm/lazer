@@ -119,6 +119,11 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Split up math/angle.js
 * Line rotation
 
+### 20th February 2016
+
+It's been a while seeing as Phaser has gotten all of my attention. Glad to be back though.
+
+
 ### 27th January 2016
 
 After a few days off ill I decided to work on the Line geometry functions. Created the core Line object and support functions for: Angle, BresenhamLine, CenterOn, Clone, Copy, GetMidPoint, Height, Length, NormalAngle, NormalX, NormalY, PerpSlope, Slope, PointOnLine, PointOnSegment, Random, Reflect, SetFromAngle, Slope and Width.

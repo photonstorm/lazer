@@ -18,6 +18,19 @@ You can also follow development on [Twitter](https://twitter.com/lazerjs)
 
 Check out the [Lazer Dev](https://github.com/photonstorm/lazer-dev) repo to get all the code samples and tests.
 
+To set-up a test environment you currently need to do the following:
+
+* Ensure you have a locally running httpd server with php support. There are numerous ways to achieve this, from WAMP Server on Windows to MAMP, Apache or any of the myriad CLI based servers available on OS X and beyond.
+* Checkout both the lazer and lazer-dev repos. Ensure they are within the web root of your local server, and at the same level. I.e.:
+```
+webroot/lazer
+webroot/lazer-dev
+```
+* Visit lazer-dev/index.php in your browser, pick a test and run it.
+
+You **don't** need to `npm install` _anything_ yet, all of the files you need to run tests locally are in the repo already. There is no 'build' step, nothing at all. It's all handled via client-side loaded run-time transpiling and loading.
+
+
 ## Support Lazer on Patreon
 
 ![patreon](http://www.phaser.io/images/patreon.png)
@@ -25,8 +38,6 @@ Check out the [Lazer Dev](https://github.com/photonstorm/lazer-dev) repo to get 
 Please help support the future development of Lazer through our [Patreon campaign](https://www.patreon.com/photonstorm). We've some exciting plans and there's so much we'd like to do. Let's see if we can all work together to make this possible.
 
 ## Warning: Highly Experimental
-
-Everything in this repository is highly experimental. We're testing out all kinds of things, from ES6 features to new renderers. Unless you're part of the development team please don't open issues here _yet_.
 
 We have no current estimated date of release.
 
