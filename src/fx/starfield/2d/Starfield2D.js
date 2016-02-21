@@ -148,4 +148,15 @@ export default class Starfield2D {
 
     }
 
+    destroy () {
+
+        for (let layer of this.layers)
+        {
+            layer.stars = [];
+        }
+
+        this.layers = [];
+
+    }
+
 }
