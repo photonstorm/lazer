@@ -121,7 +121,9 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 ### 20th February 2016
 
-It's been a while seeing as Phaser has gotten all of my attention. Glad to be back though.
+It's been a while seeing as Phaser has gotten all of my attention recently. Glad to be back though. I needed something small to kick me off, so I coded up a Starfield2D class in the new Fx category. I'm very pleased with the end result actually - it's nicely optimized, has star interpolation and lets you handle the rendering however you want.
+
+Updated Starfield to include a padding value, which makes things a lot smoother if you're using image based stars that you don't want to 'clip' off the edge. Created a few tests to accompany it. Also tidied up some properties.
 
 
 ### 27th January 2016

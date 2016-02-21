@@ -3,12 +3,25 @@ import Vec2 from 'math/vector/vec2/Build.js';
 
 export default class Starfield2D {
 
-    constructor (width, height) {
+    constructor (
+        width,
+        height,
+        {
+            speedX = 0,
+            speedY = 0,
+            paddingX = 0,
+            paddingY = 0
+        } = {})
+    {
 
         this.width = width;
         this.height = height;
 
-        this.speed = Vec2(0, 0);
+        this.speedX = speedX;
+        this.speedY = speedY;
+
+        this.paddingX = paddingX;
+        this.paddingY = paddingY;
 
         this.layers = [];
 
@@ -20,8 +33,8 @@ export default class Starfield2D {
 
         for (let i = 0; i < qty; i++)
         {
-            let x = Between(0, this.width);
-            let y = Between(0, this.height);
+            let x = Between(-this.paddingX, (this.width + this.paddingX));
+            let y = Between(-this.paddingY, (this.height + this.paddingY));
 
             //  Delta values for rendering interpolation
             let dx = x;
@@ -32,7 +45,11 @@ export default class Starfield2D {
 
         let i = this.layers.length;
 
-        this.layers.push( { i, speedX, speedY, stars } );
+        let layer = { i, speedX, speedY, stars };
+
+        this.layers.push(layer);
+
+        return layer;
 
     }
 
@@ -42,8 +59,8 @@ export default class Starfield2D {
         {
             for (let star of layer.stars)
             {
-                this.wrapX(star, layer.speedX + this.speed[0]);
-                this.wrapY(star, layer.speedY + this.speed[1]);
+                this.wrapX(star, layer.speedX + this.speedX);
+                this.wrapY(star, layer.speedY + this.speedY);
             }
         }
 
@@ -63,9 +80,9 @@ export default class Starfield2D {
         if (speed < 0)
         {
             //  Going left
-            if (x < 0)
+            if (x < -this.paddingX)
             {
-                x += this.width;
+                x += (this.width + this.paddingX);
                 star.dx = x;
             }
         }
@@ -74,6 +91,7 @@ export default class Starfield2D {
             //  Going right
             if (x < star.dx)
             {
+                x -= this.paddingX;
                 star.dx = x;
             }
         }
@@ -96,9 +114,9 @@ export default class Starfield2D {
         if (speed < 0)
         {
             //  Going up
-            if (y < 0)
+            if (y < -this.paddingY)
             {
-                y += this.height;
+                y += (this.height + this.paddingY);
                 star.dy = y;
             }
         }
@@ -107,6 +125,7 @@ export default class Starfield2D {
             //  Going down
             if (y < star.dy)
             {
+                y -= this.paddingY;
                 star.dy = y;
             }
         }
@@ -126,30 +145,6 @@ export default class Starfield2D {
                 renderCallback(layer.i, x, y);
             }
         }
-
-    }
-
-    get speedX () {
-
-        return this.speed[0];
-
-    }
-
-    get speedY () {
-
-        return this.speed[1];
-
-    }
-
-    set speedX (value) {
-
-        this.speed[0] = value;
-
-    }
-
-    set speedY (value) {
-
-        this.speed[1] = value;
 
     }
 
