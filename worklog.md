@@ -119,6 +119,10 @@ I'll add to this bullet list as I think of things while writing the entries belo
 * Split up math/angle.js
 * Line rotation
 
+### 21st February 2016
+
+Updated Starfield2D to add in a new Wave Layer feature. Might as well let the class take care of more interesting sin / cos based movement patterns. Just give it a few values when you create it and voila. Also thinking it'd make a good base class and maybe extend with things like 'Starfield2DImage' which you just give an Image object and a context, or maybe 'Starfield2DDot' which could use fillRect (or setPixel maybe? on a locked canvas), could also include ability to set the starting star patterns from your own function rather than random.
+
 ### 20th February 2016
 
 It's been a while seeing as Phaser has gotten all of my attention recently. Glad to be back though. I needed something small to kick me off, so I coded up a Starfield2D class in the new Fx category. I'm very pleased with the end result actually - it's nicely optimized, has star interpolation and lets you handle the rendering however you want.
