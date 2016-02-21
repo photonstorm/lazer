@@ -127,6 +127,8 @@ Added the ability for the `qty` value (of stars to create) to be your own callba
 
 Also thinking it'd make a good base class and maybe extend with things like 'Starfield2DImage' which you just give an Image object and a context, or maybe 'Starfield2DDot' which could use fillRect (or setPixel maybe? on a locked canvas)
 
+Update: Done the above. Starfield2D is now a sturdy base class, and Starfield2DDot extends it. You can chose to use just the base class and provide your own render callback, or use one of those provided by the extended classes. Need to update all the demos now though :)
+
 ### 20th February 2016
 
 It's been a while seeing as Phaser has gotten all of my attention recently. Glad to be back though. I needed something small to kick me off, so I coded up a Starfield2D class in the new Fx category. I'm very pleased with the end result actually - it's nicely optimized, has star interpolation and lets you handle the rendering however you want.

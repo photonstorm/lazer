@@ -77,13 +77,13 @@ export default class Starfield2D {
 
     addWaveLayer (
         qty,
-        speedX = 0,
-        speedY = 0,
         {
+            speedX = 0,
+            speedY = 0,
             color = '#fff',
             image = undefined,
-            starWidth = 1,
-            starHeight = 1,
+            starWidth = 2,
+            starHeight = 2,
             sinX = 0,
             sinY = 0,
             cosX = 0,
@@ -142,13 +142,13 @@ export default class Starfield2D {
 
     addLayer (
         qty,
-        speedX = 0,
-        speedY = 0,
         {
+            speedX = 0,
+            speedY = 0,
             color = '#fff',
             image = undefined,
-            starWidth = 1,
-            starHeight = 1
+            starWidth = 2,
+            starHeight = 2
         } = {})
     {
 

@@ -18,12 +18,6 @@ export default class Starfield2DImage extends Starfield2D {
 
     }
 
-    addLayer (qty, speedX = 0, speedY = 0, color = '#fff') {
-
-        return super.addLayer(qty, speedX, speedY, { color });
-
-    }
-
     render (i, ctx) {
 
         for (let layer of this.layers)
