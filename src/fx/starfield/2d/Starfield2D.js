@@ -80,6 +80,10 @@ export default class Starfield2D {
         speedX = 0,
         speedY = 0,
         {
+            color = '#fff',
+            image = undefined,
+            starWidth = 1,
+            starHeight = 1,
             sinX = 0,
             sinY = 0,
             cosX = 0,
@@ -111,6 +115,10 @@ export default class Starfield2D {
             speedX,
             speedY,
             stars,
+            color,
+            image,
+            starWidth,
+            starHeight,
             wave: true,
             _sinX,
             _sinY,
@@ -132,13 +140,23 @@ export default class Starfield2D {
 
     }
 
-    addLayer (qty, speedX = 0, speedY = 0) {
+    addLayer (
+        qty,
+        speedX = 0,
+        speedY = 0,
+        {
+            color = '#fff',
+            image = undefined,
+            starWidth = 1,
+            starHeight = 1
+        } = {})
+    {
 
         let stars = this.makeStarsArray(qty);
 
         let i = this.layers.length;
 
-        let layer = { i, speedX, speedY, stars, wave: false };
+        let layer = { i, speedX, speedY, stars, color, image, starWidth, starHeight, wave: false };
 
         this.layers.push(layer);
 
