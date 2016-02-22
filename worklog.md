@@ -123,6 +123,8 @@ I'll add to this bullet list as I think of things while writing the entries belo
 
 Moved the 'qty' argument for Starfield2D inside the layer creation object, just makes more sense to have it there. Fixed all the tests so they work.
 
+Created the SinusDots FX class and a load of tests for it. Such simple math, but such beautiful effects can be created from it. Included a canvas dot and image renderer, with interpolation support, as well as a renderCallback method too. Need to create a 'make your own waveform' test and then it's done.
+
 ### 21st February 2016
 
 Updated Starfield2D to add in a new Wave Layer feature. Might as well let the class take care of more interesting sin / cos based movement patterns. Just give it a few values when you create it and voila. 
