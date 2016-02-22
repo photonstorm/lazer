@@ -27,7 +27,7 @@ export function load (context, imageData, offsetX = 0, offsetY = 0) {
         this.br.zero();
         this.offset.setTo(offsetX, offsetY);
     }
-    
+
 }
 
 export function set (x, y, red = 0, green = 0, blue = 0, alpha = 255) {

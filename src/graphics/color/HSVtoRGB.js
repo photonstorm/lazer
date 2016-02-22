@@ -1,6 +1,6 @@
 /**
  * Converts an HSV (hue, saturation and value) color value to RGB.
- * Conversion forumla from http://en.wikipedia.org/wiki/HSL_color_space.
+ * Conversion formula from http://en.wikipedia.org/wiki/HSL_color_space.
  * Assumes HSV values are contained in the set [0, 1] and returns r, g and b values in the set [0, 255].
  * Based on code by Michael Jackson (https://github.com/mjijackson)
  *
@@ -10,16 +10,16 @@
  * @param {number} v - The value, in the range 0 - 1.
  * @return {BaseColor} This
  */
-export default function (h, s = 1, v = 1) {
+export default function HSVtoRGB (h, s = 1, v = 1) {
 
     const i = Math.floor(h * 6);
     const f = h * 6 - i;
 
-    const p = (v * (1 - s)) * 255;
-    const q = (v * (1 - f * s)) * 255;
-    const t = (v * (1 - (1 - f) * s)) * 255;
+    const p = Math.floor((v * (1 - s)) * 255);
+    const q = Math.floor((v * (1 - f * s)) * 255);
+    const t = Math.floor((v * (1 - (1 - f) * s)) * 255);
 
-    v *= 255;
+    v = Math.floor(v *= 255);
 
     const r = i % 6;
 
