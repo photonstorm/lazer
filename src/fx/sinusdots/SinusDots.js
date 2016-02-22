@@ -12,14 +12,17 @@ export default class SinusDots {
     // x1: -12, y1: 2952, x2: 737, y2: 1518, x3: -357, y3: -833, x4: 40, y4: 46
     // x1: 598, y1: 598, x2: 598, y2: 598, x3: 893, y3: 898, x4: 482, y4: 816
     // x1: 243, y1: 276, x2: 404, y2: 484, x3: 1259, y3: 1144, x4: 916, y4: 1268
+    // x1: 241, y1: -393, x2: 20, y2: 502, x3: 38, y3: 245, x4: 7, y4: 150
 
     constructor (
         {
             x = 0,
             y = 0,
             qty = 400,
-            xInc = 0.00010,
-            yInc = 0.00005,
+            xInc = 10,
+            yInc = 5,
+            width = 70,
+            height = 40,
             x1 = 0,
             y1 = 0,
             x2 = 0,
@@ -36,20 +39,14 @@ export default class SinusDots {
         this.x = x;
         this.y = y;
 
-        this.xInc = xInc;
-        this.yInc = yInc;
-
-        //  Static
-
-        this.sx1 = 79; // x1
-        this.sy1 = 49; // y1
-
-        this.sx2 = 79; // x12
-        this.sy2 = 49; // y12
+        this.forms = [];
 
         //  Private
 
         //  Modifiers
+
+        this._x = x;
+        this._y = y;
 
         this._x1 = 0; // x2
         this._y1 = 0; // y2
@@ -63,6 +60,11 @@ export default class SinusDots {
         this._x4 = 0; // x32
         this._y4 = 0; // y32
 
+        this._px1 = 0;
+        this._py1 = 0;
+        this._px2 = 0;
+        this._py2 = 0;
+
         this.dots = [];
 
         for (let i = 0; i < qty; i++)
@@ -70,19 +72,16 @@ export default class SinusDots {
             this.dots.push({ i, x: 0, y: 0, dx: 0, dy: 0 });
         }
 
-        this._px = 0;
-        this._py = 0;
-        this._px2 = 0;
-        this._py2 = 0;
-
-        this.forms = [];
-
-        this.addForm({ x1, y1, x2, y2, x3, y3, x4, y4 });
+        this.addForm({ xInc, yInc, width, height, x1, y1, x2, y2, x3, y3, x4, y4 });
 
     }
 
     addForm (
         {
+            xInc = 10,
+            yInc = 5,
+            width = 70,
+            height = 40,
             x1 = 0,
             y1 = 0,
             x2 = 0,
@@ -94,12 +93,16 @@ export default class SinusDots {
         } = {})
     {
 
-        this.currentForm = this.forms.push({ x1, y1, x2, y2, x3, y3, x4, y4 }) - 1;
+        this.currentForm = this.forms.push({ xInc, yInc, width, height, x1, y1, x2, y2, x3, y3, x4, y4 }) - 1;
 
     }
 
     loadData (
         {
+            xInc = 10,
+            yInc = 5,
+            width = 70,
+            height = 40,
             x1 = 0,
             y1 = 0,
             x2 = 0,
@@ -111,12 +114,28 @@ export default class SinusDots {
         } = {})
     {
 
+        this._x = this.x;
+        this._y = this.y;
+
+        this._px1 = 0;
+        this._py1 = 0;
+        this._px2 = 0;
+        this._py2 = 0;
+
+        this.xInc = xInc;
+        this.yInc = yInc;
+        this.width = width;
+        this.height = height;
+
         this.x1 = x1;
         this.y1 = y1;
+
         this.x2 = x2;
         this.y2 = y2;
+
         this.x3 = x3;
         this.y3 = y3;
+
         this.x4 = x4;
         this.y4 = y4;
 
@@ -124,20 +143,25 @@ export default class SinusDots {
 
     update () {
 
-        this._x1 = this.forms[this.currentForm].x1 * this.xInc;
-        this._y1 = this.forms[this.currentForm].y1 * this.yInc;
+        let f = this.forms[this.currentForm];
 
-        this._x2 = this.forms[this.currentForm].x2 * this.xInc;
-        this._y2 = this.forms[this.currentForm].y2 * this.yInc;
+        let xi = f.xInc * 0.00001;
+        let yi = f.yInc * 0.00001;
 
-        this._x3 = this.forms[this.currentForm].x3 * this.xInc;
-        this._y3 = this.forms[this.currentForm].y3 * this.yInc;
+        this._x1 = f.x1 * xi;
+        this._y1 = f.y1 * yi;
 
-        this._x4 = this.forms[this.currentForm].x4 * this.xInc;
-        this._y4 = this.forms[this.currentForm].y4 * this.yInc;
+        this._x2 = f.x2 * xi;
+        this._y2 = f.y2 * yi;
+
+        this._x3 = f.x3 * xi;
+        this._y3 = f.y3 * yi;
+
+        this._x4 = f.x4 * xi;
+        this._y4 = f.y4 * yi;
         
-        this._px += this._x3;
-        this._py += this._y3;
+        this._px1 += this._x3;
+        this._py1 += this._y3;
         this._px2 += this._x4;
         this._py2 += this._y4;
 
@@ -146,8 +170,8 @@ export default class SinusDots {
             dot.dx = dot.x;
             dot.dy = dot.y;
 
-            dot.x = this.x + this.sx1 * Math.sin(dot.i * this._x1 + this._px) + this.sx2 * Math.sin(dot.i * this._x2 + this._px2);
-            dot.y = this.y - this.sy1 * Math.sin(dot.i * this._y1 + this._py) + this.sy2 * Math.sin(dot.i * this._y2 + this._py2);
+            dot.x = this._x + f.width * Math.sin(dot.i * this._x1 + this._px1) + f.width * Math.sin(dot.i * this._x2 + this._px2);
+            dot.y = this._y - f.height * Math.sin(dot.i * this._y1 + this._py1) + f.height * Math.sin(dot.i * this._y2 + this._py2);
         }
 
     }
@@ -183,6 +207,38 @@ export default class SinusDots {
             ctx.drawImage(image, x, y);
         }
 
+    }
+
+    get xInc () {
+        return this.forms[this.currentForm].xInc;
+    }
+
+    set xInc (value) {
+        this.forms[this.currentForm].xInc = value;
+    }
+
+    get yInc () {
+        return this.forms[this.currentForm].yInc;
+    }
+
+    set yInc (value) {
+        this.forms[this.currentForm].yInc = value;
+    }
+
+    get width () {
+        return this.forms[this.currentForm].width;
+    }
+
+    set width (value) {
+        this.forms[this.currentForm].width = value;
+    }
+
+    get height () {
+        return this.forms[this.currentForm].height;
+    }
+
+    set height (value) {
+        this.forms[this.currentForm].height = value;
     }
 
     get x1 () {
