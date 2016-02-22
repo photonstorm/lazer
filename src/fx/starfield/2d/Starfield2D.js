@@ -76,8 +76,8 @@ export default class Starfield2D {
     }
 
     addWaveLayer (
-        qty,
         {
+            qty = 0,
             speedX = 0,
             speedY = 0,
             color = '#fff',
@@ -141,8 +141,8 @@ export default class Starfield2D {
     }
 
     addLayer (
-        qty,
         {
+            qty = 0,
             speedX = 0,
             speedY = 0,
             color = '#fff',
