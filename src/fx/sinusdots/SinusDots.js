@@ -1,4 +1,3 @@
-import DrawImage from 'canvas/DrawImage.js';
 
 export default class SinusDots {
 
@@ -48,21 +47,21 @@ export default class SinusDots {
         this.sx2 = 79; // x12
         this.sy2 = 49; // y12
 
+        //  Private
+
         //  Modifiers
 
-        this.x1 = 0; // x2
-        this.y1 = 0; // y2
+        this._x1 = 0; // x2
+        this._y1 = 0; // y2
 
-        this.x2 = 0; // x22
-        this.y2 = 0; // y22
+        this._x2 = 0; // x22
+        this._y2 = 0; // y22
 
-        this.x3 = 0; // x3
-        this.y3 = 0; // y3
+        this._x3 = 0; // x3
+        this._y3 = 0; // y3
 
-        this.x4 = 0; // x32
-        this.y4 = 0; // y32
-
-        //  Private
+        this._x4 = 0; // x32
+        this._y4 = 0; // y32
 
         this.dots = [];
 
@@ -99,32 +98,56 @@ export default class SinusDots {
 
     }
 
+    loadData (
+        {
+            x1 = 0,
+            y1 = 0,
+            x2 = 0,
+            y2 = 0,
+            x3 = 0,
+            y3 = 0,
+            x4 = 0,
+            y4 = 0
+        } = {})
+    {
+
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.x3 = x3;
+        this.y3 = y3;
+        this.x4 = x4;
+        this.y4 = y4;
+
+    }
+
     update () {
 
-        this.x1 = this.forms[this.currentForm].x1 * this.xInc;
-        this.y1 = this.forms[this.currentForm].y1 * this.yInc;
+        this._x1 = this.forms[this.currentForm].x1 * this.xInc;
+        this._y1 = this.forms[this.currentForm].y1 * this.yInc;
 
-        this.x2 = this.forms[this.currentForm].x2 * this.xInc;
-        this.y2 = this.forms[this.currentForm].y2 * this.yInc;
+        this._x2 = this.forms[this.currentForm].x2 * this.xInc;
+        this._y2 = this.forms[this.currentForm].y2 * this.yInc;
 
-        this.x3 = this.forms[this.currentForm].x3 * this.xInc;
-        this.y3 = this.forms[this.currentForm].y3 * this.yInc;
+        this._x3 = this.forms[this.currentForm].x3 * this.xInc;
+        this._y3 = this.forms[this.currentForm].y3 * this.yInc;
 
-        this.x4 = this.forms[this.currentForm].x4 * this.xInc;
-        this.y4 = this.forms[this.currentForm].y4 * this.yInc;
+        this._x4 = this.forms[this.currentForm].x4 * this.xInc;
+        this._y4 = this.forms[this.currentForm].y4 * this.yInc;
         
-        this._px += this.x3;
-        this._py += this.y3;
-        this._px2 += this.x4;
-        this._py2 += this.y4;
+        this._px += this._x3;
+        this._py += this._y3;
+        this._px2 += this._x4;
+        this._py2 += this._y4;
 
         for (let dot of this.dots)
         {
             dot.dx = dot.x;
             dot.dy = dot.y;
 
-            dot.x = this.x + this.sx1 * Math.sin(dot.i * this.x1 + this._px) + this.sx2 * Math.sin(dot.i * this.x2 + this._px2);
-            dot.y = this.y - this.sy1 * Math.sin(dot.i * this.y1 + this._py) + this.sy2 * Math.sin(dot.i * this.y2 + this._py2);
+            dot.x = this.x + this.sx1 * Math.sin(dot.i * this._x1 + this._px) + this.sx2 * Math.sin(dot.i * this._x2 + this._px2);
+            dot.y = this.y - this.sy1 * Math.sin(dot.i * this._y1 + this._py) + this.sy2 * Math.sin(dot.i * this._y2 + this._py2);
         }
 
     }
@@ -138,14 +161,14 @@ export default class SinusDots {
 
     }
 
-    renderDot (t, ctx) {
+    renderDot (t, ctx, size = 1) {
 
         for (let dot of this.dots)
         {
             let x = dot.dx + (dot.x - dot.dx) * t;
             let y = dot.dy + (dot.y - dot.dy) * t;
             
-            ctx.fillRect(x, y, 1, 1);
+            ctx.fillRect(x, y, size, size);
         }
 
     }
@@ -157,9 +180,73 @@ export default class SinusDots {
             let x = dot.dx + (dot.x - dot.dx) * t;
             let y = dot.dy + (dot.y - dot.dy) * t;
             
-            DrawImage(ctx, image, { x, y });
+            ctx.drawImage(image, x, y);
         }
 
+    }
+
+    get x1 () {
+        return this.forms[this.currentForm].x1;
+    }
+
+    set x1 (value) {
+        this.forms[this.currentForm].x1 = value;
+    }
+
+    get y1 () {
+        return this.forms[this.currentForm].y1;
+    }
+
+    set y1 (value) {
+        this.forms[this.currentForm].y1 = value;
+    }
+
+    get x2 () {
+        return this.forms[this.currentForm].x2;
+    }
+
+    set x2 (value) {
+        this.forms[this.currentForm].x2 = value;
+    }
+
+    get y2 () {
+        return this.forms[this.currentForm].y2;
+    }
+
+    set y2 (value) {
+        this.forms[this.currentForm].y2 = value;
+    }
+
+    get x3 () {
+        return this.forms[this.currentForm].x3;
+    }
+
+    set x3 (value) {
+        this.forms[this.currentForm].x3 = value;
+    }
+
+    get y3 () {
+        return this.forms[this.currentForm].y3;
+    }
+
+    set y3 (value) {
+        this.forms[this.currentForm].y3 = value;
+    }
+
+    get x4 () {
+        return this.forms[this.currentForm].x4;
+    }
+
+    set x4 (value) {
+        this.forms[this.currentForm].x4 = value;
+    }
+
+    get y4 () {
+        return this.forms[this.currentForm].y4;
+    }
+
+    set y4 (value) {
+        this.forms[this.currentForm].y4 = value;
     }
 
     destroy () {
