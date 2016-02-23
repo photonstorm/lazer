@@ -13,6 +13,7 @@ export default class SinusDots {
     // x1: 598, y1: 598, x2: 598, y2: 598, x3: 893, y3: 898, x4: 482, y4: 816
     // x1: 243, y1: 276, x2: 404, y2: 484, x3: 1259, y3: 1144, x4: 916, y4: 1268
     // x1: 241, y1: -393, x2: 20, y2: 502, x3: 38, y3: 245, x4: 7, y4: 150
+    // { xInc: 15, yInc: 5, width: 100, height: 100, x1: 322, y1: 1870, x2: 930, y2: 30, x3: -174, y3: -38, x4: 278, y4: 68 }
 
     constructor (
         {
@@ -21,8 +22,8 @@ export default class SinusDots {
             qty = 400,
             xInc = 10,
             yInc = 5,
-            width = 70,
-            height = 40,
+            width = 100,
+            height = 80,
             x1 = 0,
             y1 = 0,
             x2 = 0,
@@ -80,8 +81,8 @@ export default class SinusDots {
         {
             xInc = 10,
             yInc = 5,
-            width = 70,
-            height = 40,
+            width = 100,
+            height = 80,
             x1 = 0,
             y1 = 0,
             x2 = 0,
@@ -101,8 +102,8 @@ export default class SinusDots {
         {
             xInc = 10,
             yInc = 5,
-            width = 70,
-            height = 40,
+            width = 100,
+            height = 80,
             x1 = 0,
             y1 = 0,
             x2 = 0,
