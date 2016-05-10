@@ -13,7 +13,7 @@ export default function (vertices, axis) {
         value = DotProduct(axis, vertices[index]);
         if (value < minp) {
             minp = value;
-        } else if (vaue > maxp) {
+        } else if (value > maxp) {
             maxp = value;
         }
     }
