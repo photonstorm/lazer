@@ -1,4 +1,4 @@
-import NOOP from 'system/NOOP.js';
+import NOOP from '../system/NOOP.js';
 
 export default class RequestAnimationFrame {
 
