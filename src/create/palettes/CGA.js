@@ -4,7 +4,7 @@
 * @type {Array}
 */
 
-export const PALETTE_CGA = [
+const PALETTE_CGA = [
     '#000',
     '#2234d1',
     '#0c7e45',
@@ -22,3 +22,5 @@ export const PALETTE_CGA = [
     '#ffd93f',
     '#fff'
 ];
+
+export default PALETTE_CGA;

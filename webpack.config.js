@@ -19,7 +19,7 @@ var config = {
 			canvas: './src/canvas',	
 			components: './src/components',
 			config: './src/config',
-			// create: './src/create',
+			create: './src/create',
 			// device: './src/device',
 			// dom: './src/dom',
 			// fx: './src/fx',
@@ -52,13 +52,13 @@ var config = {
 					loader: 'babel',
 					include: PATHS.app,
 					exclude: /node_modules/
-			},
-			{
-				test: /\.js$/,
-				loader: 'eslint-loader',
-				include: PATHS.app,
-				exclude: /node_modules/
 			}
+			// {
+			// 	test: /\.js$/,
+			// 	loader: 'eslint-loader',
+			// 	include: PATHS.app,
+			// 	exclude: /node_modules/
+			// }
 		]
 	},
 	resolve: {

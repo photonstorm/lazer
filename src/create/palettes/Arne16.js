@@ -4,7 +4,7 @@
 * @type {Array}
 */
 
-export const PALETTE_ARNE = [
+const PALETTE_ARNE = [
     '#000', 
     '#9D9D9D', 
     '#FFF', 
@@ -22,3 +22,5 @@ export const PALETTE_ARNE = [
     '#31A2F2', 
     '#B2DCEF' 
 ];
+
+export default PALETTE_ARNE;

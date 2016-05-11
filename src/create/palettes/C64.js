@@ -4,7 +4,7 @@
 * @type {Array}
 */
 
-export const PALETTE_C64 = [
+const PALETTE_C64 = [
     '#000',
     '#fff',
     '#8b4131',
@@ -22,3 +22,5 @@ export const PALETTE_C64 = [
     '#7b73de',
     '#acacac'
 ];
+
+export default PALETTE_C64

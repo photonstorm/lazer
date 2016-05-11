@@ -1,5 +1,5 @@
-import Canvas from 'canvas/Canvas.js';
-import GetContext from 'canvas/GetContext.js';
+import Canvas from '../canvas/Canvas.js';
+import GetContext from '../canvas/GetContext.js';
 
 export default function Grid  (
         {

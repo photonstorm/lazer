@@ -1,7 +1,7 @@
-import { PALETTE_ARNE } from 'create/palettes/Arne16.js';
-import Canvas from 'canvas/Canvas.js';
-import GetContext from 'canvas/GetContext.js';
-import Resize from 'canvas/Resize.js';
+import { PALETTE_ARNE } from './palettes/Arne16.js';
+import Canvas from '../canvas/Canvas.js';
+import GetContext from '../canvas/GetContext.js';
+import Resize from '../canvas/Resize.js';
 
 //  data = Pixel Data Array
 //  canvas = either a Canvas object, or null / undefined / false

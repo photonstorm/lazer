@@ -4,7 +4,7 @@
 * @type {Array}
 */
 
-export const PALETTE_MSX = [
+const PALETTE_MSX = [
     '#000',
     '#191028',
     '#46af45',
@@ -22,3 +22,5 @@ export const PALETTE_MSX = [
     '#afaab9',
     '#fff'
 ];
+
+export default PALETTE_MSX;

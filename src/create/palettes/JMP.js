@@ -4,7 +4,7 @@
 * @type {Array}
 */
 
-export const PALETTE_JMP = [
+const PALETTE_JMP = [
     '#000',
     '#191028',
     '#46af45',
@@ -22,3 +22,5 @@ export const PALETTE_JMP = [
     '#afaab9',
     '#f5f4eb'
 ];
+
+export default PALETTE_JMP;
