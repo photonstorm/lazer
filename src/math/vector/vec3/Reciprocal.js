@@ -1,6 +1,6 @@
 let vec3 = Float32Array;
 
-export default function (a, dst = new vec3(3)) {
+export default function Reciprocal(a, dst = new vec3(3)) {
 
     // let rcp = VMath.reciprocal;
 

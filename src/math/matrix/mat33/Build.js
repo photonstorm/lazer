@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (a0, a1, a2, a3, a4 = null, a5 = null, a6 = null, a7 = null, a8 = null, dst = new mat(9)) {
+export default function Build(a0, a1, a2, a3, a4 = null, a5 = null, a6 = null, a7 = null, a8 = null, dst = new mat(9)) {
 
     if (a4 !== null)
     {

@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (x, y = null, z = null, dst = new mat(12)) {
+export default function BuildTranslation(x, y = null, z = null, dst = new mat(12)) {
 
     if (z !== null)
     {

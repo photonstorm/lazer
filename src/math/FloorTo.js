@@ -1,4 +1,4 @@
-export default function (value, place = 0, base = 10) {
+export default function FloortTo(value, place = 0, base = 10) {
 
     var p = Math.pow(base, -place);
 

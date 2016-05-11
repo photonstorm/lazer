@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (m, scale, dst = new mat(16)) {
+export default function Scale(m, scale, dst = new mat(16)) {
 
     dst[0] =  m[0] * scale[0];
     dst[1] =  m[1] * scale[0];

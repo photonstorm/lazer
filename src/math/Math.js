@@ -1,9 +1,9 @@
-import * as Fuzzy from 'math/Fuzzy.js';
-import * as SnapTo from 'math/SnapTo.js';
-import * as Angle from 'math/Angle.js';
-import roundTo from 'math/RoundTo.js';
-import floorTo from 'math/FloorTo.js';
-import ceilTo from 'math/CeilTo.js';
+import * as Fuzzy from './Fuzzy.js';
+import * as SnapTo from './SnapTo.js';
+import * as Angle from './Angle.js';
+import roundTo from './RoundTo.js';
+import floorTo from './FloorTo.js';
+import ceilTo from './CeilTo.js';
 
 export default class Math {
 

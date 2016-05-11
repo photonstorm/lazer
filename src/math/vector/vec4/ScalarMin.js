@@ -1,6 +1,6 @@
 let vec4 = Float32Array;
 
-export default function (a, b, dst = new vec4(4)) {
+export default function ScalarMin(a, b, dst = new vec4(4)) {
 
     dst[0] = Math.min(a[0], b);
     dst[1] = Math.min(a[1], b);

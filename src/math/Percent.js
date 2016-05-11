@@ -1,4 +1,4 @@
-export default function (a, b, base = 0) {
+export default function Percent(a, b, base = 0) {
 
     if (a > b || base > b)
     {

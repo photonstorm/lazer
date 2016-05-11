@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (q, dst = new mat(9)) {
+export default function FromQuanternion(q, dst = new mat(9)) {
 
     const qx = q[0];
     const qy = q[1];

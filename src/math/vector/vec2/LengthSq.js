@@ -1,5 +1,5 @@
 
-export default function (a) {
+export default function LengthSq(a) {
 
     let x = a[0];
     let y = a[1];

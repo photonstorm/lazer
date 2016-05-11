@@ -1,6 +1,6 @@
-import Bernstein from 'math/Bernstein.js';
+import Bernstein from '../Bernstein.js';
 
-export default function (v, k) {
+export default function Bezier(v, k) {
 
     let b = 0;
     let n = v.length - 1;

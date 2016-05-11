@@ -1,4 +1,4 @@
-export default function (m) {
+export default function Determinant(m) {
 
     return (
         m[0] * (m[4] * m[8] - m[5] * m[7]) +

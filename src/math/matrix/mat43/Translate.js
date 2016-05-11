@@ -1,4 +1,4 @@
-export default function (matrix, pos) {
+export default function Translate(matrix, pos) {
 
     matrix[9]  += pos[0];
     matrix[10] += pos[1];

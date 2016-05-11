@@ -1,4 +1,4 @@
-import BaseTransformComponent from 'math/transform/2d/components/BaseTransformComponent.js';
+import BaseTransformComponent from './BaseTransformComponent.js';
 
 export default class Pivot extends BaseTransformComponent {
 

@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (m, s, dst = new mat(12)) {
+export default function InverseTransposeProjection(m, s, dst = new mat(12)) {
 
     const xf = (0.5 / s[0]);
     const yf = (0.5 / s[1]);

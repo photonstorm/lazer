@@ -1,5 +1,5 @@
 
-export default function (a) {
+export default function LengthSq(a) {
 
     const x = a[0];
     const y = a[1];

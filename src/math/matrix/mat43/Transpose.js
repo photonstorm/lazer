@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (m, dst = new mat(12)) {
+export default function Transpose(m, dst = new mat(12)) {
 
     dst[0] =  m[0];
     dst[1] =  m[3];

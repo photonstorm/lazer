@@ -1,4 +1,4 @@
-export default function (m, axis, angle) {
+export default function SetAxisRotation(m, axis, angle) {
 
     const s = Math.sin(angle);
     const c = Math.cos(angle);

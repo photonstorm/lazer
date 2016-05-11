@@ -1,6 +1,6 @@
-import Mat23 from 'math/matrix/mat23/Build.js';
-import Scale from 'math/transform/2d/components/Scale.js';
-import Position from 'math/transform/2d/components/Position.js';
+import Mat23 from '../../../matrix/mat23/Build.js';
+import Scale from '../components/Scale.js';
+import Position from '../components/Position.js';
 
 //  A Minimal 2D Transform class
 

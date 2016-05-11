@@ -1,12 +1,12 @@
-import Normalize from 'math/vector/vec3/Normalize.js';
-import Length from 'math/vector/vec3/Length.js';
-import Dot from 'math/vector/vec3/Dot.js';
-import Cross from 'math/vector/vec3/Cross.js';
+import Normalize from '../../vector/vec3/Normalize.js';
+import Length from '../../vector/vec3/Length.js';
+import Dot from '../../vector/vec3/Dot.js';
+import Cross from '../../vector/vec3/Cross.js';
 
-import Right from 'math/matrix/mat43/Right.js';
-import Up from 'math/matrix/mat43/Up.js';
-import At from 'math/matrix/mat43/At.js';
-import Pos from 'math/matrix/mat43/Pos.js';
+import Right from '../../matrix/mat43/Right.js';
+import Up from '../../matrix/mat43/Up.js';
+import At from '../../matrix/mat43/At.js';
+import Pos from '../../matrix/mat43/Pos.js';
 
 let mat = Float32Array;
 

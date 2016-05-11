@@ -1,8 +1,8 @@
-import Normalize from 'math/quaternion/Normalize.js';
+import Normalize from './Normalize.js';
 
 let quat = Float32Array;
 
-export default function (axis, angle, dst = new quat(4)) {
+export default function FromAxisRotation(axis, angle, dst = new quat(4)) {
 
     const omega = 0.5 * angle;
     const s = Math.sin(omega);

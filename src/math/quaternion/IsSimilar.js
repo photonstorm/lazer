@@ -1,8 +1,8 @@
-import Neg from 'math/vector/vec4/Neg.js';
-import LengthSq from 'math/vector/vec4/LengthSq.js';
-import Sub from 'math/vector/vec4/Sub.js';
+import Neg from '../vector/vec4/Neg.js';
+import LengthSq from '../vector/vec4/LengthSq.js';
+import Sub from '../vector/vec4/Sub.js';
 
-export default function (q1, q2, precision = 1e-6) {
+export default function IsSimilar(q1, q2, precision = 1e-6) {
 
     //  This compares for similar rotations not raw data
     let q1temp = q1;

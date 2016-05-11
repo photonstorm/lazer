@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (m, scale, dst = new mat(12)) {
+export default function Scale(m, scale, dst = new mat(12)) {
 
     const sx = scale[0];
     const sy = scale[1];

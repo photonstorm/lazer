@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (m, ov, dst = new mat(12)) {
+export default function NegOffset(m, ov, dst = new mat(12)) {
 
     const m0 = m[0];
     const m1 = m[1];

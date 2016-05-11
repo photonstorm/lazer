@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (axis, angle, dst = new mat(9)) {
+export default function FromAxisRotation(axis, angle, dst = new mat(9)) {
 
     const s = Math.sin(angle);
     const c = Math.cos(angle);

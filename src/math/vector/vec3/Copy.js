@@ -1,6 +1,6 @@
 let vec3 = Float32Array;
 
-export default function (src, dst = new vec3(3)) {
+export default function Copy(src, dst = new vec3(3)) {
 
     dst[0] = src[0];
     dst[1] = src[1];

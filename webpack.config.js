@@ -16,7 +16,7 @@ var config = {
 	entry: {
 			meta: './src/',
 			cache: './src/cache',
-			canvas: './src/canvas'		
+			canvas: './src/canvas',	
 			// components: './src/components',
 			// config: './src/config',
 			// create: './src/create',
@@ -28,7 +28,7 @@ var config = {
 			// graphics: './src/graphics',
 			// input: './src/input',
 			// loader: './src/loader',
-			// math:'./src/math',
+			math:'./src/math'
 			// renderers: './src/renderers',
 			// sound: './src/sound',
 			// state: './src/state',

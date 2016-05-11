@@ -1,6 +1,6 @@
 let quat = Float32Array;
 
-export default function (q1, q2, dst = new quat(4)) {
+export default function Multiply(q1, q2, dst = new quat(4)) {
 
     // Note quaternion multiplication is the opposite way around from our matrix multiplication
     //var v1 = q1; // use full quats to avoid copy

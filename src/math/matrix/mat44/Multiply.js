@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (a, b, dst = new mat(16)) {
+export default function Multiply(a, b, dst = new mat(16)) {
 
     const a0 = a[0];
     const a1 = a[1];

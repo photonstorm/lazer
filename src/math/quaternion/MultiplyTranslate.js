@@ -1,5 +1,5 @@
 
-export default function (qa, va, qb, vb, qr, vr) {
+export default function MultiplyTranslate(qa, va, qb, vb, qr, vr) {
 
     const qax = qa[0];
     const qay = qa[1];
@@ -30,9 +30,9 @@ export default function (qa, va, qb, vb, qr, vr) {
 
     let s = (qaw * qaw) - (qax * qax + qay * qay + qaz * qaz);
 
-    const rx = vbx * s;
-    const ry = vby * s;
-    const rz = vbz * s;
+    let rx = vbx * s;
+    let ry = vby * s;
+    let rz = vbz * s;
 
     s = qax * vbx + qay * vby + qaz * vbz;
 

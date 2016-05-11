@@ -1,6 +1,6 @@
-import Linear from 'math/Linear.js';
+import Linear from '../Linear.js';
 
-export default function (v, k) {
+export default function LinearInterpolation(v, k) {
 
     let m = v.length - 1;
     let f = m * k;

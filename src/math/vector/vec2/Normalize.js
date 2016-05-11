@@ -1,6 +1,6 @@
 let vec2 = Float32Array;
 
-export default function (a, dst = new vec2(2)) {
+export default function Normalize(a, dst = new vec2(2)) {
 
     const x = a[0];
     const y = a[1];

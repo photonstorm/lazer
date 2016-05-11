@@ -1,4 +1,4 @@
-export default function (v, cx, cy, angle) {
+export default function RotateAround(v, cx, cy, angle) {
 
     const c = Math.cos(angle);
     const s = Math.sin(angle);

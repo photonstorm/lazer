@@ -1,5 +1,5 @@
-import Vec3 from 'math/vector/vec3/Vec3.js';
-import Quaternion from 'math/quaternion/Build.js';
+import Vec3 from '../math/vector/vec3/Vec3.js';
+import Quaternion from '../math/quaternion/Build.js';
 
 export default class Transform {
 

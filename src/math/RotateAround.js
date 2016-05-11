@@ -1,5 +1,5 @@
 //  p = Point or any object with public x/y properties
-export default function (p, cx, cy, angle) {
+export default function RotateAround(p, cx, cy, angle) {
 
     const c = Math.cos(angle);
     const s = Math.sin(angle);

@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (m, s, dst = new mat(16)) {
+export default function ScalarMultiply(m, s, dst = new mat(16)) {
 
     dst[0] = m[0] * s;
     dst[1] = m[1] * s;

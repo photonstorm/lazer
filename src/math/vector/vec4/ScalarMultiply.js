@@ -1,6 +1,6 @@
 let vec4 = Float32Array;
 
-export default function (a, b, dst = new vec4(4)) {
+export default function ScalarMultiply(a, b, dst = new vec4(4)) {
 
     if (b === 0)
     {

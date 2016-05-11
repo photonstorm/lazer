@@ -1,8 +1,8 @@
-import Mat23 from 'math/matrix/mat23/Build.js';
-import Scale from 'math/transform/2d/components/Scale.js';
-import Position from 'math/transform/2d/components/Position.js';
-import Rotation from 'math/transform/2d/components/Rotation.js';
-import RotationAnchor from 'math/transform/2d/components/RotationAnchor.js';
+import Mat23 from '../../../matrix/mat23/Build.js';
+import Scale from '../components/Scale.js';
+import Position from '../components/Position.js';
+import Rotation from '../components/Rotation.js';
+import RotationAnchor from '../components/RotationAnchor.js';
 
 //  A Basic 2D Transform class
 

@@ -1,6 +1,6 @@
 let quat = Float32Array;
 
-export default function (q, dst = new quat(4)) {
+export default function ToAxisRotation(q, dst = new quat(4)) {
 
     const q3 = q[3];
     const angle = Math.acos(q3) * 2;

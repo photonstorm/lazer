@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (quat, pos, dst = new mat(12)) {
+export default function FromRT(quat, pos, dst = new mat(12)) {
 
     const qx = quat[0];
     const qy = quat[1];

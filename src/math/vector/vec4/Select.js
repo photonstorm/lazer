@@ -1,6 +1,6 @@
 let vec4 = Float32Array;
 
-export default function (m, a, b, dst = new vec4(4)) {
+export default function Select(m, a, b, dst = new vec4(4)) {
 
     dst[0] = m[0] ? a[0] : b[0];
     dst[1] = m[1] ? a[1] : b[1];

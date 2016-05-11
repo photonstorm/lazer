@@ -1,4 +1,4 @@
-import Vec2 from 'math/vector/vec2/Vec2.js';
+import Vec2 from '../math/vector/vec2/Vec2.js';
 
 //  Likely merged with Transform in the future, but useful as a smaller
 //  stand-alone class

@@ -1,6 +1,6 @@
 let quat = Float32Array;
 
-export default function (q1, q2, t, dst = new quat(4)) {
+export default function Lerp(q1, q2, t, dst = new quat(4)) {
 
     const q1x = q1[0];
     const q1y = q1[1];

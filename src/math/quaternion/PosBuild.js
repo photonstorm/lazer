@@ -1,6 +1,6 @@
 let quat = Float32Array;
 
-export default function (x, y, z = null, w = null, px = null, py = null, pz = null, dst = new quat(7))
+export default function PosBuild(x, y, z = null, w = null, px = null, py = null, pz = null, dst = new quat(7))
 {
     if (w !== null)
     {

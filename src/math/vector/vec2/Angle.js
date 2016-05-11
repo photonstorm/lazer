@@ -1,8 +1,8 @@
-import Clamp from 'math/Clamp.js';
+import Clamp from '../../Clamp.js';
 
 //  Get the angle in radians between the two given vectors
 
-export default function (a, b) {
+export default function Angle(a, b) {
 
     const dot = a[0] * b[0] + a[1] * b[1];
     const len = Math.sqrt(a[0] * a[0] + a[1] * a[1]);

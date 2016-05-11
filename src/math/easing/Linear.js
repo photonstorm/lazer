@@ -5,7 +5,7 @@
 * @param {number} v - The value to be tweened.
 * @returns {number} v.
 */
-export default function (v) {
+export default function Linear (v) {
 
     return v;
     

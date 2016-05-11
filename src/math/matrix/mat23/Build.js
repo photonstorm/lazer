@@ -19,7 +19,7 @@ let mat = Float32Array;
 //  
 //  And the 3rd row (0, 0, 1) is ignored for speed
 
-export default function Build (a = 1, b = 0, c = 0, d = 1, e = 0, f = 0, dst = new mat(6)) {
+export default function Mat23 (a = 1, b = 0, c = 0, d = 1, e = 0, f = 0, dst = new mat(6)) {
 
     dst[0] = a;
     dst[1] = b;

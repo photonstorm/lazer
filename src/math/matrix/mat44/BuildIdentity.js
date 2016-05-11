@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (dst = new mat(16)) {
+export default function BuildIdentify(dst = new mat(16)) {
 
     dst[0] = 1;
     dst[1] = 0;

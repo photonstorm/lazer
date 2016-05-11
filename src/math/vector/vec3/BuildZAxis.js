@@ -1,6 +1,6 @@
 let vec3 = Float32Array;
 
-export default function (dst = new vec3(3)) {
+export default function BuildZAxis(dst = new vec3(3)) {
 
     dst[0] = 0;
     dst[1] = 0;

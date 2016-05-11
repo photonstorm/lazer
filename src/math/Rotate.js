@@ -1,5 +1,5 @@
 //  p = Point or any object with public x/y properties
-export default function (p, angle) {
+export default function Rotate(p, angle) {
 
     let x = p.x;
     let y = p.y;

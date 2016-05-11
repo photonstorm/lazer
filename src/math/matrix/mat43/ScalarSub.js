@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (m, s, dst = new mat(12)) {
+export default function ScalarSub(m, s, dst = new mat(12)) {
 
     dst[0] = m[0] - s;
     dst[1] = m[1] - s;

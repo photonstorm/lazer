@@ -4,7 +4,7 @@ const cosMinSlerpAngle = Math.cos(Math.PI / 40.0);
 
 let quat = Float32Array;
 
-export default function (q1, q2, t, dst = new quat(4)) {
+export default function Slerp(q1, q2, t, dst = new quat(4)) {
 
     let q1x = q1[0];
     let q1y = q1[1];

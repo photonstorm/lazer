@@ -1,6 +1,6 @@
 let radToDeg = 180 / Math.PI;
 
-export default function (radians) {
+export default function RadToDeg (radians) {
 
     return radians * radToDeg;
     

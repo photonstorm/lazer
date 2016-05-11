@@ -1,4 +1,4 @@
-export default function (value) {
+export default function Factorial(value) {
 
     if (value === 0)
     {

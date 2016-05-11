@@ -1,6 +1,6 @@
-import Dot from 'math/vector/vec4/Dot.js';
+import Dot from '../vector/vec4/Dot.js';
 
-export default function (q1, q2) {
+export default function DotQuaternion(q1, q2) {
 
     return Dot(q1, q2);
 

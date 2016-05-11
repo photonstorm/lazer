@@ -1,6 +1,6 @@
 let quat = Float32Array;
 
-export default function (src, dst = new quat(4)) {
+export default function Copy(src, dst = new quat(4)) {
 
     dst[0] = src[0];
     dst[1] = src[1];

@@ -1,5 +1,5 @@
 
-export default function (value, amount, max) {
+export default function MaxAdd(value, amount, max) {
 
     return Math.min(value + amount, max);
 

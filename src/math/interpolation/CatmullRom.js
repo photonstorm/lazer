@@ -1,6 +1,6 @@
-import CatmullRom from 'math/CatmullRom.js';
+import CatmullRom from '../CatmullRom.js';
 
-export default function (v, k) {
+export default function CatmullRomInterpolation(v, k) {
 
     let m = v.length - 1;
     let f = m * k;

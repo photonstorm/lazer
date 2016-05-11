@@ -1,6 +1,6 @@
 let vec3 = Float32Array;
 
-export default function (q, v, dst = new vec3(3)) {
+export default function TransformVector(q, v, dst = new vec3(3)) {
 
     /*
     var qimaginary = q; // Use full quat directly to avoid copy
@@ -29,9 +29,9 @@ export default function (q, v, dst = new vec3(3)) {
     let s = (qw * qw) - (qx * qx + qy * qy + qz * qz);
 
     //var r = VMath.v3ScalarMul(v, s);
-    const rx = vx * s;
-    const ry = vy * s;
-    const rz = vz * s;
+    let rx = vx * s;
+    let ry = vy * s;
+    let rz = vz * s;
 
     //s = VMath.v3Dot(qimaginary, v);
     s = qx * vx + qy * vy + qz * vz;

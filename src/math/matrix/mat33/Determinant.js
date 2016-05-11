@@ -1,4 +1,4 @@
-export default function (m) {
+export default function Determinant(m) {
 
     const m0 = m[0];
     const m1 = m[1];

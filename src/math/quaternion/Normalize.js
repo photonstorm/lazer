@@ -1,10 +1,10 @@
-import BuildZero from 'math/vector/vec4/BuildZero.js';
-import ScalarMultiply from 'math/vector/vec4/ScalarMultiply.js';
-import Dot from 'math/vector/quaternion/Dot.js';
+import BuildZero from '../vector/vec4/BuildZero.js';
+import ScalarMultiply from '../vector/vec4/ScalarMultiply.js';
+import Dot from './Dot.js';
 
 let quat = Float32Array;
 
-export default function (q, dst = new quat(4)) {
+export default function Normalize(q, dst = new quat(4)) {
 
     const norme = Dot(q, q);
 

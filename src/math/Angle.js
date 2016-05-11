@@ -1,4 +1,4 @@
-import Wrap from 'math/Wrap.js';
+import Wrap from './Wrap.js';
 
 export function between (x1, y1, x2, y2) {
 

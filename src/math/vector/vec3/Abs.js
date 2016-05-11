@@ -1,6 +1,6 @@
 let vec3 = Float32Array;
 
-export default function (a, dst = new vec3(3)) {
+export default function Abs(a, dst = new vec3(3)) {
 
     dst[0] = Math.abs(a[0]);
     dst[1] = Math.abs(a[1]);

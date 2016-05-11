@@ -1,8 +1,8 @@
-import DegToRad from 'math/DegToRad.js';
-import RadToDeg from 'math/RadToDeg.js';
-import Wrap from 'math/Wrap.js';
-import Vec2 from 'math/vector/vec2/Build.js';
-import Mat33 from 'math/matrix/mat33/Mat33.js';
+import DegToRad from '../math/DegToRad.js';
+import RadToDeg from '../math/RadToDeg.js';
+import Wrap from '../math/Wrap.js';
+import Vec2 from '../math/vector/vec2/Build.js';
+import Mat33 from '../math/matrix/mat33/Mat33.js';
 
 //  A 2D specific Transform object (based on the Unity Transform object)
 

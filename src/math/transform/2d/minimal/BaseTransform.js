@@ -1,4 +1,4 @@
-import Transform from 'math/transform/2d/minimal/Transform.js';
+import Transform from './Transform.js';
 
 //  A BaseTransform class that you can use when extending a Sprite or other Game Object
 //  Hides away the 'private' stuff and exposes only the useful getters and setters

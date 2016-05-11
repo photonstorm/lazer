@@ -1,4 +1,4 @@
-import { PI2 } from 'math/Constants.js';
+import { PI2 } from '../../../Constants.js';
 
 export default class Rotation {
 

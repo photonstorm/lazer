@@ -1,7 +1,7 @@
-import Multiply from 'math/quaternion/Multiply.js';
-import PosTransformPoint from 'math/quaternion/PosTransformPoint.js';
+import Multiply from './Multiply.js';
+import PosTransformPoint from './PosTransformPoint.js';
 
-export default function (qp, p) {
+export default function PosMultiply(qp, p) {
 
     const v2 = qp2.slice(4, 7);
     const qr = Multiply(qp1, qp2);

@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (m, v, dst = new mat(12)) {
+export default function TrransformVector(m, v, dst = new mat(12)) {
 
     const v0 = v[0];
     const v1 = v[1];

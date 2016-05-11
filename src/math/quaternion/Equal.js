@@ -1,4 +1,4 @@
-export default function (q1, q2, precision = 1e-6) {
+export default function Equal(q1, q2, precision = 1e-6) {
 
     return (
         Math.abs(q1[0] - q2[0]) <= precision &&

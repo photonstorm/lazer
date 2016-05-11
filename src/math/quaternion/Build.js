@@ -1,6 +1,6 @@
 let quat = Float32Array;
 
-export default function (x, y, z, w, dst = new quat(4)) {
+export default function Quanternion(x, y, z, w, dst = new quat(4)) {
 
     dst[0] = x;
     dst[1] = y;

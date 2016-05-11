@@ -1,9 +1,9 @@
-import Normalize from 'math/quaternion/Normalize.js';
-import Conjugate from 'math/quaternion/Conjugate.js';
+import Normalize from './Normalize.js';
+import Conjugate from './Conjugate.js';
 
 let quat = Float32Array;
 
-export default function (m, dst = new quat(4)) {
+export default function FromM43(m, dst = new quat(4)) {
 
     const m0 = m[0];
     const m1 = m[1];

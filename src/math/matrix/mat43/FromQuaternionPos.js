@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (qp, dst = new mat(12)) {
+export default function FromQuaternionPos(qp, dst = new mat(12)) {
 
     const qx = qp[0];
     const qy = qp[1];

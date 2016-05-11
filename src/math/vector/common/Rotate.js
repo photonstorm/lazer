@@ -1,4 +1,4 @@
-export default function (v, angle) {
+export default function Rotate(v, angle) {
 
     let x = v[0];
     let y = v[1];

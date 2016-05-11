@@ -1,6 +1,6 @@
 let vec4 = Float32Array;
 
-export default function (a, dst = new vec4(4)) {
+export default function MultiplyAdd(a, dst = new vec4(4)) {
 
     const a0 = a[0];
     const a1 = a[1];

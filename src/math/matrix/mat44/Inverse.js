@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (m, dst = new mat(16)) {
+export default function Inverse(m, dst = new mat(16)) {
 
     const m0 = m[0];
     const m1 = m[1];

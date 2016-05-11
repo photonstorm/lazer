@@ -1,6 +1,6 @@
 let vec3 = Float32Array;
 
-export default function (a, b, dst = new vec3(3)) {
+export default function Cross(a, b, dst = new vec3(3)) {
 
     const a0 = a[0];
     const a1 = a[1];

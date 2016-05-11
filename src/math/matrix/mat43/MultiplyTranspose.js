@@ -1,6 +1,6 @@
 let mat = Float32Array;
 
-export default function (a, b, dst = new mat(12)) {
+export default function MultiplyTranspose(a, b, dst = new mat(12)) {
 
     const a0 = a[0];
     const a1 = a[1];

@@ -1,6 +1,6 @@
 let vec2 = Float32Array;
 
-export default function (a, dst = new vec2(2)) {
+export default function ScalarBuild(a, dst = new vec2(2)) {
 
     dst[0] = a;
     dst[1] = a;

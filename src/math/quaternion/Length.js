@@ -1,4 +1,4 @@
-import Length from 'math/vector/vec4/Length.js';
+import Length from '../vector/vec4/Length.js';
 
 export default function (q) {
 
