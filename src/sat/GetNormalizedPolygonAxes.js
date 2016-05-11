@@ -4,7 +4,7 @@ let Sqrt = Math.sqrt;
 
 export default function (vertices) {
     const length = vertices.length;
-    let normals = new Array(vertices.length);
+    let normals = new Array(length);
     let index, vecA, vecB, edge, oldX, vlen;
     for (index = 0; index < length; ++index) {
         vecA = vertices[index];
