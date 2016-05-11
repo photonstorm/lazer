@@ -10,6 +10,8 @@ const Abs = Math.abs;
 export default function (verticesA, verticesB, correctionData) {
     let axesA = GetNormalizedPolygonAxes(verticesA);
     let axesB = GetNormalizedPolygonAxes(verticesB);
+    let unitVector = correctionData.unit;
+    let correctionOverlap = MAX_NUM;
     let projectionA;
     let projectionB;
     let length;
@@ -19,10 +21,6 @@ export default function (verticesA, verticesB, correctionData) {
     let axis;
     let projectionDistanceA;
     let projectionDistanceB;
-
-    correctionData.unit[0] = 0;
-    correctionData.unit[1] = 0;
-    correctionData.overlap = MAX_NUM;
 
     // Check First Axes
     for (index = 0, length = axesA.length; index < length; ++index) {
@@ -50,12 +48,12 @@ export default function (verticesA, verticesB, correctionData) {
             }
         }
         absoluteDistance = Abs(distance);
-        if (absoluteDistance < correctionData.overlap) {
-            correctionData.overlap = absoluteDistance;
-            correctionData.unit = axis;
+        if (absoluteDistance < correctionOverlap) {
+            correctionOverlap = absoluteDistance;
+            unitVector = axis;
             if (distance < 0) {
-                correctionData.unit[0] = -correctionData.unit[0];
-                correctionData.unit[1] = -correctionData.unit[1];
+                unitVector[0] = -unitVector[0];
+                unitVector[1] = -unitVector[1];
             }
         }
     }
@@ -86,15 +84,17 @@ export default function (verticesA, verticesB, correctionData) {
             }
         }
         absoluteDistance = Abs(distance);
-        if (absoluteDistance < correctionData.overlap) {
-            correctionData.overlap = absoluteDistance;
-            correctionData.unit = axis;
+        if (absoluteDistance < correctionOverlap) {
+            correctionOverlap = absoluteDistance;
+            unitVector = axis;
             if (distance < 0) {
-                correctionData.unit[0] = -correctionData.unit[0];
-                correctionData.unit[1] = -correctionData.unit[1];
+                unitVector[0] = -unitVector[0];
+                unitVector[1] = -unitVector[1];
             }
         }
     }
-    ScalarMultiply(correctionData.unit, correctionData.overlap, correctionData.correction);
+    ScalarMultiply(unitVector, correctionOverlap, correctionData.correction);
+    correction.overlap = correctionOverlap;
+    correction.unit = unitVector;
     return true;
 }
