@@ -35,5 +35,6 @@ test('Utils Array Library Object Definition', t => {
 
 test('Utils String Library Object Definition', t=> {
 	const { string } = utils;
+	
 	expect(string.Pad).to.be.a('function');
 });

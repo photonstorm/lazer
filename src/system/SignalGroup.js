@@ -1,4 +1,4 @@
-import Signal from 'system/Signal.js';
+import Signal from './Signal.js';
 
 //  A SignalGroup is a collection of Signals.
 //  A single entity can listen to a 'Group' and will receive all Signals belonging to that Group.

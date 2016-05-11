@@ -1,4 +1,4 @@
-import SignalBinding from 'system/SignalBinding.js';
+import SignalBinding from './SignalBinding.js';
 
 export default class Signal {
 

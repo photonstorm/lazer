@@ -1,5 +1,5 @@
-import RequestAnimationFrame from 'dom/RequestAnimationFrame.js';
-import NOOP from 'system/NOOP.js';
+import RequestAnimationFrame from '../dom/RequestAnimationFrame.js';
+import NOOP from './NOOP.js';
 
 //  My thanks to Isaac Sukin for some of the concepts used in this class
 
