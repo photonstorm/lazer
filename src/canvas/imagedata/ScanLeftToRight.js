@@ -1,4 +1,4 @@
-import GetIndex from 'canvas/imagedata/GetIndex.js';
+import GetIndex from './GetIndex.js';
 
 //  Scans the given imageData from left to right
 //  until it hits a pixel with an alpha value > tolerance

@@ -1,4 +1,4 @@
-import Clamp from 'math/Clamp.js';
+import Clamp from '../../math/Clamp.js';
 
 export default function GetImageData (context, x = 0, y = 0, width = null, height = null) {
 

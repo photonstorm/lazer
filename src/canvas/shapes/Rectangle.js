@@ -1,4 +1,4 @@
-import Shape from 'canvas/shapes/Shape.js';
+import Shape from './Shape.js';
 
 export default function Rectangle (config) {
 

@@ -1,4 +1,4 @@
-import GetImageData from 'canvas/imagedata/GetImageData.js';
+import GetImageData from '../imagedata/GetImageData.js';
 
 //  Gets a single pixel from the given context and returns
 //  an object containing its color properties.

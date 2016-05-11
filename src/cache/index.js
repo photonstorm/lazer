@@ -9,5 +9,5 @@ export {
   Cache,
   CacheEntry,
   ImageCache,
-  types,
+  types
 }

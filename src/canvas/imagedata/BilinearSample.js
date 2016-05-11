@@ -1,6 +1,6 @@
 //  rgba can be a Float32Array (size 4) or a normal Array
 
-export default function BilinearSample (imageData, x, y, rgba = [0,0,0,0]) {
+export default function BilinearSample (imageData, x, y, rgba = [0, 0, 0, 0]) {
 
     let x1 = Math.floor(x);
     let x2 = Math.ceil(x);

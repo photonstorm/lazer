@@ -1,4 +1,4 @@
-import ShapeFill from 'canvas/shapes/ShapeFill.js';
+import ShapeFill from './ShapeFill.js';
 
 export const SOLID = 0;
 export const PATTERN = 1;

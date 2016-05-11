@@ -1,7 +1,7 @@
-import TopToBottom from 'canvas/imagedata/ScanTopToBottom.js';
-import BottomToTop from 'canvas/imagedata/ScanBottomToTop.js';
-import LeftToRight from 'canvas/imagedata/ScanLeftToRight.js';
-import RightToLeft from 'canvas/imagedata/ScanRightToLeft.js';
+import TopToBottom from './ScanTopToBottom.js';
+import BottomToTop from './ScanBottomToTop.js';
+import LeftToRight from './ScanLeftToRight.js';
+import RightToLeft from './ScanRightToLeft.js';
 
 export default function GetBounds (imageData, tolerance, out = { x: 0, y: 0, width: 0, height: 0 }) {
 

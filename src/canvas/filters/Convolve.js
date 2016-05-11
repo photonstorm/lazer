@@ -1,4 +1,4 @@
-import CopyImageData from 'canvas/imagedata/CopyImageData.js';
+import CopyImageData from '../imagedata/CopyImageData.js';
 
 //  Weights is an array (Float32 or normal) containing 9 values:
 //  [-1, -1, -1,

@@ -1,4 +1,4 @@
-import ProcessPixels from 'canvas/pixels/Process.js';
+import ProcessPixels from '../pixels/Process.js';
 
 /**
 * Replaces all pixels matching one color with another. The color values are given as two sets of RGBA values.

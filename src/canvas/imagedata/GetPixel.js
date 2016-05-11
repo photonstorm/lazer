@@ -1,4 +1,4 @@
-import GetIndex from 'canvas/imagedata/GetIndex.js';
+import GetIndex from './GetIndex.js';
 
 /**
  * [description]

@@ -1,5 +1,5 @@
-import GetX from 'canvas/imagedata/GetX.js';
-import GetY from 'canvas/imagedata/GetY.js';
+import GetX from './GetX.js';
+import GetY from './GetY.js';
 
 //  Based on the given index return the X and Y components
 

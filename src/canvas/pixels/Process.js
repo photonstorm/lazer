@@ -1,6 +1,6 @@
-import ProcessImageData from 'canvas/imagedata/Process.js';
-import GetImageData from 'canvas/imagedata/GetImageData.js';
-import PutImageData from 'canvas/imagedata/PutImageData.js';
+import ProcessImageData from '../imagedata/Process.js';
+import GetImageData from '../imagedata/GetImageData.js';
+import PutImageData from '../imagedata/PutImageData.js';
 
 export default function Process (context, callback, x = 0, y = 0, width = null, height = null) {
 

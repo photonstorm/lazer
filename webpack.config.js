@@ -15,8 +15,8 @@ var config = {
 	devtool: 'inline-source-map',
 	entry: {
 			meta: './src/',
-			cache: './src/cache'
-			// canvas: './src/canvas',			
+			cache: './src/cache',
+			canvas: './src/canvas'		
 			// components: './src/components',
 			// config: './src/config',
 			// create: './src/create',

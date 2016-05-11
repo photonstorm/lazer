@@ -1,4 +1,4 @@
-import Convolve from 'canvas/filters/Convolve.js';
+import Convolve from './Convolve.js';
 
 export default function Emboss (imageData, offset = 127) {
 

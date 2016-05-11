@@ -1,4 +1,4 @@
-import Clamp from 'math/Clamp.js';
+import Clamp from '../../math/Clamp.js';
 
 //  method 1 (or use addColor function in this file)
 // let p = LinearGradient(this.ctx, 0, 0, 256, 256);
@@ -35,6 +35,7 @@ export default function LinearGradient (context, x0, y0, x1, y1, ...colors) {
     
 }
 
+/** This function is duplicated in ./RadialGradient.js */
 export function addColor (gradient, offset, color) {
 
     gradient.addColorStop(Clamp(offset, 0, 1), color);

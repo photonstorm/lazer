@@ -1,4 +1,4 @@
-import GetIndex from 'canvas/imagedata/GetIndex.js';
+import GetIndex from './GetIndex.js';
 
 //  Writes a single value to the given imageData.
 

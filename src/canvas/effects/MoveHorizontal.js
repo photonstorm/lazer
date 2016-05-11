@@ -1,4 +1,4 @@
-import Move from 'canvas/effects/Move.js';
+import Move from '../effects/Move.js';
 
 export default function MoveHorizontal (canvas, distance, wrap = true) {
 

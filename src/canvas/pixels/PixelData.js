@@ -1,5 +1,5 @@
-import GetContext from 'canvas/GetContext.js';
-import GetImageData from 'canvas/imagedata/GetImageData.js';
+import GetContext from '../GetContext.js';
+import GetImageData from '../imagedata/GetImageData.js';
 
 export default class PixelData {
     

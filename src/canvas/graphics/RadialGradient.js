@@ -1,4 +1,4 @@
-import Clamp from 'math/Clamp.js';
+import Clamp from '../../math/Clamp.js';
 
 // x0 - The x axis of the coordinate of the start circle.
 // y0 - The y axis of the coordinate of the start circle.

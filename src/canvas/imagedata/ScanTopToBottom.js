@@ -1,4 +1,4 @@
-import GetXY from 'canvas/imagedata/GetXY.js';
+import GetXY from './GetXY.js';
 
 //  Scans the given imageData from top to bottom (proceeding left to right)
 //  until it hits a pixel with an alpha value > tolerance

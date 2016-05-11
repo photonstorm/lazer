@@ -1,7 +1,7 @@
-import TopToBottom from 'canvas/imagedata/ScanTopToBottom.js';
-import BottomToTop from 'canvas/imagedata/ScanBottomToTop.js';
-import LeftToRight from 'canvas/imagedata/ScanLeftToRight.js';
-import RightToLeft from 'canvas/imagedata/ScanRightToLeft.js';
+import TopToBottom from './ScanTopToBottom.js';
+import BottomToTop from './ScanBottomToTop.js';
+import LeftToRight from './ScanLeftToRight.js';
+import RightToLeft from './ScanRightToLeft.js';
 
 /**
 * Scans the BitmapData, pixel by pixel, until it encounters a pixel that isn't transparent (i.e. has an alpha value > 0).

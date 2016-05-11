@@ -1,5 +1,5 @@
-import LinearGradient from 'canvas/graphics/LinearGradient.js';
-import RadialGradient from 'canvas/graphics/RadialGradient.js';
+import LinearGradient from '../graphics/LinearGradient.js';
+import RadialGradient from '../graphics/RadialGradient.js';
 
 export const SOLID = 0;
 export const PATTERN = 1;

@@ -1,4 +1,4 @@
-import ProcessPixels from 'canvas/pixels/Process.js';
+import ProcessPixels from '../pixels/Process.js';
 
 export default function Threshold (amount, context, x = 0, y = 0, width = 0, height = 0) {
 

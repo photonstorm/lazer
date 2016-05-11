@@ -1,5 +1,5 @@
-import CopyImageData from 'canvas/imagedata/CopyImageData.js';
-import BilinearSample from 'canvas/imagedata/BilinearSample.js';
+import CopyImageData from '../imagedata/CopyImageData.js';
+import BilinearSample from '../imagedata/BilinearSample.js';
 
 export default function Distort (imageData, amount = 0.5, yAmount = amount) {
 

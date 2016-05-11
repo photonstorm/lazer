@@ -1,5 +1,5 @@
-import GetX from 'canvas/imagedata/GetX.js';
-import GetY from 'canvas/imagedata/GetY.js';
+import GetX from './GetX.js';
+import GetY from './GetY.js';
 
 //  This will process ALL pixels in the ImageData
 //  If you only wish to process a few then use GetImageData to extract the region needed.

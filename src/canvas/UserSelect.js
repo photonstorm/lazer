@@ -1,4 +1,4 @@
-export default function (canvas, value = 'none') {
+export default function UserSelect (canvas, value = 'none') {
 
     canvas.style['-webkit-touch-callout'] = value;
     canvas.style['-webkit-user-select'] = value;

@@ -1,8 +1,8 @@
-import DegToRad from 'math/DegToRad.js';
-import RadToDeg from 'math/RadToDeg.js';
-import Wrap from 'math/Wrap.js';
-import ShapeFill from 'canvas/shapes/ShapeFill.js';
-import ShapeStroke from 'canvas/shapes/ShapeStroke.js';
+import DegToRad from '../../math/DegToRad.js';
+import RadToDeg from '../../math/RadToDeg.js';
+import Wrap from '../../math/Wrap.js';
+import ShapeFill from './ShapeFill.js';
+import ShapeStroke from './ShapeStroke.js';
 
 export default function Shape (
         {

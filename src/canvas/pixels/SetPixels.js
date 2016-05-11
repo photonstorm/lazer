@@ -1,6 +1,6 @@
-import Vec2 from 'math/vector/vec2/Vec2.js';
-import SetPixel from 'canvas/imagedata/SetPixel.js';
-import PutImageData from 'canvas/imagedata/PutImageData.js';
+import Vec2 from '../../math/vector/vec2/Vec2.js';
+import SetPixel from '../imagedata/SetPixel.js';
+import PutImageData from '../imagedata/PutImageData.js';
 
 //  Set Pixels
 

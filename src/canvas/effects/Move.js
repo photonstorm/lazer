@@ -1,6 +1,6 @@
-import GetContext from 'canvas/GetContext.js';
-import SetTransform from 'canvas/SetTransform.js';
-import ResetTransform from 'canvas/ResetTransform.js';
+import GetContext from '../GetContext.js';
+import SetTransform from '../SetTransform.js';
+import ResetTransform from '../ResetTransform.js';
 
 export default function Move (canvas, tx, ty, wrapX = true, wrapY = true) {
 
