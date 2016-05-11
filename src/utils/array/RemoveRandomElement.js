@@ -1,4 +1,4 @@
-import SpliceOne from 'utils/array/SpliceOne.js';
+import SpliceOne from './SpliceOne.js';
 
 /**
 * Removes a random object from the given array and returns it.

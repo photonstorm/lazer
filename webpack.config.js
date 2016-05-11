@@ -28,14 +28,14 @@ var config = {
 			graphics: './src/graphics',
 			// input: './src/input',
 			// loader: './src/loader',
-			math:'./src/math'
+			math:'./src/math',
 			// renderers: './src/renderers',
 			// sound: './src/sound',
 			// state: './src/state',
 			// system: './src/system',
 			// texture: './src/texture',
 			// time: './src/time',
-			// utils: './src/utils',
+			utils: './src/utils'
 			// webgl: './src/webgl'
 	},
 	output: {

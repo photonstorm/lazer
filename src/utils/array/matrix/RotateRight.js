@@ -1,4 +1,4 @@
-import RotateMatrix from 'utils/array/matrix/RotateMatrix.js';
+import RotateMatrix from './RotateMatrix.js';
 
 export default function RotateRight (matrix) {
 

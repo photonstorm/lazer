@@ -1,4 +1,4 @@
-import RoundAwayFromZero from 'math/RoundAwayFromZero.js';
+import RoundAwayFromZero from '../../math/RoundAwayFromZero.js';
 
 /**
 * Create an array of numbers (positive and/or negative) progressing from `start`

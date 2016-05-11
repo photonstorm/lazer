@@ -1,5 +1,5 @@
-import CheckMatrix from 'utils/array/matrix/CheckMatrix.js';
-import TransposeMatrix from 'utils/array/matrix/TransposeMatrix.js';
+import CheckMatrix from './CheckMatrix.js';
+import TransposeMatrix from './TransposeMatrix.js';
 
 /**
 * Rotates the given matrix (array of arrays).

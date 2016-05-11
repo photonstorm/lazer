@@ -1,4 +1,4 @@
-import { Version } from 'Version.js';
+import Version from '../Version.js';
 
 export default function Banner (title, url) {
 

@@ -1,5 +1,5 @@
-import Pad from 'utils/string/Pad.js';
-import CheckMatrix from 'utils/array/matrix/CheckMatrix.js';
+import Pad from '../../string/Pad.js';
+import CheckMatrix from './CheckMatrix.js';
 
 //  Generates a string (which you can pass to console.log) from the given
 //  Array Matrix.
