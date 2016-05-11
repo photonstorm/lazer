@@ -1,4 +1,4 @@
-import BaseState from 'state/State.js';
+import BaseState from './State.js';
 
 export default function State (settings) {
 

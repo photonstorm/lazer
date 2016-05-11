@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "ava ./tests | tap-nyan",
-    "testOne": "ava ./tests -m Components* | tap-nyan",
+    "testOne": "ava ./tests -m Config* | tap-nyan",
     "build": "webpack --progress"
   },
   "ava": {
