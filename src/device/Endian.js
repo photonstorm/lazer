@@ -5,7 +5,7 @@
  * @author Matt DesLauriers (@mattdesl)
  * @return {boolean} true if little endian, false if big endian, null if could not determine.
  */
-export default function () {
+export default function Endian () {
 
     const a = new ArrayBuffer(4);
     const b = new Uint8Array(a);

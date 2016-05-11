@@ -52,13 +52,13 @@ var config = {
 					loader: 'babel',
 					include: PATHS.app,
 					exclude: /node_modules/
+			},
+			{
+				test: /\.js$/,
+				loader: 'eslint-loader',
+				include: PATHS.app,
+				exclude: /node_modules/
 			}
-			// {
-			// 	test: /\.js$/,
-			// 	loader: 'eslint-loader',
-			// 	include: PATHS.app,
-			// 	exclude: /node_modules/
-			// }
 		]
 	},
 	resolve: {

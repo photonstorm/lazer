@@ -1,5 +1,5 @@
-import OS from 'device/OS.js';
-import Endian from 'device/Endian.js';
+import OS from './OS.js';
+import Endian from './Endian.js';
 
 export default class Device {
 

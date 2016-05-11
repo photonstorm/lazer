@@ -1,6 +1,6 @@
-import WebGLGetContext from 'webgl/GetContext.js';
+import WebGLGetContext from '../../webgl/GetContext.js';
 
-export default function () {
+export default function WebGL() {
 
     try {
         let canvas = document.createElement('canvas');

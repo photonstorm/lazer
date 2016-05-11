@@ -7,7 +7,6 @@ test('Create Library Object Definition', t=> {
 
 	expect(create.Grid).to.be.a('function');
 	expect(create.RenderToCanvas).to.be.a('function');
-	// console.log(palettes)
 	expect(palettes.PALETTE_ARNE).to.be.a('array');
 	expect(palettes.PALETTE_C64).to.be.a('array');
 	expect(palettes.PALETTE_CGA).to.be.a('array');
