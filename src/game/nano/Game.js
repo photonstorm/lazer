@@ -1,17 +1,17 @@
-import Config from 'config/Config.js';
-import Dimensions from 'config/settings/Dimensions.js';
-import Parent from 'config/settings/Parent.js';
-import FrameRate from 'config/settings/FrameRate.js';
-import State from 'config/settings/State.js';
-import Boot from 'dom/Boot.js';
-import Banner from 'utils/Banner.js';
-import MainLoop from 'system/MainLoop.js';
-import Canvas from 'canvas/Canvas.js';
-import GetContext from 'canvas/GetContext.js';
-import AddToDOM from 'dom/AddToDOM.js';
-import Clear from 'canvas/graphics/Clear.js';
-import Loader from 'loader/Loader.js';
-import ResetTransform from 'canvas/ResetTransform.js';
+import Config from '../../config/Config.js';
+import Dimensions from '../../config/settings/Dimensions.js';
+import Parent from '../../config/settings/Parent.js';
+import FrameRate from '../../config/settings/FrameRate.js';
+import State from '../../config/settings/State.js';
+import Boot from '../../dom/Boot.js';
+import Banner from '../../utils/Banner.js';
+import MainLoop from '../../system/MainLoop.js';
+import Canvas from '../../canvas/Canvas.js';
+import GetContext from '../../canvas/GetContext.js';
+import AddToDOM from '../../dom/AddToDOM.js';
+import Clear from '../../canvas/graphics/Clear.js';
+import Loader from '../../loader/Loader.js';
+import ResetTransform from '../../canvas/ResetTransform.js';
 
 export default class Game {
 

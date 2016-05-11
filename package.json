@@ -17,8 +17,8 @@
   },
   "scripts": {
     "test": "ava ./tests | tap-nyan",
-    "testOne": "ava ./tests -m Device* | tap-nyan",
-    "build": "webpack --progress"
+    "testOne": "ava ./tests -m Game* | tap-nyan",
+    "build": "webpack --progress --colors"
   },
   "ava": {
     "require": [

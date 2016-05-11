@@ -1,7 +1,7 @@
-import BaseTransform from 'math/transform/2d/basic/BaseTransform.js';
-import SetTransformToContext from 'math/transform/2d/SetTransformToContext.js';
+import BaseTransform from '../../math/transform/2d/basic/BaseTransform.js';
+import SetTransformToContext from '../../math/transform/2d/SetTransformToContext.js';
 
-class Sprite extends BaseTransform {
+export default class Sprite extends BaseTransform {
 
     constructor (image, x, y) {
 

@@ -23,7 +23,7 @@ var config = {
 			device: './src/device',
 			dom: './src/dom',
 			fx: './src/fx',
-			// game: './src/game',
+			game: './src/game',
 			// geom: './src/geom',
 			graphics: './src/graphics',
 			// input: './src/input',
