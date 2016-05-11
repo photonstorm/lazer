@@ -1,12 +1,12 @@
-import BaseLoader from 'loader/BaseLoader.js';
-import ImageFile from 'loader/types/ImageFile.js';
-import JSONFile from 'loader/types/JSONFile.js';
-import XMLFile from 'loader/types/XMLFile.js';
-import TextFile from 'loader/types/TextFile.js';
-import GLSLFile from 'loader/types/GLSLFile.js';
-import BinaryFile from 'loader/types/BinaryFile.js';
-import AtlasJSONFile from 'loader/types/AtlasJSONFile.js';
-import AtlasXMLFile from 'loader/types/AtlasXMLFile.js';
+import BaseLoader from './BaseLoader.js';
+import ImageFile from './types/ImageFile.js';
+import JSONFile from './types/JSONFile.js';
+import XMLFile from './types/XMLFile.js';
+import TextFile from './types/TextFile.js';
+import GLSLFile from './types/GLSLFile.js';
+import BinaryFile from './types/BinaryFile.js';
+import AtlasJSONFile from './types/AtlasJSONFile.js';
+import AtlasXMLFile from './types/AtlasXMLFile.js';
 
 //  This is our Phaser-like Loader class. You don't have to use it :)
 

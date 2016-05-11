@@ -1,6 +1,6 @@
-import ImageFile from 'loader/types/ImageFile.js';
-import JSONFile from 'loader/types/JSONFile.js';
-import MultiFile from 'loader/MultiFile.js';
+import ImageFile from './ImageFile.js';
+import JSONFile from './JSONFile.js';
+import MultiFile from '../MultiFile.js';
 
 export default function AtlasJSONFile (key, textureURL, atlasURL, atlasData) {
 

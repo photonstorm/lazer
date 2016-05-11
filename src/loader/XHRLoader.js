@@ -1,4 +1,4 @@
-import MergeXHRSettings from 'loader/MergeXHRSettings.js';
+import MergeXHRSettings from './MergeXHRSettings.js';
 
 export default function XHRLoader (file, globalXHRSettings) {
 

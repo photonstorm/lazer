@@ -1,4 +1,4 @@
-import File, * as FILE from 'loader/File.js';
+import File, * as FILE from '../File.js';
 
 export const TYPE = 'text';
 

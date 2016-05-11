@@ -27,7 +27,7 @@ var config = {
 			// geom: './src/geom',
 			graphics: './src/graphics',
 			// input: './src/input',
-			// loader: './src/loader',
+			loader: './src/loader',
 			math:'./src/math',
 			// renderers: './src/renderers',
 			// sound: './src/sound',

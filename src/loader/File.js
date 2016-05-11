@@ -1,5 +1,5 @@
-import XHRLoader from 'loader/XHRLoader.js';
-import XHRSettings from 'loader/XHRSettings.js';
+import XHRLoader from './XHRLoader.js';
+import XHRSettings from './XHRSettings.js';
 
 //  File level consts
 

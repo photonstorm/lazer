@@ -1,4 +1,4 @@
-import XHRSettings from 'loader/XHRSettings.js';
+import XHRSettings from './XHRSettings.js';
 
 //  Takes two XHR Objects and creates a new object
 

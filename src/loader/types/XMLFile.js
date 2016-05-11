@@ -1,5 +1,5 @@
-import ParseXML from 'system/ParseXML.js';
-import File, * as FILE from 'loader/File.js';
+import ParseXML from '../../system/ParseXML.js';
+import File, * as FILE from '../File.js';
 
 export const TYPE = 'xml';
 

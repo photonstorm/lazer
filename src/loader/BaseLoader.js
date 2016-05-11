@@ -1,5 +1,5 @@
-import XHRSettings from 'loader/XHRSettings.js';
-import File, * as FILE from 'loader/File.js';
+import XHRSettings from './XHRSettings.js';
+import File, * as FILE from './File.js';
 
 export const PENDING = 0;
 export const LOADING = 1;
