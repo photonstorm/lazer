@@ -7,7 +7,7 @@
  * @param {integer} b - The blue color component in the range 0 - 255.
  * @return {integer} A native color value integer (format: 0xRRGGBB).
  */
-export default function (r, g, b) {
+export default function GetColor(r, g, b) {
 
     return r << 16 | g << 8 | b;
 

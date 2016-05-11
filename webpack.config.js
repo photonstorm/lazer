@@ -25,7 +25,7 @@ var config = {
 			// fx: './src/fx',
 			// game: './src/game',
 			// geom: './src/geom',
-			// graphics: './src/graphics',
+			graphics: './src/graphics',
 			// input: './src/input',
 			// loader: './src/loader',
 			math:'./src/math'

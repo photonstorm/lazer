@@ -1,11 +1,11 @@
-import GetColor from 'graphics/color/GetColor.js';
-import GetColor32 from 'graphics/color/GetColor32.js';
-import RGBtoString from 'graphics/color/RGBtoString.js';
-import HSVtoRGB from 'graphics/color/HSVtoRGB.js';
-import HSLtoRGB from 'graphics/color/HSLtoRGB.js';
-import RandomRGB from 'graphics/color/RandomRGB.js';
-import ColorToRGB from 'graphics/color/ColorToRGB.js';
-import * as LinearInterpolation from 'graphics/color/LinearInterpolation.js';
+import GetColor from './GetColor.js';
+import GetColor32 from './GetColor32.js';
+import RGBtoString from './RGBtoString.js';
+import HSVtoRGB from './HSVtoRGB.js';
+import HSLtoRGB from './HSLtoRGB.js';
+import RandomRGB from './RandomRGB.js';
+import ColorToRGB from './ColorToRGB.js';
+import * as LinearInterpolation from './LinearInterpolation.js';
 
 export default class BaseColor {
 

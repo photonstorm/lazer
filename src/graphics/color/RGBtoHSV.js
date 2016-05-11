@@ -11,7 +11,7 @@
 * @param {number} b - The blue color component, in the range 0 - 255.
 * @return {object} An object with the hue, saturation and value set in the h, s and v properties.
 */
-export default function (r, g, b) {
+export default function RGBtoHSV(r, g, b) {
 
     r /= 255;
     g /= 255;
@@ -22,7 +22,7 @@ export default function (r, g, b) {
     const d = max - min;
 
     // achromatic by default
-    const h = 0;
+    let h = 0;
     const s = (max === 0) ? 0 : d / max;
     const v = max;
 

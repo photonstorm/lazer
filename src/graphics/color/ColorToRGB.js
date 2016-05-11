@@ -1,4 +1,4 @@
-export default function (color) {
+export default function ColorToRGB(color) {
 
     if (color > 16777215)
     {

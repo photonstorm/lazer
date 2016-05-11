@@ -1,4 +1,4 @@
-import Starfield2D from 'fx/starfield/2d/Starfield2D.js';
+import Starfield2D from './Starfield2D.js';
 
 export default class Starfield2DDot extends Starfield2D {
 

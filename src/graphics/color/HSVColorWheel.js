@@ -1,4 +1,4 @@
-import HSVtoRGB from 'graphics/color/HSVtoRGB.js';
+import HSVtoRGB from './HSVtoRGB.js';
 
 /**
 * Get HSV color wheel values in an array which will be 360 elements in size.

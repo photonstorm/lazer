@@ -1,4 +1,4 @@
-import Linear from 'math/Linear.js';
+import Linear from '../../math/Linear.js';
 
 export function colorWithColor (color1, color2, length = 100, index = 0) {
 

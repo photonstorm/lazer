@@ -1,6 +1,6 @@
-import HueToColor from 'graphics/color/HueToColor.js';
+import HueToColor from './HueToColor.js';
 
-export default function (h, s, l) {
+export default function HSLtoRGB(h, s, l) {
 
     // achromatic by default
     let r = l;

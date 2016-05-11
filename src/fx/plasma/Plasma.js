@@ -1,6 +1,6 @@
-import HSVColorWheel from 'graphics/color/HSVColorWheel.js';
-import * as SetPixels from 'canvas/pixels/SetPixels.js';
-import GetImageData from 'canvas/imagedata/GetImageData.js';
+import HSVColorWheel from '../../graphics/color/HSVColorWheel.js';
+import * as SetPixels from '../../canvas/pixels/SetPixels.js';
+import GetImageData from '../../canvas/imagedata/GetImageData.js';
 
 export default class Plasma {
     

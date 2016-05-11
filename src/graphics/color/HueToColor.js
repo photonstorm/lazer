@@ -8,7 +8,7 @@
 * @param {number} t
 * @return {number} The color component value.
 */
-export default function (p, q, t) {
+export default function HueToColor(p, q, t) {
 
     if (t < 0)
     {

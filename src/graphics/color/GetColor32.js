@@ -8,7 +8,7 @@
  * @param {integer} a - The alpha color component in the range 0 - 255.
  * @return {integer} A native color value integer (format: 0xAARRGGBB).
  */
-export default function (r, g, b, a) {
+export default function GetColor32(r, g, b, a) {
 
     return a << 24 | r << 16 | g << 8 | b;
 

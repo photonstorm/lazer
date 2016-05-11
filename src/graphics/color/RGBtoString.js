@@ -1,6 +1,6 @@
-import ComponentToHex from 'graphics/color/ComponentToHex.js';
+import ComponentToHex from './ComponentToHex.js';
 
-export default function (r, g, b, a = 255, prefix = '#') {
+export default function RGBtoString(r, g, b, a = 255, prefix = '#') {
 
     if (prefix === '#')
     {

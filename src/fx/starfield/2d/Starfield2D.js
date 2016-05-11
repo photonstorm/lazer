@@ -1,4 +1,4 @@
-import Between from 'math/Between.js';
+import Between from '../../../math/Between.js';
 
 export default class Starfield2D {
 

@@ -1,5 +1,5 @@
-import Starfield2D from 'fx/starfield/2d/Starfield2D.js';
-import DrawImage from 'canvas/DrawImage.js';
+import Starfield2D from './Starfield2D.js';
+import DrawImage from '../../../canvas/DrawImage.js';
 
 export default class Starfield2DImage extends Starfield2D {
 

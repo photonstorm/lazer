@@ -147,7 +147,7 @@ let CSSMap = new Map([
     ['yellowgreen',            [ 154, 205,  50 ]]
 ]);
 
-export default function (name) {
+export default function CSStoRGB(name) {
 
     let color = CSSMap.get(name);
 
