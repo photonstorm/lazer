@@ -22,7 +22,7 @@ var config = {
 			create: './src/create',
 			device: './src/device',
 			dom: './src/dom',
-			// fx: './src/fx',
+			fx: './src/fx',
 			// game: './src/game',
 			// geom: './src/geom',
 			graphics: './src/graphics',
