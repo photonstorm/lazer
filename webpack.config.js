@@ -20,7 +20,7 @@ var config = {
 			components: './src/components',
 			config: './src/config',
 			create: './src/create',
-			// device: './src/device',
+			device: './src/device',
 			// dom: './src/dom',
 			// fx: './src/fx',
 			// game: './src/game',
