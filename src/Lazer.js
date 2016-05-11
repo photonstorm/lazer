@@ -1,4 +1,4 @@
-var Lazer = {
+const Lazer = {
 
     /**
     * AUTO renderer - picks between WebGL or Canvas based on device.
@@ -29,3 +29,5 @@ var Lazer = {
     HEADLESS: 3
 
 };
+
+export default Lazer;
