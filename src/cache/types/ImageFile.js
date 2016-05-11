@@ -1,4 +1,4 @@
-import CacheFile from 'cache/types/CacheFile.js';
+import CacheFile from './CacheFile';
 
 export default class ImageFile extends CacheFile {
 

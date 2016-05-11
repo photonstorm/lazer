@@ -14,9 +14,9 @@ var outputFile = libraryName + '.js';
 var config = {
 	devtool: 'inline-source-map',
 	entry: {
-			app: './src/',
-			// canvas: './src/canvas',
-			// cache: './src/cache',
+			meta: './src/',
+			cache: './src/cache'
+			// canvas: './src/canvas',			
 			// components: './src/components',
 			// config: './src/config',
 			// create: './src/create',
@@ -66,11 +66,11 @@ var config = {
 		extensions: ['', '.js']
 	},
 	plugins: [
-		// new CleanWebpackPlugin('build', {
-		// 		root: __dirname,
-		// 		verbose: true,
-		// 		dry: false
-		// 	}),
+		new CleanWebpackPlugin('build', {
+				root: __dirname,
+				verbose: true,
+				dry: false
+			}),
 		new UglifyJsPlugin({ 
 			minimize: true 
 		}),

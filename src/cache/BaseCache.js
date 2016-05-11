@@ -1,4 +1,4 @@
-import CacheFile from 'cache/types/CacheFile.js';
+import CacheFile from './types/CacheFile';
 
 export default class BaseCache {
 
