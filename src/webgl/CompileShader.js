@@ -6,11 +6,11 @@
  * @param  {integer} type - Type of shader. Either gl.VERTEX_SHADER or gl.FRAGMENT_SHADER
  * @return {WebGLShader} The compiled shader, or null if shader could not compile.
  */
-export default function (gl, src, type) {
+export default function CompileShader(gl, src, type) {
 
     if (Array.isArray(src))
     {
-        src = src.join("\n");
+        src = src.join('\n');
     }
 
     let shader = gl.createShader(type);

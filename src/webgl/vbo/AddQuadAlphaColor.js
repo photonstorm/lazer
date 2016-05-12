@@ -3,7 +3,7 @@
 //  alpha = float
 //  colorX = ints
 
-export default function (buffer, uvs, a, b, c, d, tx, ty, alpha = 1.0, color1 = 0xffffff, color2 = 0xffffff, color3 = 0xffffff, color4 = 0xffffff) {
+export default function AddQuadAlphaColor (buffer, uvs, a, b, c, d, tx, ty, alpha = 1.0, color1 = 0xffffff, color2 = 0xffffff, color3 = 0xffffff, color4 = 0xffffff) {
 
     let v = buffer.vertices;
     let i = buffer.size * 4 * buffer.vertSize;

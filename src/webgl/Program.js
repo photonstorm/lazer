@@ -1,4 +1,4 @@
-import * as Attribute from 'webgl/Attribute.js';
+import * as Attribute from './Attribute.js';
 
 export default class WebGLProgram {
 
