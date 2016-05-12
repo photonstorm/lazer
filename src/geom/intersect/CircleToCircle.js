@@ -1,4 +1,4 @@
-import DistanceBetween from 'math/distance/DistanceBetween.js';
+import DistanceBetween from '../../math/distance/DistanceBetween.js';
 
 export default function CircleToCircle (a, b) {
 

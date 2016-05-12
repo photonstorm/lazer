@@ -1,4 +1,4 @@
-import Circle from 'geom/circle/Circle.js';
+import Circle from './Circle.js';
 
 export default function Clone (source) {
 

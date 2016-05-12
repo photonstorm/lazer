@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "ava ./tests | tap-nyan",
-    "testOne": "ava ./tests -m Game* | tap-nyan",
+    "testOne": "ava ./tests -m Geom* | tap-nyan",
     "build": "webpack --progress --colors"
   },
   "ava": {

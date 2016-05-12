@@ -1,4 +1,4 @@
-import Rectangle from 'geom/rectangle/Rectangle.js';
+import Rectangle from './Rectangle.js';
 
 export default function Clone (source) {
 

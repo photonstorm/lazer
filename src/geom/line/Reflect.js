@@ -1,5 +1,5 @@
-import Angle from 'geom/line/Angle.js';
-import NormalAngle from 'geom/line/NormalAngle.js';
+import Angle from './Angle.js';
+import NormalAngle from './NormalAngle.js';
 
 /**
 * Returns the reflected angle between two lines.

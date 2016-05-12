@@ -1,4 +1,4 @@
-import Angle from 'geom/line/Angle.js';
+import Angle from './Angle.js';
 
 /**
 * @name Phaser.Line#normalX

@@ -1,4 +1,4 @@
-import GetAspectRatio from 'geom/rectangle/GetAspectRatio.js';
+import GetAspectRatio from './GetAspectRatio.js';
 
 //  Fits the target rectangle around the source rectangle.
 //  Preserves aspect ration.

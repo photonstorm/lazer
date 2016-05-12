@@ -1,5 +1,5 @@
-import Angle from 'geom/line/Angle.js';
-import Wrap from 'math/Wrap.js';
+import Angle from './Angle.js';
+import Wrap from '../../math/Wrap.js';
 
 export default function NormalAngle (line) {
 

@@ -1,4 +1,4 @@
-import Line from 'geom/line/Line.js';
+import Line from './Line.js';
 
 export default function Clone (source) {
 

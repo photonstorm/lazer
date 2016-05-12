@@ -1,4 +1,4 @@
-import Rectangle from 'geom/rectangle/Rectangle.js';
+import Rectangle from './Rectangle.js';
 
 export default function Union (rectA, rectB, output = Rectangle()) {
 
