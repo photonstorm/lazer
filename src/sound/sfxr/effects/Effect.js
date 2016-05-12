@@ -1,13 +1,13 @@
-import Envelope from 'sound/sfxr/effects/Envelope.js';
-import Tone from 'sound/sfxr/effects/Tone.js';
-import Vibrato from 'sound/sfxr/effects/Vibrato.js';
-import Tonal from 'sound/sfxr/effects/Tonal.js';
-import SquareDuty from 'sound/sfxr/effects/SquareDuty.js';
-import Repeat from 'sound/sfxr/effects/Repeat.js';
-import Phaser from 'sound/sfxr/effects/Phaser.js';
-import LowPassFilter from 'sound/sfxr/effects/LowPassFilter.js';
-import HighPassFilter from 'sound/sfxr/effects/HighPassFilter.js';
-import GetShape, * as SHAPE from 'sound/sfxr/Shapes.js';
+import Envelope from './Envelope.js';
+import Tone from './Tone.js';
+import Vibrato from './Vibrato.js';
+import Tonal from './Tonal.js';
+import SquareDuty from './SquareDuty.js';
+import Repeat from './Repeat.js';
+import Phaser from './Phaser.js';
+import LowPassFilter from './LowPassFilter.js';
+import HighPassFilter from './HighPassFilter.js';
+import GetShape, * as SHAPE from '../Shapes.js';
 
 export default function Effect (volume = 0.5, sampleRate = 44100, bitDepth = 8) {
 

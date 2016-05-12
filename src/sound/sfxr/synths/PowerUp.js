@@ -1,5 +1,5 @@
-import Effect from 'sound/sfxr/effects/Effect.js';
-import GetShape, * as SHAPE from 'sound/sfxr/Shapes.js';
+import Effect from '../effects/Effect.js';
+import GetShape, * as SHAPE from '../Shapes.js';
 
 export default function PowerUp (rnd, frnd) {
 
@@ -14,11 +14,11 @@ export default function PowerUp (rnd, frnd) {
         fx.duty.value = frnd(0.6);
     }
 
-    fx.waveType = GetShape(frnd);
+    fx.waveType = GetShape  (frnd);
 
-    if (fx.wave_type === 3)
+    if (fx.waveType === 3)
     {
-        fx.wave_type = SHAPE.SQUARE;
+        fx.waveType = SHAPE.SQUARE;
     }
 
     if (rnd(1))

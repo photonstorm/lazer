@@ -1,5 +1,5 @@
-import Effect from 'sound/sfxr/effects/Effect.js';
-import GetShape, * as SHAPE from 'sound/sfxr/Shapes.js';
+import Effect from '../effects/Effect.js';
+import GetShape, * as SHAPE from '../Shapes.js';
 
 export default function LaserShoot (rnd, frnd) {
 

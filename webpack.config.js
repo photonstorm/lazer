@@ -30,7 +30,7 @@ var config = {
 			loader: './src/loader',
 			math:'./src/math',
 			renderers: './src/renderers',
-			// sound: './src/sound',
+			sound: './src/sound',
 			// state: './src/state',
 			system: './src/system',
 			// texture: './src/texture',

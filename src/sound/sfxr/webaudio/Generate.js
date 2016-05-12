@@ -1,13 +1,13 @@
-import GenerateData from 'sound/sfxr/data/GenerateData.js';
-import UpdateData from 'sound/sfxr/data/UpdateData.js';
-import Envelope from 'sound/sfxr/data/generators/Envelope.js';
-import Filter from 'sound/sfxr/data/generators/Filter.js';
-import Noise from 'sound/sfxr/data/generators/Noise.js';
-import Phaser from 'sound/sfxr/data/generators/Phaser.js';
-import Vibrato from 'sound/sfxr/data/generators/Vibrato.js';
-import Repeat from 'sound/sfxr/data/generators/Repeat.js';
-import SoundEffect from 'sound/sfxr/webaudio/SoundEffect.js';
-import GetShape, * as SHAPE from 'sound/sfxr/Shapes.js';
+import GenerateData from '../data/GenerateData.js';
+import UpdateData from '../data/UpdateData.js';
+import Envelope from '../data/generators/Envelope.js';
+import Filter from '../data/generators/Filter.js';
+import Noise from '../data/generators/Noise.js';
+import Phaser from '../data/generators/Phaser.js';
+import Vibrato from '../data/generators/Vibrato.js';
+import Repeat from '../data/generators/Repeat.js';
+import SoundEffect from '../webaudio/SoundEffect.js';
+import GetShape, * as SHAPE from '../Shapes.js';
 
 const MIN_SAMPLE_RATE = 44100;
 const SOUND_VOL = 0.25;

@@ -1,4 +1,4 @@
-import Effect from 'sound/sfxr/effects/Effect.js';
+import Effect from '../effects/Effect.js';
 
 export default function Explosion (rnd, frnd) {
 

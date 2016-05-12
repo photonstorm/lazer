@@ -9,7 +9,7 @@ export default function HighPassFilter (
     return {
 
         frequency,  // High-pass filter cutoff
-        ramp,       // High-pass filter cutoff sweep (SIGNED)
+        ramp       // High-pass filter cutoff sweep (SIGNED)
 
     };
     
