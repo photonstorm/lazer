@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "ava ./tests | tap-nyan",
-    "testOne": "ava ./tests -m Input* | tap-nyan",
+    "testOne": "ava ./tests -m Renderer* | tap-nyan",
     "build": "webpack --progress --colors"
   },
   "ava": {

@@ -29,14 +29,14 @@ var config = {
 			input: './src/input',
 			loader: './src/loader',
 			math:'./src/math',
-			// renderers: './src/renderers',
+			renderers: './src/renderers',
 			// sound: './src/sound',
 			// state: './src/state',
 			system: './src/system',
 			// texture: './src/texture',
 			// time: './src/time',
-			utils: './src/utils'
-			// webgl: './src/webgl'
+			utils: './src/utils',
+			webgl: './src/webgl'
 	},
 	output: {
 		path: PATHS.build,

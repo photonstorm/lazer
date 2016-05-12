@@ -1,8 +1,8 @@
-import Lazer from 'Lazer.js';
-import Color from 'graphics/color/BaseColor.js';
-import CheckWebGL from 'device/features/WebGL.js';
-import CanvasRenderer from 'renderers/minimal/CanvasRenderer.js';
-import WebGLRenderer from 'renderers/minimal/WebGLRenderer.js';
+import Lazer from '../../Lazer.js';
+import Color from '../../graphics/color/BaseColor.js';
+import CheckWebGL from '../../device/features/WebGL.js';
+import CanvasRenderer from '../../renderers/minimal/CanvasRenderer.js';
+import WebGLRenderer from '../../renderers/minimal/WebGLRenderer.js';
 
 export default class MinimalRenderer {
 

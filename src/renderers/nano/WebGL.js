@@ -1,6 +1,6 @@
-import WebGLContextHandler from 'renderers/common/webgl/WebGLContextHandler.js';
-import WebGLContextOptions from 'renderers/common/webgl/WebGLContextOptions.js';
-import WebGLGetContext from 'renderers/common/webgl/WebGLGetContext.js';
+import WebGLContextHandler from '../../webgl/ContextHandler.js';
+import WebGLContextOptions from '../../webgl/ContextOptions.js';
+import WebGLGetContext from '../../webgl/GetContext.js';
 
 export default class WebGLNano {
 

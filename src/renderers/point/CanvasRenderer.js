@@ -1,4 +1,4 @@
-import CanvasGetContext from 'canvas/GetContext.js';
+import CanvasGetContext from '../../canvas/GetContext.js';
 
 export default class CanvasPointRenderer {
 

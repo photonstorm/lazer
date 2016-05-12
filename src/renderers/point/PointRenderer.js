@@ -1,7 +1,7 @@
-import Lazer from 'Lazer.js';
-import CheckWebGL from 'device/features/WebGL.js';
-import CanvasRenderer from 'renderers/point/CanvasRenderer.js';
-import WebGLRenderer from 'renderers/point/WebGLRenderer.js';
+import Lazer from '../../Lazer.js';
+import CheckWebGL from '../../device/features/WebGL.js';
+import CanvasRenderer from './CanvasRenderer.js';
+import WebGLRenderer from './WebGLRenderer.js';
 
 export default class PointRenderer {
 

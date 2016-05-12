@@ -1,8 +1,8 @@
-import WebGLContextOptions from 'webgl/ContextOptions.js';
-import WebGLContextHandler from 'webgl/ContextHandler.js';
-import WebGLGetContext from 'webgl/GetContext.js';
-import CompileShader from 'webgl/CompileShader.js';
-import WebGLProgram from 'webgl/Program.js';
+import WebGLContextOptions from '../../webgl/ContextOptions.js';
+import WebGLContextHandler from '../../webgl/ContextHandler.js';
+import WebGLGetContext from '../../webgl/GetContext.js';
+import CompileShader from '../../webgl/CompileShader.js';
+import WebGLProgram from '../../webgl/Program.js';
 
 export default class WebGLPointRenderer {
 

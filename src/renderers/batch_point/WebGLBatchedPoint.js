@@ -1,11 +1,11 @@
-import WebGLContextHandler from 'webgl/ContextHandler.js';
-import WebGLContextOptions from 'webgl/ContextOptions.js';
-import WebGLGetContext from 'webgl/GetContext.js';
-import CompileShader from 'webgl/CompileShader.js';
-import WebGLProgram from 'webgl/Program.js';
-import VertexArrayBuffer from 'webgl/vbo/VertexArrayBuffer.js';
-import AddVert from 'webgl/vbo/AddVert.js';
-import * as Attribute from 'webgl/Attribute.js';
+import WebGLContextHandler from '../../webgl/ContextHandler.js';
+import WebGLContextOptions from '../../webgl/ContextOptions.js';
+import WebGLGetContext from '../../webgl/GetContext.js';
+import CompileShader from '../../webgl/CompileShader.js';
+import WebGLProgram from '../../webgl/Program.js';
+import VertexArrayBuffer from '../../webgl/vbo/VertexArrayBuffer.js';
+import AddVert from '../../webgl/vbo/AddVert.js';
+import * as Attribute from '../../webgl/Attribute.js';
 
 export default class WebGLBatchedPointRenderer {
 
