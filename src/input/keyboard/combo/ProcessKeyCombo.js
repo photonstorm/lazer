@@ -1,4 +1,4 @@
-import AdvanceKeyCombo from 'input/keyboard/combo/AdvanceKeyCombo.js';
+import AdvanceKeyCombo from './AdvanceKeyCombo.js';
 
 export default function ProcessKeyCombo (event, combo) {
 

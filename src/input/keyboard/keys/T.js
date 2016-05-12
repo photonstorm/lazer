@@ -1,4 +1,4 @@
-import Key from 'input/keyboard/Key.js';
+import Key from '../Key.js';
 
 export default function T () {
 

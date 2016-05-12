@@ -1,4 +1,4 @@
-import Signal from 'system/Signal.js';
+import Signal from '../../../system/Signal.js';
 
 export const onUp = new Signal();
 

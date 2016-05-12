@@ -1,4 +1,4 @@
-import AddEventListener from 'dom/AddEventListener.js';
+import AddEventListener from '../../../dom/AddEventListener.js';
 
 //  Adds a keypress event listener to the specified target (usually 'window')
 

@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "ava ./tests | tap-nyan",
-    "testOne": "ava ./tests -m Geom* | tap-nyan",
+    "testOne": "ava ./tests -m Input* | tap-nyan",
     "build": "webpack --progress --colors"
   },
   "ava": {
@@ -68,6 +68,7 @@
     "clean-webpack-plugin": "^0.1.9",
     "eslint": "^2.9.0",
     "eslint-loader": "^1.3.0",
+    "estraverse-fb": "^1.3.1",
     "systemjs": "^0.19.6",
     "tap-nyan": "0.0.2",
     "tap-spec": "^4.1.1",
