@@ -12,12 +12,8 @@ export default function (vertices, axis) {
     let dotValue;
     for (index = 0; index < length; ++index) {
         dotValue = DotProduct(vertices[index], axis);
-        if (dotValue < minp) {
-            minp = dotValue;
-        }
-        if (dotValue > maxp) {
-            maxp = dotValue;
-        }
+        if (dotValue < minp) minp = dotValue;
+        if (dotValue > maxp) maxp = dotValue;
     }
     result[0] = minp;
     result[1] = maxp;
