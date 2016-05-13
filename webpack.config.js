@@ -31,7 +31,7 @@ var config = {
 			math:'./src/math',
 			renderers: './src/renderers',
 			sound: './src/sound',
-			// state: './src/state',
+			state: './src/state',
 			system: './src/system',
 			// texture: './src/texture',
 			// time: './src/time',

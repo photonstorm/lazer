@@ -1,4 +1,4 @@
-import NOOP from 'system/NOOP.js';
+import NOOP from '../system/NOOP.js';
 
 export const PENDING = 0;
 export const ACTIVE = 1;
@@ -17,7 +17,7 @@ export default function State (
             render = NOOP,
             postRender = NOOP,
             shutdown = NOOP,
-            destroy = NOOP,
+            destroy = NOOP
         } = {}
     ) {
 
