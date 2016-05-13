@@ -94,7 +94,7 @@ export default function (verticesA, verticesB, correctionData) {
         }
     }
     ScalarMultiply(unitVector, correctionOverlap, correctionData.correction);
-    correction.overlap = correctionOverlap;
-    correction.unit = unitVector;
+    correctionData.overlap = correctionOverlap;
+    correctionData.unit = unitVector;
     return true;
 }
