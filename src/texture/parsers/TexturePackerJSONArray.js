@@ -1,5 +1,5 @@
-import Frame from 'texture/Frame.js';
-import SetTrim from 'texture/SetTrim.js';
+import Frame from '../Frame.js';
+import SetTrim from '../SetTrim.js';
 
 //  source = image / canvas reference
 //  json = Texture Packer JSON data

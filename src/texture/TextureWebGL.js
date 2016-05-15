@@ -1,4 +1,4 @@
-import UpdateUVs from 'texture/UpdateUVs.js';
+import UpdateUVs from './UpdateUVs.js';
 
 //  Binds Texture data and a Frame together
 

@@ -33,7 +33,7 @@ var config = {
 			sound: './src/sound',
 			state: './src/state',
 			system: './src/system',
-			// texture: './src/texture',
+			texture: './src/texture',
 			// time: './src/time',
 			utils: './src/utils',
 			webgl: './src/webgl'

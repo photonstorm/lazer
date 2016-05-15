@@ -1,4 +1,4 @@
-import Frame from 'texture/Frame.js';
+import Frame from '../Frame.js';
 
 //  Generates an array full of Frame objects that correspond to the individual frames
 //  of a classic sprite sheet - where each frame of the sheet is the exact same size.

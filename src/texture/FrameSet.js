@@ -1,4 +1,4 @@
-import Frame from 'texture/Frame.js';
+import Frame from './Frame.js';
 
 export default class FrameSet {
 
