@@ -1,5 +1,5 @@
-import RequestAnimationFrame from 'dom/RequestAnimationFrame.js';
-import Clock from 'time/Clock.js';
+import RequestAnimationFrame from '../dom/RequestAnimationFrame.js';
+import Clock from './Clock.js';
 
 //  This can implement RAF itself, so it can be the heart of the Game.
 //  Then GameClock objects will use this data to run from, including their

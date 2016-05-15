@@ -34,7 +34,7 @@ var config = {
 			state: './src/state',
 			system: './src/system',
 			texture: './src/texture',
-			// time: './src/time',
+			time: './src/time',
 			utils: './src/utils',
 			webgl: './src/webgl'
 	},
