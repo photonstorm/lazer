@@ -1,16 +1,11 @@
 import Sub from 'math/vector/vec2/Sub.js'
 import Dot from 'math/vector/vec2/Dot.js'
+import Equal from 'math/vector/vec2/Equal.js'
 
-export default function VertexInsideEar(vertex, ear) {
-    let p0, p1, p2, v, u,
-        verts = ear.vertices,
-        v0 = verts[0],
-        v1 = verts[1],
-        v2 = verts[2];
+export default function VertexInsideEar(vertex, v0, v1, v2) {
+    let p0, p1, p2, v, u;
 
-    if ((v0[0] === vertex[0] && v0[1] === vertex[1]) ||
-        (v1[0] === vertex[0] && v1[1] === vertex[1]) ||
-        (v2[0] === vertex[0] && v2[1] === vertex[1])) {
+    if (Equal(v0, vertex) || Equal(v1, vertex) || Equal(v2, vertex)) {
         return false;
     }
     p0 = Sub(v0, v1);
