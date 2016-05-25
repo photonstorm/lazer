@@ -27,7 +27,7 @@ class RandomAccessVec2 {
     }
 }
 
-export default function Body(x, y, width, height) {
+export default function Body(x, y) {
     return RegisterBody({
         position: new RandomAccessVec2(x, y),
         velocity: new RandomAccessVec2(),
@@ -36,6 +36,8 @@ export default function Body(x, y, width, height) {
         bounce: new RandomAccessVec2(),
         maxVelocity: new RandomAccessVec2(10000, 10000),
         friction: new RandomAccessVec2(1, 0),
-        ID: -1
+        drag: new RandomAccessVec2(),
+        ID: -1,
+        shape: null
     });
 }

@@ -1,5 +1,5 @@
 // This is a value that could be set at initialization.
-const MAX_BODIES = 10000;
+const MAX_BODIES = 100000;
 let BodyCount = 0;
 
 // Helping data locality by splitting members
@@ -19,6 +19,13 @@ let SystemDataMaxVelocityX = new Float32Array(MAX_BODIES);
 let SystemDataMaxVelocityY = new Float32Array(MAX_BODIES);
 let SystemDataFrictionX = new Float32Array(MAX_BODIES);
 let SystemDataFrictionY = new Float32Array(MAX_BODIES);
+let SystemDataDragX = new Float32Array(MAX_BODIES);
+let SystemDataDragY = new Float32Array(MAX_BODIES);
+
+// System global values
+
+let SystemGlobalGravityX = 0;
+let SystemGlobalGravityY = 0;
 
 // This will give external access to body component data
 // for developer use if they need it for something special. 
@@ -28,49 +35,49 @@ export function GetBodiesPosition() {
         y: SystemDataPositionY.subarray(0, BodyCount)
     };
 }
-
 export function GetBodiesVelocity() {
     return {
         x: SystemDataVelocityX.subarray(0, BodyCount),
         y: SystemDataVelocityY.subarray(0, BodyCount)
     };
 }
-
 export function GetBodiesAcceleration() {
     return {
         x: SystemDataAccelerationX.subarray(0, BodyCount),
         y: SystemDataAccelerationY.subarray(0, BodyCount)
     };
 }
-
 export function GetBodiesGravity() {
     return {
         x: SystemDataGravityX.subarray(0, BodyCount),
         y: SystemDataGravityY.subarray(0, BodyCount)
     };
 }
-
 export function GetBodiesBounce() {
     return {
         x: SystemDataBounceX.subarray(0, BodyCount),
         y: SystemDataBounceY.subarray(0, BodyCount)
     };
 }
-
 export function GetBodiesMaxVelocity() {
     return {
         x: SystemDataMaxVelocityX.subarray(0, BodyCount),
         y: SystemDataMaxVelocityY.subarray(0, BodyCount)
     };
 }
-
 export function GetBodiesFriction() {
     return {
         x: SystemDataFrictionX.subarray(0, BodyCount),
         y: SystemDataFrictionY.subarray(0, BodyCount)
     };
 }
-// ---
+export function GetBodiesDrag() {
+        return {
+            x: SystemDataDragX.subarray(0, BodyCount),
+            y: SystemDataDragY.subarray(0, BodyCount)
+        };
+    }
+    // ---
 
 export function ClearAllBodies() {
     BodyCount = 0;
@@ -110,19 +117,40 @@ export function RegisterBody(body) {
         SystemDataFrictionX.subarray(OldBodyCount, BodyCount),
         SystemDataFrictionY.subarray(OldBodyCount, BodyCount)
     );
+    body.drag.init(
+        SystemDataDragX.subarray(OldBodyCount, BodyCount),
+        SystemDataDragY.subarray(OldBodyCount, BodyCount)
+    );
     body.ID = OldBodyCount;
     return body;
 }
 
 // All elements in this calculation are arrays.
-export function ComputeBodiesVelocity(velocityData, accelerationData, maxData /*, delta*/ ) {
+export function ComputeBodiesVelocity(velocityData, accelerationData, maxData, gravityData, dragData, globalGravity, physicsStep) {
     let index = 0,
         length = BodyCount,
         velocity = 0.0,
-        maxVelocity = 0.0;
+        maxVelocity = 0.0,
+        drag = 0.0;
 
     for (; index < length; ++index) {
+        velocityData[index] += (globalGravity + gravityData[index]) * physicsStep;
         velocityData[index] += accelerationData[index];
+    }
+
+    for (index = 0; index < length; ++index) {
+        if (accelerationData[index] != 0.0) {
+            continue;
+        }
+        drag = dragData[index] * physicsStep;
+        if (velocityData[index] - drag > 0) {
+            velocityData[index] -= drag;
+            continue;
+        } else if (velocityData[index] + drag < 0) {
+            velocityData[index] += drag;
+            continue;
+        }
+        velocityData[index] = 0;
     }
 
     for (index = 0; index < length; ++index) {
@@ -137,7 +165,7 @@ export function ComputeBodiesVelocity(velocityData, accelerationData, maxData /*
 }
 
 export function UpdateBodiesPosition(positionData, velocityData) {
-     let index = 0,
+    let index = 0,
         length = BodyCount;
 
     for (; index < length; ++index) {
@@ -145,10 +173,27 @@ export function UpdateBodiesPosition(positionData, velocityData) {
     }
 }
 
-export function RunSimulationFrame(/* delta ?*/) {
-    ComputeBodiesVelocity(SystemDataVelocityX, SystemDataAccelerationX, SystemDataMaxVelocityX);
-    ComputeBodiesVelocity(SystemDataVelocityY, SystemDataAccelerationY, SystemDataMaxVelocityY);
+export function RunSimulationFrame(physicsStep) {
+    ComputeBodiesVelocity(
+        SystemDataVelocityX,
+        SystemDataAccelerationX,
+        SystemDataMaxVelocityX,
+        SystemDataGravityX,
+        SystemDataDragX,
+        SystemGlobalGravityX,
+        physicsStep
+    );
+    ComputeBodiesVelocity(
+        SystemDataVelocityY,
+        SystemDataAccelerationY,
+        SystemDataMaxVelocityY,
+        SystemDataGravityY,
+        SystemDataDragY,
+        SystemGlobalGravityY,
+        physicsStep
+    );
     UpdateBodiesPosition(SystemDataPositionX, SystemDataVelocityX);
     UpdateBodiesPosition(SystemDataPositionY, SystemDataVelocityY);
-    // Here we should run collision check.
 }
+
+//export function RunCollisionTestFrame()
