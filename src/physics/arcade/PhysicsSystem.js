@@ -195,5 +195,3 @@ export function RunSimulationFrame(physicsStep) {
     UpdateBodiesPosition(SystemDataPositionX, SystemDataVelocityX);
     UpdateBodiesPosition(SystemDataPositionY, SystemDataVelocityY);
 }
-
-//export function RunCollisionTestFrame()
