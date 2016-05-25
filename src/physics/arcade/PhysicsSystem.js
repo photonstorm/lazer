@@ -20,6 +20,58 @@ let SystemDataMaxVelocityY = new Float32Array(MAX_BODIES);
 let SystemDataFrictionX = new Float32Array(MAX_BODIES);
 let SystemDataFrictionY = new Float32Array(MAX_BODIES);
 
+// This will give external access to body component data
+// for developer use if they need it for something special. 
+export function GetBodiesPosition() {
+    return {
+        x: SystemDataPositionX.subarray(0, BodyCount),
+        y: SystemDataPositionY.subarray(0, BodyCount)
+    };
+}
+
+export function GetBodiesVelocity() {
+    return {
+        x: SystemDataVelocityX.subarray(0, BodyCount),
+        y: SystemDataVelocityY.subarray(0, BodyCount)
+    };
+}
+
+export function GetBodiesAcceleration() {
+    return {
+        x: SystemDataAccelerationX.subarray(0, BodyCount),
+        y: SystemDataAccelerationY.subarray(0, BodyCount)
+    };
+}
+
+export function GetBodiesGravity() {
+    return {
+        x: SystemDataGravityX.subarray(0, BodyCount),
+        y: SystemDataGravityY.subarray(0, BodyCount)
+    };
+}
+
+export function GetBodiesBounce() {
+    return {
+        x: SystemDataBounceX.subarray(0, BodyCount),
+        y: SystemDataBounceY.subarray(0, BodyCount)
+    };
+}
+
+export function GetBodiesMaxVelocity() {
+    return {
+        x: SystemDataMaxVelocityX.subarray(0, BodyCount),
+        y: SystemDataMaxVelocityY.subarray(0, BodyCount)
+    };
+}
+
+export function GetBodiesFriction() {
+    return {
+        x: SystemDataFrictionX.subarray(0, BodyCount),
+        y: SystemDataFrictionY.subarray(0, BodyCount)
+    };
+}
+// ---
+
 export function ClearAllBodies() {
     BodyCount = 0;
 }
