@@ -7,6 +7,7 @@ export class PolygonCollider {
         this.verticesX = null;
         this.verticesY = null;
         this.ID = -1;
+        this.vertexCount = vertices.length;
         RegisterPolygonCollider(
             this,
             vertices
