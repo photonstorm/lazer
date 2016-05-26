@@ -1,43 +1,40 @@
-import { RegisterBody } from 'physics/arcade/PhysicsSystem.js';
-
-class RandomAccessVec2 {
-    constructor(x = 0, y = 0) {
-        this.px = null;
-        this.py = null;
-        this._a = x;
-        this._b = y;
-    }
-    init(ptrX, ptrY) {
-        this.px = ptrX;
-        this.py = ptrY;
-        this.px[0] = this._a;
-        this.py[0] = this._b;
-    }
-    get x() {
-        return this.px[0];
-    }
-    get y() {
-        return this.py[0];
-    }
-    set x(value) {
-        this.px[0] = value;
-    }
-    set y(value) {
-        this.py[0] = value;
-    }
+import {
+    RegisterBody
 }
+from 'physics/arcade/PhysicsSystem.js';
 
-export default function Body(x, y) {
-    return RegisterBody({
-        position: new RandomAccessVec2(x, y),
-        velocity: new RandomAccessVec2(),
-        acceleration: new RandomAccessVec2(),
-        gravity: new RandomAccessVec2(),
-        bounce: new RandomAccessVec2(),
-        maxVelocity: new RandomAccessVec2(10000, 10000),
-        friction: new RandomAccessVec2(1, 0),
-        drag: new RandomAccessVec2(),
-        ID: -1,
-        shape: null
-    });
+export default class Body {
+    constructor(x, y, collider) {
+        if (collider === null || typeof collider === 'undefined') {
+            throw 'Body must include collider.';
+        }
+        this.position = null;
+        this.velocity = null;
+        this.acceleration = null;
+        this.gravity = null;
+        this.bounce = null;
+        this.maxVelocity = null;
+        this.friction = null;
+        this.drag = null;
+        this.ID = -1;
+        this.ptrMass = null;
+        this.collider = collider;
+        RegisterBody(
+            this,
+            x, y,
+            0, 0,
+            0, 0,
+            0, 0,
+            0, 0,
+            10000, 10000,
+            1, 0,
+            0, 0
+        );
+    }
+    get mass() {
+        return this.ptrMass[0];
+    }
+    set mass(value) {
+        this.ptrMass[0] = value;
+    }
 }
