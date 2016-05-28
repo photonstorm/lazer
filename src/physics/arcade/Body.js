@@ -19,6 +19,7 @@ export default class Body {
         this.ID = -1;
         this.ptrMass = null;
         this.collider = collider;
+        this.immovable = false;
         RegisterBody(
             this,
             x, y,

@@ -33,31 +33,31 @@ let SystemGlobalGravityY = 0;
 // This will give external access to body component data
 // for developer use if they need it for something special. 
 export function GetBodiesPositionX() {
-    return SystemDataPositionX.subarray(0, BodyCount);
+    return SystemDataPositionX;
 }
 export function GetBodiesPositionY() {
-    return SystemDataPositionY.subarray(0, BodyCount);
+    return SystemDataPositionY;
 }
 export function GetBodiesVelocityX() {
-    return SystemDataVelocityX.subarray(0, BodyCount);
+    return SystemDataVelocityX;
 }
 export function GetBodiesVelocityY() {
-    return SystemDataVelocityY.subarray(0, BodyCount);
+    return SystemDataVelocityY;
 }
 export function GetBodiesBounceX() {
-    return SystemDataBounceX.subarray(0, BodyCount);
+    return SystemDataBounceX;
 }
 export function GetBodiesBounceY() {
-    return SystemDataBounceY.subarray(0, BodyCount);
+    return SystemDataBounceY;
 }
 export function GetBodiesFrictionX() {
-    return SystemDataFrictionX.subarray(0, BodyCount);
+    return SystemDataFrictionX;
 }
 export function GetBodiesFrictionY() {
-    return SystemDataFrictionY.subarray(0, BodyCount);
+    return SystemDataFrictionY;
 }
 export function GetBodiesMass() {
-    return SystemDataMass.subarray(0, BodyCount);
+    return SystemDataMass;
 }
 export function ClearAllBodies() {
     BodyCount = 0;
