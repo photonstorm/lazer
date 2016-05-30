@@ -1,4 +1,4 @@
-import Sub from 'math/vector/vec2/Sub.js'
+ import Sub from 'math/vector/vec2/Sub.js'
 import Length from 'math/vector/vec2/Length.js'
 import Normalize from 'math/vector/vec2/Normalize.js'
 import ScalarMultiply from 'math/vector/vec2/ScalarMultiply.js'
