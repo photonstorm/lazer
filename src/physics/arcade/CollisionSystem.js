@@ -129,25 +129,25 @@ function CollidePolyonToPolygon(bodyA, bodyB) {
 
 function CollideCircleToCircle(bodyA, bodyB) {
     if (!bodyA.immovable && !bodyB.immovable) {
-        SystemDDCircleToCircleCollisionReqA[SystemDPolyToDPolyCollisionReqSize] = bodyA.ID;
-        SystemDDCircleToCircleCollisionReqA[SystemDPolyToDPolyCollisionReqSize + 1] = bodyA.collider.ID;
+        SystemDDCircleToCircleCollisionReqA[SystemDDCircleToCircleCollisionReqSize] = bodyA.ID;
+        SystemDDCircleToCircleCollisionReqA[SystemDDCircleToCircleCollisionReqSize + 1] = bodyA.collider.ID;
 
-        SystemDDCircleToCircleCollisionReqB[SystemDPolyToDPolyCollisionReqSize] = bodyB.ID;
-        SystemDDCircleToCircleCollisionReqB[SystemDPolyToDPolyCollisionReqSize + 1] = bodyB.collider.ID;
+        SystemDDCircleToCircleCollisionReqB[SystemDDCircleToCircleCollisionReqSize] = bodyB.ID;
+        SystemDDCircleToCircleCollisionReqB[SystemDDCircleToCircleCollisionReqSize + 1] = bodyB.collider.ID;
         SystemDDCircleToCircleCollisionReqSize += 2;
     } else if (bodyA.immovable && !bodyB.immovable) {
-        SystemSDCircleToCircleCollisionReqA[SystemSPolyToDPolyCollisionReqSize] = bodyA.ID;
-        SystemSDCircleToCircleCollisionReqA[SystemSPolyToDPolyCollisionReqSize + 1] = bodyA.collider.ID;
+        SystemSDCircleToCircleCollisionReqA[SystemSDCircleToCircleCollisionReqSize] = bodyA.ID;
+        SystemSDCircleToCircleCollisionReqA[SystemSDCircleToCircleCollisionReqSize + 1] = bodyA.collider.ID;
 
-        SystemSDCircleToCircleCollisionReqB[SystemSPolyToDPolyCollisionReqSize] = bodyB.ID;
-        SystemSDCircleToCircleCollisionReqB[SystemSPolyToDPolyCollisionReqSize + 1] = bodyB.collider.ID;
+        SystemSDCircleToCircleCollisionReqB[SystemSDCircleToCircleCollisionReqSize] = bodyB.ID;
+        SystemSDCircleToCircleCollisionReqB[SystemSDCircleToCircleCollisionReqSize + 1] = bodyB.collider.ID;
         SystemSDCircleToCircleCollisionReqSize += 2;
     } else if (!bodyA.immovable && bodyB.immovable) {
-        SystemSDCircleToCircleCollisionReqA[SystemSPolyToDPolyCollisionReqSize] = bodyB.ID;
-        SystemSDCircleToCircleCollisionReqA[SystemSPolyToDPolyCollisionReqSize + 1] = bodyB.collider.ID;
+        SystemSDCircleToCircleCollisionReqA[SystemSDCircleToCircleCollisionReqSize] = bodyB.ID;
+        SystemSDCircleToCircleCollisionReqA[SystemSDCircleToCircleCollisionReqSize + 1] = bodyB.collider.ID;
 
-        SystemSDCircleToCircleCollisionReqB[SystemSPolyToDPolyCollisionReqSize] = bodyA.ID;
-        SystemSDCircleToCircleCollisionReqB[SystemSPolyToDPolyCollisionReqSize + 1] = bodyA.collider.ID;
+        SystemSDCircleToCircleCollisionReqB[SystemSDCircleToCircleCollisionReqSize] = bodyA.ID;
+        SystemSDCircleToCircleCollisionReqB[SystemSDCircleToCircleCollisionReqSize + 1] = bodyA.collider.ID;
         SystemSDCircleToCircleCollisionReqSize += 2;
     } else {
         return false;
@@ -176,6 +176,74 @@ export function Collide(bodyA, bodyB, callback) {
         //ColliderCirleToPolygon(bodyB, bodyA);
         SystemCollisionRequestCallback[SystemCollisionRequestCallbackSize++] = callback;
     }
+}
+
+function SolveStaticCircleToDynamicCircleCollision(
+    globalPositionX,
+    globalPositionY,
+    globalVelocityX,
+    globalVelocityY,
+    globalBounceX,
+    globalBounceY,
+    globalFrictionX,
+    globalFrictionY,
+    globalMass) {
+    let index = 0;
+    let length = SystemSDCircleToCircleCollisionReqSize;
+    let aColliderID = 0;
+    let bColliderID = 0;
+    let aID = 0;
+    let bID = 0;
+    let dot = 0.0;
+    let dx = 0.0;
+    let dy = 0.0;
+    let ux = 0.0;
+    let uy = 0.0;
+    let nv1 = 0.0;
+    let nv2 = 0.0;
+    let avg = 0.0;
+
+    for (; index < length; index += 2) {
+        aID = SystemSDCircleToCircleCollisionReqA[index];
+        aColliderID = SystemSDCircleToCircleCollisionReqA[index + 1];
+        bID = SystemSDCircleToCircleCollisionReqB[index];
+        bColliderID = SystemSDCircleToCircleCollisionReqB[index + 1];
+
+        if (DODCircleToCircleCorrection(
+                aID,
+                aColliderID,
+                bID,
+                bColliderID,
+                globalPositionX,
+                globalPositionY)) {
+
+            globalPositionX[bID] -= Correction[0];
+            globalPositionY[bID] -= Correction[1];
+
+            ux = UnitVector[0];
+            uy = UnitVector[1];
+
+            dot = globalVelocityX[bID] * ux + globalVelocityY[bID] * uy;
+            ux *= dot;
+            uy *= dot;
+
+            dx = globalVelocityX[bID] - ux - ux;
+            dy = globalVelocityY[bID] - uy - uy;
+            dx -= globalVelocityX[bID] * globalBounceX[bID];
+            dy -= globalVelocityY[bID] * globalBounceY[bID];
+
+            globalVelocityX[bID] += dx;
+            globalVelocityY[bID] += dy;            
+
+            Correction[0] = 0;
+            Correction[1] = 0;
+            UnitVector[0] = 0;
+            UnitVector[1] = 0;
+            // Pass the callback
+            SystemCollisionValidCallback[SystemCollisionValidCallbackSize++] = SystemCollisionRequestCallback[(index / 3) | 0];
+        }
+    }
+    SystemSDCircleToCircleCollisionReqSize = 0;
 }
 
 function SolveDynamicCircleToDynamicCircleCollision(
@@ -214,10 +282,10 @@ function SolveDynamicCircleToDynamicCircleCollision(
                 globalPositionX,
                 globalPositionY)) {
 
-            globalPositionX[aID] -= Correction[0];
-            globalPositionX[bID] += Correction[0];
-            globalPositionY[aID] -= Correction[1];
-            globalPositionY[bID] += Correction[1];
+            globalPositionX[aID] += Correction[0];
+            globalPositionX[bID] -= Correction[0];
+            globalPositionY[aID] += Correction[1];
+            globalPositionY[bID] -= Correction[1];
 
             ux = UnitVector[0];
             uy = UnitVector[1];
@@ -278,9 +346,7 @@ function SolveDynamicPolygonToDynamicPolygonCollision(
     let index = 0;
     let length = SystemDPolyToDPolyCollisionReqSize;
     let startA = 0;
-    let endA = 0;
     let startB = 0;
-    let endB = 0;
     let aID = 0;
     let bID = 0;
     let nv1 = 0.0;
@@ -289,9 +355,7 @@ function SolveDynamicPolygonToDynamicPolygonCollision(
 
     for (; index < length; index += 3) {
         startA = SystemDPolyToDPolyCollisionReqA[index + 1];
-        endA = startA + SystemDPolyToDPolyCollisionReqA[index + 2];
         startB = SystemDPolyToDPolyCollisionReqB[index + 1];
-        endB = startB + SystemDPolyToDPolyCollisionReqB[index + 2];
         aID = SystemDPolyToDPolyCollisionReqA[index];
         bID = SystemDPolyToDPolyCollisionReqB[index];
 
@@ -375,9 +439,7 @@ function SolveStaticPolygonToDynamicPolygonCollision(
 
     for (; index < length; index += 3) {
         startA = SystemSPolyToDPolyCollisionReqA[index + 1];
-        endA = startA + SystemSPolyToDPolyCollisionReqA[index + 2];
         startB = SystemSPolyToDPolyCollisionReqB[index + 1];
-        endB = startB + SystemSPolyToDPolyCollisionReqB[index + 2];
         aID = SystemSPolyToDPolyCollisionReqA[index];
         bID = SystemSPolyToDPolyCollisionReqB[index];
 
@@ -450,6 +512,17 @@ export function RunCollisionFrame() {
         globalFrictionY,
         globalMass
     );
+    SolveStaticCircleToDynamicCircleCollision(
+        globalPositionX,
+        globalPositionY,
+        globalVelocityX,
+        globalVelocityY,
+        globalBounceX,
+        globalBounceY,
+        globalFrictionX,
+        globalFrictionY,
+        globalMass
+    );
     SystemCollisionRequestCallbackSize = 0;
 }
 
@@ -483,7 +556,7 @@ function DODCircleToCircleCorrection(aID, aColliderID, bID, bColliderID, globalP
     let norm = unitVectorX * unitVectorX + unitVectorY * unitVectorY;
     let distance = Sqrt(norm);
     let mixRadius = aRadius + bRadius;
-    let overlapFactor = 0.0;
+    let overlapFactor = mixRadius - distance;
     if (distance > mixRadius) {
         return false;
     }
