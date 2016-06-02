@@ -624,19 +624,43 @@ function SolveStaticPolygonToDynamicPolygonCollision(
                 globalPositionX,
                 globalPositionY)) {
 
-            globalPositionX[bID] -= Correction[0];
-            globalPositionY[bID] += Correction[1];
-            if ((Correction[0] == 0 || Correction[0] == 1) &&
-                (Correction[1] == 0 || Correction[1] == 1)) {
-                globalVelocityX[bID] = globalVelocityX[aID] - globalVelocityX[bID] * globalBounceX[bID];
-                globalVelocityY[bID] = globalVelocityY[aID] - globalVelocityY[bID] * globalBounceY[bID];
+            if (Abs(Correction[0]) > Abs(Correction[1])) {
+                globalPositionX[bID] += Correction[0];
             } else {
-                if (Correction[0] < Correction[1]) {
-                    globalVelocityX[bID] = globalVelocityX[aID] - globalVelocityX[bID] * globalBounceX[bID];
-                } else {
-                    globalVelocityY[bID] = globalVelocityY[aID] - globalVelocityY[bID] * globalBounceY[bID];
-                }
+                globalPositionY[bID] += Correction[1];
             }
+            /*nv1 = ((globalVelocityX[bID] * globalVelocityX[aID] * globalMass[bID]) / globalMass[aID]) * 1000;
+            // Get abs value
+            nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
+            nv1 = Sqrt(nv1);
+            // Multiply by sign
+            nv1 *= (~((globalVelocityX[bID] >> 31) & 1) + 1) | (((~globalVelocityX[bID] + 1) >> 31) & 1);
+            nv2 = ((globalVelocityX[aID] * globalVelocityX[bID] * globalMass[aID]) / globalMass[bID]) * 1000;
+            // Get abs value
+            nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
+            nv2 = Sqrt(nv2);
+            // Multiply by sign
+            nv2 *= (~((globalVelocityX[aID] >> 31) & 1) + 1) | (((~globalVelocityX[aID] + 1) >> 31) & 1);
+            avg = (nv1 + nv2) * 0.5;
+            nv1 -= avg;
+            nv2 -= avg;
+            globalVelocityX[bID] = avg + nv2 * globalBounceX[bID];
+            nv1 = ((globalVelocityY[bID] * globalVelocityY[aID] * globalMass[bID]) / globalMass[aID]) * 1000;
+            // Get abs value
+            nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
+            nv1 = Sqrt(nv1);
+            // Multiply by sign
+            nv1 *= (~((globalVelocityY[bID] >> 31) & 1) + 1) | (((~globalVelocityY[bID] + 1) >> 31) & 1);
+            nv2 = ((globalVelocityY[aID] * globalVelocityY[bID] * globalMass[aID]) / globalMass[bID]) * 1000;
+            // Get abs value
+            nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
+            nv2 = Sqrt(nv2);
+            // Multiply by sign
+            nv2 *= (~((globalVelocityY[aID] >> 31) & 1) + 1) | (((~globalVelocityY[aID] + 1) >> 31) & 1);
+            avg = (nv1 + nv2) * 0.5;
+            nv1 -= avg;
+            nv2 -= avg;
+            globalVelocityY[bID] = avg + nv2 * globalBounceY[bID];*/
             Correction[0] = 0;
             Correction[1] = 0;
             // Pass the callback
@@ -764,6 +788,7 @@ function DODPolygonToPolygonCorrection(aID, fromA, lengthA, bID, fromB, lengthB,
     let absoluteDistance = 0.0;
     let correctionOverlap = MAX_NUM;
 
+
     for (; index < lengthA; ++index) {
         distance = 0.0;
         absoluteDistance = 0.0;
@@ -772,8 +797,10 @@ function DODPolygonToPolygonCorrection(aID, fromA, lengthA, bID, fromB, lengthB,
         DODGetProjectionRange(aID, fromA, lengthA, axisX, axisY, ProjectionA, globalPositionX, globalPositionY);
         DODGetProjectionRange(bID, fromB, lengthB, axisX, axisY, ProjectionB, globalPositionX, globalPositionY);
 
-        if (ProjectionA[0] > ProjectionB[1] || ProjectionB[0] > ProjectionA[1])
+        if (ProjectionA[0] > ProjectionB[1] || ProjectionB[0] > ProjectionA[1]) {
+            NormalsPoolUsed = 0;
             return false;
+        }
 
         if (ProjectionA[0] < ProjectionB[0] &&
             ProjectionA[1] < ProjectionB[1]) {
@@ -809,8 +836,10 @@ function DODPolygonToPolygonCorrection(aID, fromA, lengthA, bID, fromB, lengthB,
         DODGetProjectionRange(aID, fromA, lengthA, axisX, axisY, ProjectionA, globalPositionX, globalPositionY);
         DODGetProjectionRange(bID, fromB, lengthB, axisX, axisY, ProjectionB, globalPositionX, globalPositionY);
 
-        if (ProjectionA[0] > ProjectionB[1] || ProjectionB[0] > ProjectionA[1])
+        if (ProjectionA[0] > ProjectionB[1] || ProjectionB[0] > ProjectionA[1]) {
+            NormalsPoolUsed = 0;
             return false;
+        }
 
         if (ProjectionA[0] < ProjectionB[0] &&
             ProjectionA[1] < ProjectionB[1]) {
@@ -839,8 +868,70 @@ function DODPolygonToPolygonCorrection(aID, fromA, lengthA, bID, fromB, lengthB,
     }
     Correction[0] = unitVectorX * correctionOverlap;
     Correction[1] = unitVectorY * correctionOverlap;
-    NormalsPoolUsed = 0;
     return true;
+}
+
+/*}
+export default function (vertices) {
+    const length = vertices.length;
+    let normals = new Array(length);
+    let index, vecA, vecB, edge, oldX, vlen;
+    for (index = 0; index < length - 1; ++index) {
+        vecA = vertices[index];
+        vecB = vertices[index + 1];
+        edge = Sub(vecB, vecA);
+        oldX = edge[0];
+        edge[0] = edge[1];
+        edge[1] = -oldX;
+        normals[index] = Normalize(edge);
+    }
+    vecA = vertices[length - 1];
+    vecB = vertices[0];
+    edge = Sub(vecB, vecA);
+    oldX = edge[0];
+    edge[0] = edge[1];
+    edge[1] = -oldX;
+    normals[length - 1] = Normalize(edge);
+    return normals;
+}
+*/
+
+function Normalize(x, y) {
+    /*
+const x = a[0];
+        const y = a[1];
+        const lsq = x * x + y * y;
+
+        if (lsq > 0)
+        {
+            const lr = 1 / Math.sqrt(lsq);
+
+            dst[0] = x * lr;
+            dst[1] = y * lr;
+        }
+        else
+        {
+            dst[0] = 0;
+            dst[1] = 0;
+        }
+
+        return dst;
+    */
+    const lsq = x * x + y * y;
+    let dx = 0;
+    let dy = 0;
+
+    if (lsq > 0) {
+        const lr = 1 / Math.sqrt(lsq);
+
+        dx = x * lr;
+        dy = y * lr;
+    } else {
+        dx = 0;
+        dy = 0;
+    }
+
+    return [dx, dy];
 }
 
 function DODGetNormalizedPolygonAxes(id, start, length, globalPositionX, globalPositionY) {
@@ -856,7 +947,33 @@ function DODGetNormalizedPolygonAxes(id, start, length, globalPositionX, globalP
     let norm = 0.0;
     let x = globalPositionX[id];
     let y = globalPositionY[id];
+    /*
+    const length = vertices.length;
+        let normals = new Array(length);
+        let index, vecA, vecB, edge, oldX, vlen;
+        for (index = 0; index < length - 1; ++index) {
+            vecA = vertices[index];
+            vecB = vertices[index + 1];
+            edge = Sub(vecB, vecA);
+            oldX = edge[0];
+            edge[0] = edge[1];
+            edge[1] = -oldX;
+            normals[index] = Normalize(edge);
+        }
+        vecA = vertices[length - 1];
+        vecB = vertices[0];
+        edge = Sub(vecB, vecA);
+        oldX = edge[0];
+        edge[0] = edge[1];
+        edge[1] = -oldX;
+        normals[length - 1] = Normalize(edge);
+        return normals;
+        export default function (a, dst = new vec2(2)) {
 
+        
+
+    }
+    */
     for (; index < length - 1; ++index) {
         vecAX = x + SystemPColliderDataX[start + index];
         vecAY = y + SystemPColliderDataY[start + index];
@@ -864,14 +981,21 @@ function DODGetNormalizedPolygonAxes(id, start, length, globalPositionX, globalP
         vecBY = y + SystemPColliderDataY[start + index + 1];
         edgeX = vecBY - vecAY;
         edgeY = -(vecBX - vecAX);
-        norm = edgeX * edgeX + edgeY * edgeY;
+        vecAX = Normalize(edgeX, edgeY);
+        edgeX = vecAX[0];
+        edgeY = vecAX[1];
+        /*norm = edgeX * edgeX + edgeY * edgeY;
         if (norm > 0) {
             norm = 1 / Sqrt(norm);
             edgeX *= norm;
             edgeY *= norm;
-        }
+        } else {
+            edgeX = 0;
+            edgeY = 0;
+        }*/
         NormalsPoolX[NormalsPoolUsed] = edgeX;
-        NormalsPoolY[NormalsPoolUsed++] = edgeY;
+        NormalsPoolY[NormalsPoolUsed] = edgeY;
+        NormalsPoolUsed++
     }
     vecAX = x + SystemPColliderDataX[start + length - 1];
     vecAY = y + SystemPColliderDataY[start + length - 1];
@@ -879,14 +1003,21 @@ function DODGetNormalizedPolygonAxes(id, start, length, globalPositionX, globalP
     vecBY = y + SystemPColliderDataY[start];
     edgeX = vecBY - vecAY;
     edgeY = -(vecBX - vecAX);
-    norm = edgeX * edgeX + edgeY * edgeY;
+    /*norm = edgeX * edgeX + edgeY * edgeY;
     if (norm > 0) {
         norm = 1 / Sqrt(norm);
         edgeX *= norm;
         edgeY *= norm;
-    }
+    } else {
+        edgeX = 0;
+        edgeY = 0;
+    }*/
+    vecAX = Normalize(edgeX, edgeY);
+    edgeX = vecAX[0];
+    edgeY = vecAX[1];
     NormalsPoolX[NormalsPoolUsed] = edgeX;
-    NormalsPoolY[NormalsPoolUsed++] = edgeY;
+        NormalsPoolY[NormalsPoolUsed] = edgeY;
+        NormalsPoolUsed++
     return normalsIndex;
 }
 
