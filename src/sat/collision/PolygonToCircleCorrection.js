@@ -28,7 +28,6 @@ export default function (vertices, circlePosition, circleRadius, correctionData)
     let dx;
     let dy;
     let axis;
-
     // Look into implementing Voroni Region 
     // detection for better performance.
     for (index = 0, length = vertices.length; index < length; ++index) {

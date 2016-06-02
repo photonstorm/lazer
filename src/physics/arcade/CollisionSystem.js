@@ -15,6 +15,9 @@ import {
     CIRCLE_COLLIDER,
     POLYGON_COLLIDER
 } from 'physics/arcade/Collider.js'
+// Move to DOD style
+import PolygonToCircleCorrection from 'sat/collision/PolygonToCircleCorrection.js'
+import CorrectionData from 'sat/collision/CorrectionData.js'
 
 const MAX_COLLIDERS = 100000;
 const MAX_NUM = Number.MAX_VALUE;
@@ -51,6 +54,21 @@ let SystemDDCircleToCircleCollisionReqB = new Uint16Array(MAX_COLLIDERS * 2);
 let SystemSDCircleToCircleCollisionReqSize = 0;
 let SystemSDCircleToCircleCollisionReqA = new Uint16Array(MAX_COLLIDERS * 2);
 let SystemSDCircleToCircleCollisionReqB = new Uint16Array(MAX_COLLIDERS * 2);
+
+// Circle to Polygon Dynamic-Dymamic Collision Request Data.
+let SystemDDCircleToPolygonCollisionReqSize = 0;
+let SystemDDCircleToPolygonCollisionReqA = new Uint16Array(MAX_COLLIDERS * 3);
+let SystemDDCircleToPolygonCollisionReqB = new Uint16Array(MAX_COLLIDERS * 3);
+
+// Circle to Polygon Static-Dymamic Collision Request Data.
+let SystemSDCircleToPolygonCollisionReqSize = 0;
+let SystemSDCircleToPolygonCollisionReqA = new Uint16Array(MAX_COLLIDERS * 3);
+let SystemSDCircleToPolygonCollisionReqB = new Uint16Array(MAX_COLLIDERS * 3);
+
+// Polygon to Circle Static-Dymamic Collision Request Data.
+let SystemSDPolygonToCircleCollisionReqSize = 0;
+let SystemSDPolygonToCircleCollisionReqA = new Uint16Array(MAX_COLLIDERS * 3);
+let SystemSDPolygonToCircleCollisionReqB = new Uint16Array(MAX_COLLIDERS * 3);
 
 // Collision Callbacks Data.
 let SystemCollisionValidCallbackSize = 0;
@@ -155,6 +173,159 @@ function CollideCircleToCircle(bodyA, bodyB) {
     return true;
 }
 
+function CollideCircleToPolygon(bodyA, bodyB) {
+    /*if (!bodyA.immovable && !bodyB.immovable) {
+        SystemDDCircleToPolygonCollisionReqA[SystemDPolyToDPolyCollisionReqSize] = bodyA.ID;
+        SystemDDCircleToPolygonCollisionReqA[SystemDPolyToDPolyCollisionReqSize + 1] = bodyA.collider.ID;
+        SystemDDCircleToPolygonCollisionReqA[SystemDPolyToDPolyCollisionReqSize + 2] = 0;
+        SystemDDCircleToPolygonCollisionReqB[SystemDPolyToDPolyCollisionReqSize] = bodyB.ID;
+        SystemDDCircleToPolygonCollisionReqB[SystemDPolyToDPolyCollisionReqSize + 1] = bodyB.collider.ID;
+        SystemDDCircleToPolygonCollisionReqB[SystemDPolyToDPolyCollisionReqSize + 2] = bodyB.collider.verticesX.length;
+        SystemDDCircleToPolygonCollisionReqSize += 3;
+    }/* else if (bodyA.immovable && !bodyB.immovable) {
+        SystemSPolyToDPolyCollisionReqA[SystemSPolyToDPolyCollisionReqSize] = bodyA.ID;
+        SystemSPolyToDPolyCollisionReqA[SystemSPolyToDPolyCollisionReqSize + 1] = bodyA.collider.ID;
+        SystemSPolyToDPolyCollisionReqA[SystemSPolyToDPolyCollisionReqSize + 2] = bodyA.collider.verticesX.length;
+        SystemSPolyToDPolyCollisionReqB[SystemSPolyToDPolyCollisionReqSize] = bodyB.ID;
+        SystemSPolyToDPolyCollisionReqB[SystemSPolyToDPolyCollisionReqSize + 1] = bodyB.collider.ID;
+        SystemSPolyToDPolyCollisionReqB[SystemSPolyToDPolyCollisionReqSize + 2] = bodyB.collider.verticesX.length;
+        SystemSPolyToDPolyCollisionReqSize += 3;
+    } else if (!bodyA.immovable && bodyB.immovable) {
+        SystemSPolyToDPolyCollisionReqA[SystemSPolyToDPolyCollisionReqSize] = bodyB.ID;
+        SystemSPolyToDPolyCollisionReqA[SystemSPolyToDPolyCollisionReqSize + 1] = bodyB.collider.ID;
+        SystemSPolyToDPolyCollisionReqA[SystemSPolyToDPolyCollisionReqSize + 2] = bodyB.collider.verticesX.length;
+        SystemSPolyToDPolyCollisionReqB[SystemSPolyToDPolyCollisionReqSize] = bodyA.ID;
+        SystemSPolyToDPolyCollisionReqB[SystemSPolyToDPolyCollisionReqSize + 1] = bodyA.collider.ID;
+        SystemSPolyToDPolyCollisionReqB[SystemSPolyToDPolyCollisionReqSize + 2] = bodyA.collider.verticesX.length;
+        SystemSPolyToDPolyCollisionReqSize += 3;
+    } else {
+        return false;
+    }
+    return true;*/
+}
+
+function CollidePolygonToCircle(bodyA, bodyB) {
+    let circleBody = bodyA.collider.colliderType === CIRCLE_COLLIDER ? bodyA : bodyB;
+    let polygonBody = bodyA.collider.colliderType === POLYGON_COLLIDER ? bodyA : bodyB;
+    let correctionData = new CorrectionData();
+    let globalPositionX = GetBodiesPositionX();
+    let globalPositionY = GetBodiesPositionY();
+    let globalVelocityX = GetBodiesVelocityX();
+    let globalVelocityY = GetBodiesVelocityY();
+    let globalBounceX = GetBodiesBounceX();
+    let globalBounceY = GetBodiesBounceY();
+    let globalFrictionX = GetBodiesFrictionX();
+    let globalFrictionY = GetBodiesFrictionY();
+    let globalMass = GetBodiesMass();
+    let length = polygonBody.collider.vertexCount;
+    let index = 0;
+    let vertices = new Array(length);
+    let bodyID = polygonBody.ID;
+    let polyID = polygonBody.collider.ID;
+    for (; index < length; ++index) {
+        vertices[index] = [
+            polygonBody.position.x + polygonBody.collider.getX(index),
+            polygonBody.position.y + polygonBody.collider.getY(index)
+        ];
+    }
+    if (PolygonToCircleCorrection(
+            vertices, [
+                circleBody.position.x + circleBody.collider.x,
+                circleBody.position.y + circleBody.collider.y
+            ],
+            circleBody.collider.radius,
+            correctionData
+        )) {
+        let aID = circleBody.ID;
+        let bID = polygonBody.ID;
+
+        let ux = correctionData.unit[0];
+        let uy = correctionData.unit[1];
+        let dot, dx, dy;
+        //polygon
+        if (!polygonBody.immovable) {
+            polygonBody.position.x += correctionData.correction[0];
+            polygonBody.position.y += correctionData.correction[1];
+            if (circleBody.immovable) {
+                if (correctionData.correction[0] < correctionData.correction[1]) {
+                    globalPositionX[bID] += correctionData.correction[0];
+                    globalVelocityX[bID] = globalVelocityX[aID] - globalVelocityX[bID] * globalBounceX[bID];
+                } else {
+                    globalPositionY[bID] += correctionData.correction[1];
+                    globalVelocityY[bID] = globalVelocityY[aID] - globalVelocityY[bID] * globalBounceY[bID];
+                }
+            } else {
+                let nv1 = ((globalVelocityX[bID] * globalVelocityX[aID] * globalMass[bID]) / globalMass[aID]) * 1000;
+                // Get abs value
+                nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
+                nv1 = Sqrt(nv1);
+                // Multiply by sign
+                nv1 *= (~((globalVelocityX[bID] >> 31) & 1) + 1) | (((~globalVelocityX[bID] + 1) >> 31) & 1);
+                let nv2 = ((globalVelocityX[aID] * globalVelocityX[bID] * globalMass[aID]) / globalMass[bID]) * 1000;
+                // Get abs value
+                nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
+                nv2 = Sqrt(nv2);
+                // Multiply by sign
+                nv2 *= (~((globalVelocityX[aID] >> 31) & 1) + 1) | (((~globalVelocityX[aID] + 1) >> 31) & 1);
+                let avg = (nv1 + nv2) * 0.5;
+                nv1 -= avg;
+                nv2 -= avg;
+                globalVelocityX[bID] = avg + nv2 * globalBounceX[bID];
+                nv1 = ((globalVelocityY[bID] * globalVelocityY[aID] * globalMass[bID]) / globalMass[aID]) * 1000;
+                // Get abs value
+                nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
+                nv1 = Sqrt(nv1);
+                // Multiply by sign
+                nv1 *= (~((globalVelocityY[bID] >> 31) & 1) + 1) | (((~globalVelocityY[bID] + 1) >> 31) & 1);
+                nv2 = ((globalVelocityY[aID] * globalVelocityY[bID] * globalMass[aID]) / globalMass[bID]) * 1000;
+                // Get abs value
+                nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
+                nv2 = Sqrt(nv2);
+                // Multiply by sign
+                nv2 *= (~((globalVelocityY[aID] >> 31) & 1) + 1) | (((~globalVelocityY[aID] + 1) >> 31) & 1);
+                avg = (nv1 + nv2) * 0.5;
+                nv1 -= avg;
+                nv2 -= avg;
+                globalVelocityY[bID] = avg + nv2 * globalBounceY[bID];
+            }
+        }
+        // Circle
+        if (!circleBody.immovable) {
+            circleBody.position.x -= correctionData.correction[0];
+            circleBody.position.y -= correctionData.correction[1];
+
+            if (polygonBody.immovable) {
+                dot = globalVelocityX[aID] * ux + globalVelocityY[aID] * uy;
+                ux *= dot;
+                uy *= dot;
+
+                dx = globalVelocityX[aID] - ux - ux;
+                dy = globalVelocityY[aID] - uy - uy;
+                dx -= globalVelocityX[aID] * globalBounceX[aID];
+                dy = globalVelocityY[aID] * globalBounceY[aID];
+
+                globalVelocityX[aID] = dx;
+                globalVelocityY[aID] = dy;
+            } else {
+                dot = globalVelocityX[aID] * ux + globalVelocityY[aID] * uy;
+                ux *= dot;
+                uy *= dot;
+
+                dx = globalVelocityX[aID] - ux - ux;
+                dy = globalVelocityY[aID] - uy - uy;
+                dx -= globalVelocityX[aID] * globalBounceX[aID];
+                dy -= globalVelocityY[aID] * globalBounceY[aID];
+
+                globalVelocityX[aID] += dx;
+                globalVelocityY[aID] += dy;
+            }
+        }
+
+        SystemCollisionValidCallback[SystemCollisionValidCallbackSize++] = SystemCollisionRequestCallback[SystemCollisionRequestCallbackSize];
+    }
+
+}
+
 export function Collide(bodyA, bodyB, callback) {
     let colliderTypeA = bodyA.collider.colliderType;
     let colliderTypeB = bodyB.collider.colliderType;
@@ -169,11 +340,11 @@ export function Collide(bodyA, bodyB, callback) {
         SystemCollisionRequestCallback[SystemCollisionRequestCallbackSize++] = callback;
     } else if (colliderTypeA === CIRCLE_COLLIDER &&
         colliderTypeB === POLYGON_COLLIDER) {
-        //ColliderCirleToPolygon(bodyA, bodyB);
+        CollidePolygonToCircle(bodyA, bodyB);
         SystemCollisionRequestCallback[SystemCollisionRequestCallbackSize++] = callback;
     } else if (colliderTypeA === POLYGON_COLLIDER &&
         colliderTypeB === CIRCLE_COLLIDER) {
-        //ColliderCirleToPolygon(bodyB, bodyA);
+        CollidePolygonToCircle(bodyB, bodyA);
         SystemCollisionRequestCallback[SystemCollisionRequestCallbackSize++] = callback;
     }
 }
@@ -233,7 +404,7 @@ function SolveStaticCircleToDynamicCircleCollision(
             dy -= globalVelocityY[bID] * globalBounceY[bID];
 
             globalVelocityX[bID] += dx;
-            globalVelocityY[bID] += dy;            
+            globalVelocityY[bID] += dy;
 
             Correction[0] = 0;
             Correction[1] = 0;
