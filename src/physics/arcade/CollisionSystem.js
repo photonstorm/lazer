@@ -623,12 +623,19 @@ function SolveStaticPolygonToDynamicPolygonCollision(
                 SystemSPolyToDPolyCollisionReqB[index + 2],
                 globalPositionX,
                 globalPositionY)) {
-            if (Correction[0] < Correction[1]) {
-                globalPositionX[bID] += Correction[0];
+
+            globalPositionX[bID] -= Correction[0];
+            globalPositionY[bID] += Correction[1];
+            if ((Correction[0] == 0 || Correction[0] == 1) &&
+                (Correction[1] == 0 || Correction[1] == 1)) {
                 globalVelocityX[bID] = globalVelocityX[aID] - globalVelocityX[bID] * globalBounceX[bID];
-            } else {
-                globalPositionY[bID] += Correction[1];
                 globalVelocityY[bID] = globalVelocityY[aID] - globalVelocityY[bID] * globalBounceY[bID];
+            } else {
+                if (Correction[0] < Correction[1]) {
+                    globalVelocityX[bID] = globalVelocityX[aID] - globalVelocityX[bID] * globalBounceX[bID];
+                } else {
+                    globalVelocityY[bID] = globalVelocityY[aID] - globalVelocityY[bID] * globalBounceY[bID];
+                }
             }
             Correction[0] = 0;
             Correction[1] = 0;
