@@ -18,6 +18,7 @@ import {
 // Move to DOD style
 import PolygonToCircleCorrection from 'sat/collision/PolygonToCircleCorrection.js'
 import CorrectionData from 'sat/collision/CorrectionData.js'
+import PolygonToPolygonCorrection from 'sat/collision/PolygonToPolygonCorrection.js'
 
 const MAX_COLLIDERS = 100000;
 const MAX_NUM = Number.MAX_VALUE;
@@ -598,23 +599,47 @@ function SolveStaticPolygonToDynamicPolygonCollision(
     globalMass) {
     let index = 0;
     let length = SystemSPolyToDPolyCollisionReqSize;
-    let startA = 0;
-    let endA = 0;
-    let startB = 0;
-    let endB = 0;
+    let aColliderID = 0;
+    let bColliderID = 0;
     let aID = 0;
     let bID = 0;
-    let nv1 = 0.0;
-    let nv2 = 0.0;
-    let avg = 0.0;
+    let lengthA = 0;
+    let lengthB = 0;
 
+    var correctionData = new CorrectionData();
     for (; index < length; index += 3) {
-        startA = SystemSPolyToDPolyCollisionReqA[index + 1];
-        startB = SystemSPolyToDPolyCollisionReqB[index + 1];
+        aColliderID = SystemSPolyToDPolyCollisionReqA[index + 1];
+        bColliderID = SystemSPolyToDPolyCollisionReqB[index + 1];
         aID = SystemSPolyToDPolyCollisionReqA[index];
         bID = SystemSPolyToDPolyCollisionReqB[index];
+        lengthA = SystemSPolyToDPolyCollisionReqA[index + 2];
+        lengthB = SystemSPolyToDPolyCollisionReqB[index + 2];
+        var v0 = new Array(lengthA);
+        var v1 = new Array(lengthB);
 
-        if (DODPolygonToPolygonCorrection(
+        for (var i = 0; i < lengthA; ++i) {
+            v0[i] = [
+                globalPositionX[aID] + SystemPColliderDataX[aColliderID + i],
+                globalPositionY[aID] + SystemPColliderDataY[aColliderID + i]
+            ];
+        }
+        for (var i = 0; i < lengthB; ++i) {
+            v1[i] = [
+                globalPositionX[bID] + SystemPColliderDataX[bColliderID + i],
+                globalPositionY[bID] + SystemPColliderDataY[bColliderID + i]
+            ];
+        }
+        if (PolygonToPolygonCorrection(v0, v1, correctionData)) {
+            globalPositionX[bID] += correctionData.correction[0]
+            globalPositionY[bID] += correctionData.correction[1]
+            if (Abs(correctionData.unit[0]) > Abs(correctionData.unit[1])) {
+                globalVelocityX[bID] = globalVelocityX[aID] - globalVelocityX[bID] * globalBounceX[bID];
+            } else {
+                globalVelocityY[bID] = globalVelocityY[aID] - globalVelocityY[bID] * globalBounceY[bID];
+            }
+        }
+
+        /*if (DODPolygonToPolygonCorrection(
                 aID,
                 startA,
                 SystemSPolyToDPolyCollisionReqA[index + 2],
@@ -628,44 +653,44 @@ function SolveStaticPolygonToDynamicPolygonCollision(
                 globalPositionX[bID] += Correction[0];
             } else {
                 globalPositionY[bID] += Correction[1];
-            }
-            /*nv1 = ((globalVelocityX[bID] * globalVelocityX[aID] * globalMass[bID]) / globalMass[aID]) * 1000;
-            // Get abs value
-            nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
-            nv1 = Sqrt(nv1);
-            // Multiply by sign
-            nv1 *= (~((globalVelocityX[bID] >> 31) & 1) + 1) | (((~globalVelocityX[bID] + 1) >> 31) & 1);
-            nv2 = ((globalVelocityX[aID] * globalVelocityX[bID] * globalMass[aID]) / globalMass[bID]) * 1000;
-            // Get abs value
-            nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
-            nv2 = Sqrt(nv2);
-            // Multiply by sign
-            nv2 *= (~((globalVelocityX[aID] >> 31) & 1) + 1) | (((~globalVelocityX[aID] + 1) >> 31) & 1);
-            avg = (nv1 + nv2) * 0.5;
-            nv1 -= avg;
-            nv2 -= avg;
-            globalVelocityX[bID] = avg + nv2 * globalBounceX[bID];
-            nv1 = ((globalVelocityY[bID] * globalVelocityY[aID] * globalMass[bID]) / globalMass[aID]) * 1000;
-            // Get abs value
-            nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
-            nv1 = Sqrt(nv1);
-            // Multiply by sign
-            nv1 *= (~((globalVelocityY[bID] >> 31) & 1) + 1) | (((~globalVelocityY[bID] + 1) >> 31) & 1);
-            nv2 = ((globalVelocityY[aID] * globalVelocityY[bID] * globalMass[aID]) / globalMass[bID]) * 1000;
-            // Get abs value
-            nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
-            nv2 = Sqrt(nv2);
-            // Multiply by sign
-            nv2 *= (~((globalVelocityY[aID] >> 31) & 1) + 1) | (((~globalVelocityY[aID] + 1) >> 31) & 1);
-            avg = (nv1 + nv2) * 0.5;
-            nv1 -= avg;
-            nv2 -= avg;
-            globalVelocityY[bID] = avg + nv2 * globalBounceY[bID];*/
-            Correction[0] = 0;
-            Correction[1] = 0;
-            // Pass the callback
-            SystemCollisionValidCallback[SystemCollisionValidCallbackSize++] = SystemCollisionRequestCallback[(index / 3) | 0];
-        }
+            }*/
+        /*nv1 = ((globalVelocityX[bID] * globalVelocityX[aID] * globalMass[bID]) / globalMass[aID]) * 1000;
+        // Get abs value
+        nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
+        nv1 = Sqrt(nv1);
+        // Multiply by sign
+        nv1 *= (~((globalVelocityX[bID] >> 31) & 1) + 1) | (((~globalVelocityX[bID] + 1) >> 31) & 1);
+        nv2 = ((globalVelocityX[aID] * globalVelocityX[bID] * globalMass[aID]) / globalMass[bID]) * 1000;
+        // Get abs value
+        nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
+        nv2 = Sqrt(nv2);
+        // Multiply by sign
+        nv2 *= (~((globalVelocityX[aID] >> 31) & 1) + 1) | (((~globalVelocityX[aID] + 1) >> 31) & 1);
+        avg = (nv1 + nv2) * 0.5;
+        nv1 -= avg;
+        nv2 -= avg;
+        globalVelocityX[bID] = avg + nv2 * globalBounceX[bID];
+        nv1 = ((globalVelocityY[bID] * globalVelocityY[aID] * globalMass[bID]) / globalMass[aID]) * 1000;
+        // Get abs value
+        nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
+        nv1 = Sqrt(nv1);
+        // Multiply by sign
+        nv1 *= (~((globalVelocityY[bID] >> 31) & 1) + 1) | (((~globalVelocityY[bID] + 1) >> 31) & 1);
+        nv2 = ((globalVelocityY[aID] * globalVelocityY[bID] * globalMass[aID]) / globalMass[bID]) * 1000;
+        // Get abs value
+        nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
+        nv2 = Sqrt(nv2);
+        // Multiply by sign
+        nv2 *= (~((globalVelocityY[aID] >> 31) & 1) + 1) | (((~globalVelocityY[aID] + 1) >> 31) & 1);
+        avg = (nv1 + nv2) * 0.5;
+        nv1 -= avg;
+        nv2 -= avg;
+        globalVelocityY[bID] = avg + nv2 * globalBounceY[bID];*/
+        //Correction[0] = 0;
+        //Correction[1] = 0;
+        // Pass the callback
+        //SystemCollisionValidCallback[SystemCollisionValidCallbackSize++] = SystemCollisionRequestCallback[(index / 3) | 0];
+        //}
     }
     SystemSPolyToDPolyCollisionReqSize = 0;
 }
@@ -1016,8 +1041,8 @@ function DODGetNormalizedPolygonAxes(id, start, length, globalPositionX, globalP
     edgeX = vecAX[0];
     edgeY = vecAX[1];
     NormalsPoolX[NormalsPoolUsed] = edgeX;
-        NormalsPoolY[NormalsPoolUsed] = edgeY;
-        NormalsPoolUsed++
+    NormalsPoolY[NormalsPoolUsed] = edgeY;
+    NormalsPoolUsed++
     return normalsIndex;
 }
 
