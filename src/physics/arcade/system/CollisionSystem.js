@@ -108,9 +108,17 @@ function SolveDynamicPolygonCollision() {
     let bVertexCount = 0;
     let correctionX = 0.0;
     let correctionY = 0.0;
-    let nv1 = 0.0;
-    let nv2 = 0.0;
-    let avg = 0.0;
+    let unitX = 0.0;
+    let unitY = 0.0;
+    let mass1 = 0.0;
+    let mass2 = 0.0;
+    let vx = 0.0;
+    let vy = 0.0;
+    let ux = 0.0;
+    let uy = 0.0;
+    let dot = 0.0;
+    let dx = 0.0;
+    let dy = 0.0;
 
     for (; index < length; index += 3) {
         aID = PolygonDynamicA[index];
@@ -135,56 +143,68 @@ function SolveDynamicPolygonCollision() {
             testCount++
         );
     }
-    PolygonDynamicSize = 0;
-    for (index = 0; index < CollideCount; index += 5) {
+    for (index = 0; index < CollideCount; index += 7) {
+        // Bounce bodies based on the normal of the edges colliding.
         aID = CollideData[index];
         bID = CollideData[index + 1];
         correctionX = CollideData[index + 3];
         correctionY = CollideData[index + 4];
+        unitX = CollideData[index + 5];
+        unitY = CollideData[index + 6];
 
         BodyDataPositionX[aID] -= correctionX;
         BodyDataPositionX[bID] += correctionX;
         BodyDataPositionY[aID] -= correctionY;
         BodyDataPositionY[bID] += correctionY;
 
-        nv1 = ((BodyDataVelocityX[bID] * BodyDataVelocityX[aID] * BodyDataMass[bID]) / BodyDataMass[aID]) * 1000;
-        // Get abs value
-        nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
-        nv1 = Sqrt(nv1);
-        // Multiply by sign
-        nv1 *= (~((BodyDataVelocityX[bID] >> 31) & 1) + 1) | (((~BodyDataVelocityX[bID] + 1) >> 31) & 1);
-        nv2 = ((BodyDataVelocityX[aID] * BodyDataVelocityX[bID] * BodyDataMass[aID]) / BodyDataMass[bID]) * 1000;
-        // Get abs value
-        nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
-        nv2 = Sqrt(nv2);
-        // Multiply by sign
-        nv2 *= (~((BodyDataVelocityX[aID] >> 31) & 1) + 1) | (((~BodyDataVelocityX[aID] + 1) >> 31) & 1);
-        avg = (nv1 + nv2) * 0.5;
-        nv1 -= avg;
-        nv2 -= avg;
-        BodyDataVelocityX[aID] = avg + nv1 * BodyDataBounceX[aID];
-        BodyDataVelocityX[bID] = avg + nv2 * BodyDataBounceX[bID];
-        nv1 = ((BodyDataVelocityY[bID] * BodyDataVelocityY[aID] * BodyDataMass[bID]) / BodyDataMass[aID]) * 1000;
-        // Get abs value
-        nv1 = ((nv1 ^ (nv1 >> 31)) - (nv1 >> 31)) / 1000;
-        nv1 = Sqrt(nv1);
-        // Multiply by sign
-        nv1 *= (~((BodyDataVelocityY[bID] >> 31) & 1) + 1) | (((~BodyDataVelocityY[bID] + 1) >> 31) & 1);
-        nv2 = ((BodyDataVelocityY[aID] * BodyDataVelocityY[bID] * BodyDataMass[aID]) / BodyDataMass[bID]) * 1000;
-        // Get abs value
-        nv2 = ((nv2 ^ (nv2 >> 31)) - (nv2 >> 31)) / 1000;
-        nv2 = Sqrt(nv2);
-        // Multiply by sign
-        nv2 *= (~((BodyDataVelocityY[aID] >> 31) & 1) + 1) | (((~BodyDataVelocityY[aID] + 1) >> 31) & 1);
-        avg = (nv1 + nv2) * 0.5;
-        nv1 -= avg;
-        nv2 -= avg;
-        BodyDataVelocityY[aID] = avg + nv1 * BodyDataBounceY[aID];
-        BodyDataVelocityY[bID] = avg + nv2 * BodyDataBounceY[bID];
+        vx = BodyDataVelocityX[aID];
+        vy = BodyDataVelocityY[aID];
+        mass1 = BodyDataMass[aID];
+        mass2 = BodyDataMass[bID];
+
+        ux = unitX;
+        uy = unitY;
+
+        dot = vx * ux + vy * uy;
+
+        ux *= dot;
+        uy *= dot;
+
+        dx = vx - ux;
+        dy = vy - uy;
+        dx -= ux;
+        dy -= uy;
+        dx -= (vx * BodyDataBounceX[aID] * mass2) / mass1;
+        dy -= (vy * BodyDataBounceY[aID] * mass2) / mass1;
+
+        BodyDataVelocityX[aID] += dx;
+        BodyDataVelocityY[aID] += dy;
+
+        vx = BodyDataVelocityX[bID];
+        vy = BodyDataVelocityY[bID];
+
+        ux = unitX;
+        uy = unitY;
+
+        dot = vx * ux + vy * uy;
+
+        ux *= dot;
+        uy *= dot;
+
+        dx = vx - ux;
+        dy = vy - uy;
+        dx -= ux;
+        dy -= uy;
+        dx -= (vx * BodyDataBounceX[bID] * mass1) / mass2;
+        dy -= (vy * BodyDataBounceY[bID] * mass1) / mass2;
+
+        BodyDataVelocityX[bID] += dx;
+        BodyDataVelocityY[bID] += dy;
     }
     for (index = 0; index < CollideCount; index += 5) {
         EmitCallbackCollision(CollideData[index + 2], CollideData[index], CollideData[index + 1]);
     }
+    PolygonDynamicSize = 0;
     ResetCollide();
 }
 
