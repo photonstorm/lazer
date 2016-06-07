@@ -73,7 +73,7 @@ export default function UpdatePhysics(physicsStep) {
         if (BodyDataAccelerationY[index] != 0.0) {
             continue;
         }
-        drag = dragData[index] * physicsStep;
+        drag = BodyDataDragY[index] * physicsStep;
         if (BodyDataVelocityY[index] - drag > 0) {
             BodyDataVelocityY[index] -= drag;
             continue;

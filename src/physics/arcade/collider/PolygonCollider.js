@@ -15,7 +15,7 @@ function RegisterPolygonCollider(collider, vertices) {
         return null;
     }
     vx = collider.verticesX = PolygonDataX.subarray(PolygonColliderCount, PolygonColliderCount + length);
-    vy = collider.verticesY = PolygonDataX.subarray(PolygonColliderCount, PolygonColliderCount + length);
+    vy = collider.verticesY = PolygonDataY.subarray(PolygonColliderCount, PolygonColliderCount + length);
     for (; index < length; ++index) {
         vx[index] = vertices[index][0];
         vy[index] = vertices[index][1];
