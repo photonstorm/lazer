@@ -38,7 +38,8 @@ export function EmitCallbackOverlap(callbackID, aID, bID) {
 export function UpdateCallbacks() {
     let count = 0;
     for (let index = 0; index < ValidCallbackSize; ++index) {
-        ValidCallbackArray[index](ValidCallbackMembers[count], ValidCallbackMembers[count + 1]);
+        if (ValidCallbackArray[index])
+            ValidCallbackArray[index](ValidCallbackMembers[count], ValidCallbackMembers[count + 1]);
         count += 2;
     }
     ValidCallbackSize = 0;

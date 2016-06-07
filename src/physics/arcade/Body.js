@@ -57,7 +57,7 @@ function RegisterBody(
     bounceY = 0,
     maxVelocityX = 10000,
     maxVelocityY = 10000,
-    frictionX = 1,
+    frictionX = 0,
     frictionY = 0,
     dragX = 0,
     dragY = 0,

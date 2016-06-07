@@ -21,7 +21,7 @@ export let OverlapCount = 0;
 export let OverlapData = new Uint16Array(MAX_COLLIDERS * 3);
 
 export let CollideCount = 0;
-export let CollideData = new Float32Array(MAX_COLLIDERS * 7);
+export let CollideData = new Float32Array(MAX_COLLIDERS * 8);
 
 export function ResetOverlap() {
     OverlapCount = 0;
@@ -253,6 +253,7 @@ export function PolygonToPolygonCorrection(
     CollideData[CollideCount + 4] = correctionOverlap * unitY;
     CollideData[CollideCount + 5] = unitX;
     CollideData[CollideCount + 6] = unitY;
-    CollideCount += 7;
+    CollideData[CollideCount + 7] = correctionOverlap;
+    CollideCount += 8;
     return true;
 }
