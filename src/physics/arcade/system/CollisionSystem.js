@@ -70,32 +70,32 @@ export function Collide(bodyA, bodyB, callback) {
         PolygonDynamicB[PolygonDynamicSize] = bodyB.ID;
         PolygonDynamicB[PolygonDynamicSize + 1] = bodyB.collider.ID;
         PolygonDynamicB[PolygonDynamicSize + 2] = bodyB.collider.vertexCount;
-        ++PolygonDynamicSize;
+        PolygonDynamicSize += 3;
         // Register Callback
         RegisterCallbackCollision(callback);
     } else if (immovableA && !immovableB) {
         // Store Body ID
-        PolygonStaticA[PolygonDynamicSize] = bodyA.ID;
+        PolygonStaticA[PolygonStaticSize] = bodyA.ID;
         // Store Collider ID
-        PolygonStaticA[PolygonDynamicSize + 1] = bodyA.collider.ID;
+        PolygonStaticA[PolygonStaticSize + 1] = bodyA.collider.ID;
         // Store Polygon Vertex Count
-        PolygonStaticA[PolygonDynamicSize + 2] = bodyA.collider.vertexCount;
-        PolygonStaticB[PolygonDynamicSize] = bodyB.ID;
-        PolygonStaticB[PolygonDynamicSize + 1] = bodyB.collider.ID;
-        PolygonStaticB[PolygonDynamicSize + 2] = bodyB.collider.vertexCount;
-        ++PolygonStaticSize;
+        PolygonStaticA[PolygonStaticSize + 2] = bodyA.collider.vertexCount;
+        PolygonStaticB[PolygonStaticSize] = bodyB.ID;
+        PolygonStaticB[PolygonStaticSize + 1] = bodyB.collider.ID;
+        PolygonStaticB[PolygonStaticSize + 2] = bodyB.collider.vertexCount;
+        PolygonStaticSize += 3;
         RegisterCallbackCollision(callback);
     } else if (immovableB && !immovableA) {
         // Store Body ID
-        PolygonStaticA[PolygonDynamicSize] = bodyB.ID;
+        PolygonStaticA[PolygonStaticSize] = bodyB.ID;
         // Store Collider ID
-        PolygonStaticA[PolygonDynamicSize + 1] = bodyB.collider.ID;
+        PolygonStaticA[PolygonStaticSize + 1] = bodyB.collider.ID;
         // Store Polygon Vertex Count
-        PolygonStaticA[PolygonDynamicSize + 2] = bodyB.collider.vertexCount;
-        PolygonStaticB[PolygonDynamicSize] = bodyA.ID;
-        PolygonStaticB[PolygonDynamicSize + 1] = bodyA.collider.ID;
-        PolygonStaticB[PolygonDynamicSize + 2] = bodyA.collider.vertexCount;
-        ++PolygonStaticSize;
+        PolygonStaticA[PolygonStaticSize + 2] = bodyB.collider.vertexCount;
+        PolygonStaticB[PolygonStaticSize] = bodyA.ID;
+        PolygonStaticB[PolygonStaticSize + 1] = bodyA.collider.ID;
+        PolygonStaticB[PolygonStaticSize + 2] = bodyA.collider.vertexCount;
+        PolygonStaticSize += 3;
         RegisterCallbackCollision(callback);
     }
 }
@@ -124,7 +124,7 @@ export function UpdateCollisions() {
 
 function SolveDynamicPolygonCollision() {
     let index = 0;
-    let length = PolygonDynamicSize * 3;
+    let length = PolygonDynamicSize;
     let testCount = 0;
     let aID = 0;
     let aPolygonID = 0;
@@ -173,10 +173,10 @@ function SolveDynamicPolygonCollision() {
         // Bounce bodies based on the normal of the edges colliding.
         aID = CollideData[index];
         bID = CollideData[index + 1];
-        correctionX = CollideData[index + 3];
-        correctionY = CollideData[index + 4];
-        unitX = CollideData[index + 5];
         unitY = CollideData[index + 6];
+        unitX = CollideData[index + 5];
+        correctionX = CollideData[index + 3] + unitX;
+        correctionY = CollideData[index + 4] + unitY;
 
         BodyDataPositionX[aID] -= correctionX;
         BodyDataPositionX[bID] += correctionX;
@@ -190,12 +190,9 @@ function SolveDynamicPolygonCollision() {
 
         ux = unitX;
         uy = unitY;
-
         dot = vx * ux + vy * uy;
-
         ux *= dot;
         uy *= dot;
-
         dx = vx - ux;
         dy = vy - uy;
         dx -= ux;
@@ -208,15 +205,11 @@ function SolveDynamicPolygonCollision() {
 
         vx = BodyDataVelocityX[bID];
         vy = BodyDataVelocityY[bID];
-
         ux = unitX;
         uy = unitY;
-
         dot = vx * ux + vy * uy;
-
         ux *= dot;
         uy *= dot;
-
         dx = vx - ux;
         dy = vy - uy;
         dx -= ux;
@@ -236,7 +229,7 @@ function SolveDynamicPolygonCollision() {
 
 function SolveStaticPolygonCollision() {
     let index = 0;
-    let length = PolygonStaticSize * 3;
+    let length = PolygonStaticSize;
     let testCount = 0;
     let aID = 0;
     let aPolygonID = 0;
@@ -246,8 +239,6 @@ function SolveStaticPolygonCollision() {
     let bVertexCount = 0;
     let correctionX = 0.0;
     let correctionY = 0.0;
-    let unitX = 0.0;
-    let unitY = 0.0;
     let mass1 = 0.0;
     let mass2 = 0.0;
     let vx = 0.0;
@@ -285,55 +276,32 @@ function SolveStaticPolygonCollision() {
         // Bounce bodies based on the normal of the edges colliding.
         aID = CollideData[index];
         bID = CollideData[index + 1];
-        correctionX = CollideData[index + 3];
-        correctionY = CollideData[index + 4];        
+        mass1 = BodyDataMass[aID];
+        mass2 = BodyDataMass[bID];
         ux = CollideData[index + 5];
         uy = CollideData[index + 6];
+        correctionX = CollideData[index + 3] + ux;
+        correctionY = CollideData[index + 4] + uy;
         vx = BodyDataVelocityX[bID];
         vy = BodyDataVelocityY[bID];
-
-        BodyDataPositionX[bID] += correctionX;
-        BodyDataPositionY[bID] += correctionY;
-
-        var nv = (vx * ux + vy * uy) + CollideData[index + 6];
-        vx -= ux * nv; 
-        vy -= uy * nv; 
-        var tanX = ux;
-        var tanY = -uy;
-        var tv = (vx * tanX + vy * tanY) * BodyDataFrictionX[bID];
-        vx -=tanX * tv;
-        vy -=tanY * tv;
-        BodyDataVelocityX[bID] = vx;
-        BodyDataVelocityY[bID] = vy;
-        /*mass2 = BodyDataMass[bID];
-
-        vx = BodyDataVelocityX[bID];
-        vy = BodyDataVelocityY[bID];
-
-        ux = unitX;
-        uy = unitY;
-
         dot = vx * ux + vy * uy;
-
-        ux = dot * ux;
-        uy = dot * uy;
-
+        ux *= dot;
+        uy *= dot;
         dx = vx - ux;
         dy = vy - uy;
-        dx += BodyDataBounceX[bID] * vx;
-        dy += BodyDataBounceX[bID] * vy;
-        //dx += ux;
-        //dy -= uy;
-        //dx -= vx// * BodyDataBounceX[bID]); // mass2;
-        //dy -= vy// * BodyDataBounceY[bID]); // mass2;
-
-        BodyDataVelocityX[bID] = dx;
-        BodyDataVelocityY[bID] = dy;*/
+        dx -= ux;
+        dy -= uy;
+        dx -= (vx * BodyDataBounceX[bID] * mass1) / mass2;
+        dy -= (vy * BodyDataBounceY[bID] * mass1) / mass2;
+        BodyDataVelocityX[bID] += dx;
+        BodyDataVelocityY[bID] += dy;
+        BodyDataPositionX[bID] += correctionX;
+        BodyDataPositionY[bID] += correctionY;
     }
     for (index = 0; index < CollideCount; index += 5) {
         EmitCallbackCollision(CollideData[index + 2], CollideData[index], CollideData[index + 1]);
     }
-    PolygonDynamicSize = 0;
+    PolygonStaticSize = 0;
     ResetCollide();
 }
 
