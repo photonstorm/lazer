@@ -16,7 +16,13 @@ import {
     BodyDataFrictionY,
     BodyDataDragX,
     BodyDataDragY,
-    BodyDataMass
+    BodyDataMass,
+    BodyDataRotation,
+    BodyDataAngularVelocity,
+    BodyDataAngularAcceleration,
+    BodyDataAngularDrag,
+    BodyDataMaxAngular,
+    BodyDataAngle
 } from 'physics/arcade/Body.js'
 import {
     MAX_COLLIDERS
@@ -31,7 +37,7 @@ export default function UpdatePhysics(physicsStep) {
         velocity = 0.0,
         maxVelocity = 0.0,
         drag = 0.0;
-
+        
     // Compute Horizontal Velocity
     for (; index < length; ++index) {
         BodyDataVelocityX[index] += (GlobalGravityX + BodyDataGravityX[index]) * physicsStep;
@@ -84,14 +90,30 @@ export default function UpdatePhysics(physicsStep) {
         BodyDataVelocityY[index] = 0;
     }
 
+    // Compute Angular Velocity
     for (index = 0; index < length; ++index) {
-        velocity = BodyDataVelocityY[index];
-        maxVelocity = BodyDataMaxVelocityY[index];
-        if (velocity > maxVelocity) {
-            BodyDataVelocityY[index] = maxVelocity;
-        } else if (velocity < -maxVelocity) {
-            BodyDataVelocityY[index] = -maxVelocity;
+        drag = BodyDataAngularDrag[index];
+        velocity = BodyDataAngularVelocity[index];
+        if (BodyDataAngularAcceleration[index]) {
+            velocity += BodyDataAngularAcceleration[index] * physicsStep;
+        } else if (drag) {
+            drag = drag * physicsStep;
+            // TODO: Optimize this branch
+            if (velocity - drag > 0) {
+                velocity -= drag;
+            } else if (velocity + drag < 0) {
+                velocity += drag;
+            } else {
+                velocity = 0;
+            }
         }
+        maxVelocity = BodyDataMaxAngular[index];
+        if (velocity > maxVelocity) {
+            velocity = maxVelocity;
+        } else if (velocity < -maxVelocity) {
+            velocity = -maxVelocity;
+        }
+        BodyDataAngularVelocity[index] += velocity;        
     }
 
     // Horizontal Position Update
@@ -102,5 +124,10 @@ export default function UpdatePhysics(physicsStep) {
     // Vertical Position Update
     for (index = 0; index < length; ++index) {
         BodyDataPositionY[index] += BodyDataVelocityY[index];
+    }
+
+    // Rotation Update
+    for (index = 0; index < length; ++index) {
+        BodyDataRotation[index] += BodyDataAngularVelocity[index] * physicsStep;
     }
 }

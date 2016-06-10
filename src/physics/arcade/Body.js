@@ -23,6 +23,12 @@ export let BodyDataFrictionY = new Float32Array(MAX_BODIES);
 export let BodyDataDragX = new Float32Array(MAX_BODIES);
 export let BodyDataDragY = new Float32Array(MAX_BODIES);
 export let BodyDataMass = new Float32Array(MAX_BODIES);
+export let BodyDataRotation = new Float32Array(MAX_BODIES);
+export let BodyDataAngularVelocity = new Float32Array(MAX_BODIES);
+export let BodyDataAngularAcceleration = new Float32Array(MAX_BODIES);
+export let BodyDataAngularDrag = new Float32Array(MAX_BODIES);
+export let BodyDataMaxAngular = new Float32Array(MAX_BODIES);
+export let BodyDataAngle = new Float32Array(MAX_BODIES);
 
 function MapVec2(px, py, vx, vy) {
     px[0] = vx;
@@ -61,7 +67,13 @@ function RegisterBody(
     frictionY = 0,
     dragX = 0,
     dragY = 0,
-    mass = 1
+    mass = 1,
+    rotation = 0,
+    angularVelocity = 0,
+    angularAcceleration = 0,
+    angularDrag = 0,
+    maxAngular = 0,
+    angle = 0
 ) {
     let OldBodyCount = BodyCount++;
     if (OldBodyCount >= MAX_BODIES) {
@@ -109,6 +121,18 @@ function RegisterBody(
     );
     body.ptrMass = BodyDataMass.subarray(OldBodyCount, BodyCount);
     body.ptrMass[0] = mass;
+    body.ptrRotation = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrRotation[0] = rotation;
+    body.ptrAngularVelocity = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrAngularVelocity[0] = angularVelocity;
+    body.ptrAngularAcceleration = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrAngularAcceleration[0] = angularAcceleration;
+    body.ptrAngularDrag = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrAngularDrag[0] = angularDrag;
+    body.ptrMaxAngular = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrMaxAngular[0] = maxAngular;
+    body.ptrAngle = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrAngle[0] = angle;
     body.ID = OldBodyCount;
     return body;
 }
@@ -128,8 +152,13 @@ export default class Body {
         this.drag = null;
         this.ID = -1;
         this.ptrMass = null;
-        this.collider = collider;
         this.immovable = false;
+        this.ptrRotation = null;
+        this.ptrAngularVelocity = null;
+        this.ptrAngularAcceleration = null;
+        this.ptrAngularDrag = null;
+        this.ptrMaxAngular = null;
+        this.ptrAngle = null;
         RegisterBody(
             this,
             x, y,
@@ -141,9 +170,47 @@ export default class Body {
             1, 0,
             0, 0
         );
+        this.collider = collider;
+        this.collider.ownerID = this.ID;
+    }
+    get rotation() {
+        return this.ptrRotation[0];
+    }
+    get angularVelocity() {
+        return this.ptrAngularVelocity[0];
+    }
+    get angularAcceleration() {
+        return this.ptrAngularAcceleration[0];
+    }
+    get angularDrag() {
+        return this.ptrAngularDrag[0];
+    }
+    get maxAngular() {
+        return this.ptrMaxAngular[0];
+    }
+    get angle() {
+        return this.ptrAngle[0];
     }
     get mass() {
         return this.ptrMass[0];
+    }
+    set rotation(value) {
+        this.ptrRotation[0] = value;
+    }
+    set angularVelocity(value) {
+        this.ptrAngularVelocity[0] = value;
+    }
+    set angularAcceleration(value) {
+        this.ptrAngularAcceleration[0] = value;
+    }
+    set angularDrag(value) {
+        this.ptrAngularDrag[0] = value;
+    }
+    set maxAngular(value) {
+        this.ptrMaxAngular[0] = value;
+    }
+    set angle(value) {
+        this.ptrAngle[0] = value;
     }
     set mass(value) {
         this.ptrMass[0] = value;

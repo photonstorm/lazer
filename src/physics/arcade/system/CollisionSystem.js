@@ -16,7 +16,8 @@ import {
     BodyDataFrictionY,
     BodyDataDragX,
     BodyDataDragY,
-    BodyDataMass
+    BodyDataMass,
+    BodyDataRotation
 } from 'physics/arcade/Body.js'
 import {
     RegisterCallbackCollision,
@@ -38,6 +39,12 @@ import {
     CollideData,
     ResetCollide
 } from 'physics/arcade/collision/PolygonToPolygon.js'
+import {
+    PolygonColliderCount,
+    PolygonDataX,
+    PolygonDataY,
+    PolygonDataMeta
+} from 'physics/arcade/collider/PolygonCollider.js'
 
 // Polygon to Polygon Dynamic-Dymamic Collision Request Data.
 let PolygonDynamicSize = 0;
@@ -55,6 +62,8 @@ let PolygonOverlapA = new Uint16Array(MAX_COLLIDERS * 3);
 let PolygonOverlapB = new Uint16Array(MAX_COLLIDERS * 3);
 
 const Sqrt = Math.sqrt;
+const Cos = Math.cos;
+const Sin = Math.sin;
 
 export function Collide(bodyA, bodyB, callback) {
     let immovableA = bodyA.immovable;
@@ -116,10 +125,40 @@ export function Overlap(bodyA, bodyB, callback) {
 }
 
 export function UpdateCollisions() {
+    UpdateColliderData();
     SolvePolygonOverlap();
     SolveDynamicPolygonCollision();
     SolveStaticPolygonCollision();
     UpdateCallbacks();
+}
+
+function UpdateColliderData() {
+    let index = 0;
+    let vertexCount = 0;
+    let colliderID = 0;
+    let ownerID = 0;
+    let rotation = 0;
+    let indexVertex = 0;
+    let x = 0.0;
+    let y = 0.0;
+    let cosA = 0.0;
+    let sinA = 0.0;
+    for (index; index < PolygonColliderCount; index += 3) {
+        ownerID = PolygonDataMeta[index + 2];
+        rotation = BodyDataRotation[ownerID];
+        if (rotation == 0.0)
+            continue;
+        vertexCount = PolygonDataMeta[index];
+        colliderID = PolygonDataMeta[index + 1];
+        cosA = Cos(rotation);
+        sinA = Sin(rotation);
+        for (indexVertex = 0; indexVertex < vertexCount; ++indexVertex) {
+            x = PolygonDataX[colliderID + indexVertex];
+            y = PolygonDataY[colliderID + indexVertex];
+            PolygonDataX[colliderID + indexVertex] = x * cosA - y * sinA;
+            PolygonDataY[colliderID + indexVertex] = x * sinA + y * cosA;
+        }
+    }
 }
 
 function SolveDynamicPolygonCollision() {
