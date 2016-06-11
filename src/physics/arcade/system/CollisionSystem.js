@@ -17,7 +17,8 @@ import {
     BodyDataDragX,
     BodyDataDragY,
     BodyDataMass,
-    BodyDataRotation
+    BodyDataRotation,
+    BodyDataOldRotation
 } from 'physics/arcade/Body.js'
 import {
     RegisterCallbackCollision,
@@ -138,26 +139,29 @@ function UpdateColliderData() {
     let colliderID = 0;
     let ownerID = 0;
     let rotation = 0;
+    let oldRotation = 0;
     let indexVertex = 0;
     let x = 0.0;
     let y = 0.0;
     let cosA = 0.0;
     let sinA = 0.0;
     for (index; index < PolygonColliderCount; index += 3) {
-        ownerID = PolygonDataMeta[index + 2];
-        rotation = BodyDataRotation[ownerID];
-        if (rotation == 0.0)
-            continue;
         vertexCount = PolygonDataMeta[index];
         colliderID = PolygonDataMeta[index + 1];
-        cosA = Cos(rotation);
-        sinA = Sin(rotation);
-        for (indexVertex = 0; indexVertex < vertexCount; ++indexVertex) {
-            x = PolygonDataX[colliderID + indexVertex];
-            y = PolygonDataY[colliderID + indexVertex];
-            PolygonDataX[colliderID + indexVertex] = x * cosA - y * sinA;
-            PolygonDataY[colliderID + indexVertex] = x * sinA + y * cosA;
-        }
+        ownerID = PolygonDataMeta[index + 2];
+        rotation = BodyDataRotation[ownerID];
+        oldRotation = BodyDataOldRotation[ownerID];
+        if (rotation != oldRotation) {
+            BodyDataOldRotation[ownerID] = rotation;
+            cosA = Cos(rotation);
+            sinA = Sin(rotation);
+            for (indexVertex = 0; indexVertex < vertexCount; ++indexVertex) {
+                x = PolygonDataX[colliderID + indexVertex];
+                y = PolygonDataY[colliderID + indexVertex];
+                PolygonDataX[colliderID + indexVertex] = x * cosA - y * sinA;
+                PolygonDataY[colliderID + indexVertex] = x * sinA + y * cosA;
+            }
+        }        
     }
 }
 
@@ -296,7 +300,6 @@ function SolveStaticPolygonCollision() {
         bID = PolygonStaticB[index];
         bPolygonID = PolygonStaticB[index + 1];
         bVertexCount = PolygonStaticB[index + 2];
-
         PolygonToPolygonCorrection(
             aID,
             BodyDataPositionX[aID],
@@ -334,6 +337,7 @@ function SolveStaticPolygonCollision() {
         dy -= (vy * BodyDataBounceY[bID] * mass1) / mass2;
         BodyDataVelocityX[bID] += dx;
         BodyDataVelocityY[bID] += dy;
+
         BodyDataPositionX[bID] += correctionX;
         BodyDataPositionY[bID] += correctionY;
     }

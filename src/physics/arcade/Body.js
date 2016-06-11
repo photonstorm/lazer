@@ -24,6 +24,7 @@ export let BodyDataDragX = new Float32Array(MAX_BODIES);
 export let BodyDataDragY = new Float32Array(MAX_BODIES);
 export let BodyDataMass = new Float32Array(MAX_BODIES);
 export let BodyDataRotation = new Float32Array(MAX_BODIES);
+export let BodyDataOldRotation = new Float32Array(MAX_BODIES);
 export let BodyDataAngularVelocity = new Float32Array(MAX_BODIES);
 export let BodyDataAngularAcceleration = new Float32Array(MAX_BODIES);
 export let BodyDataAngularDrag = new Float32Array(MAX_BODIES);
@@ -72,7 +73,7 @@ function RegisterBody(
     angularVelocity = 0,
     angularAcceleration = 0,
     angularDrag = 0,
-    maxAngular = 0,
+    maxAngular = 1000,
     angle = 0
 ) {
     let OldBodyCount = BodyCount++;
@@ -123,15 +124,17 @@ function RegisterBody(
     body.ptrMass[0] = mass;
     body.ptrRotation = BodyDataRotation.subarray(OldBodyCount, BodyCount);
     body.ptrRotation[0] = rotation;
-    body.ptrAngularVelocity = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrOldRotation = BodyDataOldRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrOldRotation[0] = rotation;
+    body.ptrAngularVelocity = BodyDataAngularVelocity.subarray(OldBodyCount, BodyCount);
     body.ptrAngularVelocity[0] = angularVelocity;
-    body.ptrAngularAcceleration = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrAngularAcceleration = BodyDataAngularAcceleration.subarray(OldBodyCount, BodyCount);
     body.ptrAngularAcceleration[0] = angularAcceleration;
-    body.ptrAngularDrag = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrAngularDrag = BodyDataAngularDrag.subarray(OldBodyCount, BodyCount);
     body.ptrAngularDrag[0] = angularDrag;
-    body.ptrMaxAngular = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrMaxAngular = BodyDataMaxAngular.subarray(OldBodyCount, BodyCount);
     body.ptrMaxAngular[0] = maxAngular;
-    body.ptrAngle = BodyDataRotation.subarray(OldBodyCount, BodyCount);
+    body.ptrAngle = BodyDataAngle.subarray(OldBodyCount, BodyCount);
     body.ptrAngle[0] = angle;
     body.ID = OldBodyCount;
     return body;
@@ -159,6 +162,7 @@ export default class Body {
         this.ptrAngularDrag = null;
         this.ptrMaxAngular = null;
         this.ptrAngle = null;
+        this.ptrOldRotation = null;
         RegisterBody(
             this,
             x, y,

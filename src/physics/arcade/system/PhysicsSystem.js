@@ -92,9 +92,28 @@ export default function UpdatePhysics(physicsStep) {
 
     // Compute Angular Velocity
     for (index = 0; index < length; ++index) {
+        if (BodyDataAngularAcceleration[index] != 0.0) {
+            BodyDataAngularVelocity[index] += BodyDataAngularAcceleration[index] * physicsStep;
+        }
+        drag = BodyDataAngularDrag[index] * physicsStep;
+        if (BodyDataAngularVelocity[index] - drag > 0) {
+            BodyDataAngularVelocity[index] -= drag;
+        } else if (BodyDataAngularVelocity[index] + drag < 0) {
+            BodyDataAngularVelocity[index] += drag;
+        } else {
+            BodyDataAngularVelocity[index] = 0;
+        }
+        maxVelocity = BodyDataMaxAngular[index];
+        if (BodyDataAngularVelocity[index] > maxVelocity) {
+            BodyDataAngularVelocity[index] = maxVelocity;
+        } else if (BodyDataAngularVelocity[index] < -maxVelocity) {
+            BodyDataAngularVelocity[index] = -maxVelocity;
+        }
+    }
+    /*for (index = 0; index < length; ++index) {
         drag = BodyDataAngularDrag[index];
         velocity = BodyDataAngularVelocity[index];
-        if (BodyDataAngularAcceleration[index]) {
+        if (BodyDataAngularAcceleration[index] !== 0.0) {
             velocity += BodyDataAngularAcceleration[index] * physicsStep;
         } else if (drag) {
             drag = drag * physicsStep;
@@ -113,8 +132,8 @@ export default function UpdatePhysics(physicsStep) {
         } else if (velocity < -maxVelocity) {
             velocity = -maxVelocity;
         }
-        BodyDataAngularVelocity[index] += velocity;        
-    }
+        BodyDataAngularVelocity[index] = velocity;        
+    }*/
 
     // Horizontal Position Update
     for (index = 0; index < length; ++index) {
