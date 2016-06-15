@@ -1,5 +1,6 @@
 import {
-    MAX_COLLIDERS
+    MAX_COLLIDERS,
+    POLYGON_COLLIDER
 } from 'physics/arcade/Constants.js'
 
 let PolygonColliderDataCount = 0;
@@ -33,6 +34,7 @@ function RegisterPolygonCollider(collider, vertices) {
 
 export default class PolygonCollider {
     constructor(vertices) {
+        this.type = POLYGON_COLLIDER;
         this.verticesX = null;
         this.verticesY = null;
         this.ptrMeta = null;

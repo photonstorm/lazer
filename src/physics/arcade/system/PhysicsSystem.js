@@ -110,31 +110,7 @@ export default function UpdatePhysics(physicsStep) {
             BodyDataAngularVelocity[index] = -maxVelocity;
         }
     }
-    /*for (index = 0; index < length; ++index) {
-        drag = BodyDataAngularDrag[index];
-        velocity = BodyDataAngularVelocity[index];
-        if (BodyDataAngularAcceleration[index] !== 0.0) {
-            velocity += BodyDataAngularAcceleration[index] * physicsStep;
-        } else if (drag) {
-            drag = drag * physicsStep;
-            // TODO: Optimize this branch
-            if (velocity - drag > 0) {
-                velocity -= drag;
-            } else if (velocity + drag < 0) {
-                velocity += drag;
-            } else {
-                velocity = 0;
-            }
-        }
-        maxVelocity = BodyDataMaxAngular[index];
-        if (velocity > maxVelocity) {
-            velocity = maxVelocity;
-        } else if (velocity < -maxVelocity) {
-            velocity = -maxVelocity;
-        }
-        BodyDataAngularVelocity[index] = velocity;        
-    }*/
-
+    
     // Horizontal Position Update
     for (index = 0; index < length; ++index) {
         BodyDataPositionX[index] += BodyDataVelocityX[index];
