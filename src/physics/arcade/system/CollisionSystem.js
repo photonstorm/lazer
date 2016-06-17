@@ -43,10 +43,14 @@ import {
     ResetCollide
 } from 'physics/arcade/collision/PolygonToPolygon.js'
 import {
+    ResetAABBOverlap,
     ResetAABBCollision,
     AABBtoAABBCorrection,
+    AABBtoAABBOverlap,
     AABBCollisionData,
-    AABBCollisionCount
+    AABBCollisionCount,
+    AABBOverlapData,
+    AABBOverlapCount
 } from 'physics/arcade/collision/AABBtoAABB.js'
 import {
     PolygonColliderCount,
@@ -82,6 +86,10 @@ let AABBStaticSize = 0;
 let AABBStaticA = new Uint16Array(MAX_COLLIDERS * 3);
 let AABBStaticB = new Uint16Array(MAX_COLLIDERS * 3);
 
+// AABB to AABB Static-Dynamic Overlap Request Data.
+let AABBOverlapSize = 0;
+let AABBOverlapA = new Uint16Array(MAX_COLLIDERS * 3);
+let AABBOverlapB = new Uint16Array(MAX_COLLIDERS * 3);
 
 const Sqrt = Math.sqrt;
 const Cos = Math.cos;
@@ -168,25 +176,43 @@ export function Collide(bodyA, bodyB, callback) {
 }
 
 export function Overlap(bodyA, bodyB, callback) {
-    // Store Body ID
-    PolygonOverlapA[PolygonOverlapSize] = bodyA.ID;
-    // Store Collider ID
-    PolygonOverlapA[PolygonOverlapSize + 1] = bodyA.collider.ID;
-    // Store Polygon Vertex Count
-    PolygonOverlapA[PolygonOverlapSize + 2] = bodyA.collider.vertexCount;
-    PolygonOverlapB[PolygonOverlapSize] = bodyB.ID;
-    PolygonOverlapB[PolygonOverlapSize + 1] = bodyB.collider.ID;
-    PolygonOverlapB[PolygonOverlapSize + 2] = bodyB.collider.vertexCount;
-    ++PolygonOverlapSize;
-    // Register Callback
-    RegisterCallbackOverlap(callback);
+    if (bodyA.collider.type == AABB_COLLIDER &&
+        bodyB.collider.type == AABB_COLLIDER) {
+         // Store Body ID
+        AABBOverlapA[AABBOverlapSize] = bodyA.ID;
+        // Store Collider ID
+        AABBOverlapA[AABBOverlapSize + 1] = bodyA.collider.ID;
+
+        AABBOverlapB[AABBOverlapSize] = bodyB.ID;
+        AABBOverlapB[AABBOverlapSize + 1] = bodyB.collider.ID;
+        AABBOverlapB[AABBOverlapSize + 2] = RegisterCallbackOverlap(callback);;
+        ++AABBOverlapSize;        
+    } else if (
+        bodyA.collider.type == POLYGON_COLLIDER &&
+        bodyB.collider.type == POLYGON_COLLIDER) {
+        // Store Body ID
+        PolygonOverlapA[PolygonOverlapSize] = bodyA.ID;
+        // Store Collider ID
+        PolygonOverlapA[PolygonOverlapSize + 1] = bodyA.collider.ID;
+        // Store Polygon Vertex Count
+        PolygonOverlapA[PolygonOverlapSize + 2] = bodyA.collider.vertexCount;
+        PolygonOverlapB[PolygonOverlapSize] = bodyB.ID;
+        PolygonOverlapB[PolygonOverlapSize + 1] = bodyB.collider.ID;
+        PolygonOverlapB[PolygonOverlapSize + 2] = bodyB.collider.vertexCount;
+        ++PolygonOverlapSize;
+        // Register Callback
+        RegisterCallbackOverlap(callback);
+    } else {
+        console.log('Lazer: Invalid Collider Type ', bodyA.collider.type, ' and ', bodyB.collider.type);
+    }
 }
 
 export function UpdateCollisions() {
     UpdateColliderData();
+    SolvePolygonOverlap();
+    SolveAABBOverlap();
     SolveStaticAABBCollision();
     SolveDynamicAABBCollision();
-    SolvePolygonOverlap();
     SolveDynamicPolygonCollision();
     SolveStaticPolygonCollision();
     UpdateCallbacks();
@@ -231,7 +257,7 @@ function SolveStaticAABBCollision() {
         aID = AABBCollisionData[index];
         bID = AABBCollisionData[index + 1];
         correctionX = AABBCollisionData[index + 3];
-        correctionY = AABBCollisionData[index + 4];        
+        correctionY = AABBCollisionData[index + 4];
         BodyDataPositionX[bID] += correctionX;
         BodyDataPositionY[bID] += correctionY;
         BodyDataVelocityX[bID] = BodyDataVelocityX[aID] - BodyDataVelocityX[bID] * BodyDataBounceX[bID];
@@ -283,7 +309,7 @@ function SolveDynamicAABBCollision() {
         aID = AABBCollisionData[index];
         bID = AABBCollisionData[index + 1];
         correctionX = AABBCollisionData[index + 3];
-        correctionY = AABBCollisionData[index + 4];        
+        correctionY = AABBCollisionData[index + 4];
         mass1 = BodyDataMass[aID];
         mass2 = BodyDataMass[bID];
 
@@ -535,7 +561,7 @@ function SolveStaticPolygonCollision() {
 
 function SolvePolygonOverlap() {
     let index = 0;
-    let length = PolygonOverlapSize * 3;
+    let length = PolygonOverlapSize;
     let testCount = 0;
 
     for (; index < length; index += 3) {
@@ -566,4 +592,35 @@ function SolvePolygonOverlap() {
         EmitCallbackOverlap(OverlapData[index + 2], OverlapData[index], OverlapData[index + 1]);
     }
     ResetOverlap();
+}
+
+function SolveAABBOverlap() {
+    let index = 0;
+    let aID = 0;
+    let bID = 0;
+    let aColliderID = 0;
+    let bColliderID = 0;
+   
+    for (index = 0; index < AABBOverlapSize; index += 3) {
+        aID = AABBOverlapA[index];
+        aColliderID = AABBOverlapA[index + 1];
+        bID = AABBOverlapB[index];
+        bColliderID = AABBOverlapB[index + 1];
+        AABBtoAABBOverlap (
+            aID,
+            aColliderID,
+            BodyDataPositionX[aID],
+            BodyDataPositionY[aID],
+            bID,
+            bColliderID,
+            BodyDataPositionX[bID],
+            BodyDataPositionY[bID],
+            AABBOverlapB[index + 2]
+        );
+    }
+    for (index = 0; index < AABBOverlapCount; index += 3) {
+        EmitCallbackOverlap(AABBOverlapData[index + 2], AABBOverlapData[index], AABBOverlapData[index + 1]);
+    }
+    AABBOverlapSize = 0;
+    ResetAABBOverlap();
 }

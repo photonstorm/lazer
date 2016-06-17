@@ -10,8 +10,48 @@ let Abs = Math.abs;
 export let AABBCollisionData = new Float32Array(MAX_COLLIDERS * 8);
 export let AABBCollisionCount = 0;
 
+export let AABBOverlapData = new Uint16Array(MAX_COLLIDERS * 3);
+export let AABBOverlapCount = 0;
+
 export function ResetAABBCollision() {
     AABBCollisionCount = 0;
+}
+
+export function ResetAABBOverlap() {
+    AABBOverlapCount = 0;
+}
+
+export function AABBtoAABBOverlap(
+    aID, 
+    aColliderID,
+    aPositionX, 
+    aPositionY,
+    bID, 
+    bColliderID,
+    bPositionX, 
+    bPositionY,
+    callbackID
+) {
+    let halfWidthA = AABBData[aColliderID + 2] / 2;
+    let halfWidthB = AABBData[bColliderID + 2] / 2;
+    let halfHeightA = AABBData[aColliderID + 3] / 2;
+    let halfHeightB = AABBData[bColliderID + 3] / 2;
+    let ax = aPositionX + AABBData[aColliderID];
+    let ay = aPositionY + AABBData[aColliderID + 1];
+    let bx = bPositionX + AABBData[bColliderID];
+    let by = bPositionY + AABBData[bColliderID + 1];
+    let distanceX = (bx + halfWidthB) - (ax + halfWidthA);
+    let distanceY = (by + halfHeightB) - (ay + halfHeightA);
+    
+    if (halfWidthA + halfWidthB - Abs(distanceX) < 0 ||
+        halfHeightA + halfHeightB - Abs(distanceY) < 0)
+        return false;
+
+    AABBOverlapData[AABBOverlapCount] = aID;
+    AABBOverlapData[AABBOverlapCount + 1] = bID;
+    AABBOverlapData[AABBOverlapCount + 2] = callbackID;
+    AABBOverlapCount += 3;
+    return true;
 }
 
 export function AABBtoAABBCorrection(
