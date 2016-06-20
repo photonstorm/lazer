@@ -209,12 +209,12 @@ export function Overlap(bodyA, bodyB, callback) {
 
 export function UpdateCollisions() {
     UpdateColliderData();
-    SolvePolygonOverlap();
     SolveAABBOverlap();
+    SolvePolygonOverlap();
     SolveStaticAABBCollision();
+    SolveStaticPolygonCollision();
     SolveDynamicAABBCollision();
     SolveDynamicPolygonCollision();
-    SolveStaticPolygonCollision();
     UpdateCallbacks();
 }
 

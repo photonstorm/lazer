@@ -37,7 +37,7 @@ export default function UpdatePhysics(physicsStep) {
         velocity = 0.0,
         maxVelocity = 0.0,
         drag = 0.0;
-        
+
     // Compute Horizontal Velocity
     for (; index < length; ++index) {
         BodyDataVelocityX[index] += (GlobalGravityX + BodyDataGravityX[index]) * physicsStep;
@@ -110,7 +110,7 @@ export default function UpdatePhysics(physicsStep) {
             BodyDataAngularVelocity[index] = -maxVelocity;
         }
     }
-    
+
     // Horizontal Position Update
     for (index = 0; index < length; ++index) {
         BodyDataPositionX[index] += BodyDataVelocityX[index];
