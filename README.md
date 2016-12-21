@@ -2,7 +2,7 @@
 
 # Lazer
 
-**All development on Lazer is postponed until Phaser 3 is completed.**
+**Please [read this important update](https://www.patreon.com/posts/7547955) about Phaser 3 and Lazer development.**
 
 Read our [Phaser 3](https://github.com/photonstorm/phaser/blob/master/v3/) updates each week in Phaser World:
 
